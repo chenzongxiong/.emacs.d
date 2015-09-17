@@ -33,8 +33,8 @@
                          ;; ;;
                          ;; web-mode
                          ;; writegood-mode
-                         ;; yaml
-                         yaml-mode
+                         ;; ;; yaml
+                         ;; yaml-mode
                          ;; ;; highlighting
                          ;; idle-highlight-mode highlight-symbol highlight-numbers highlight-quoted
                          ;; LaTeX
@@ -55,10 +55,12 @@
                          ;; function-args
                          plantuml-mode
                          ;; git
-                         magit
+                         ;; magit
+                         ;; git github-theme gitignore-mode magit magit-popup
+                         ;; magit-gitflow magit-gerrit
                          ;; dictionary
-                         dictionary youdao-dictionary
-                         ;; theme
+                         dictionary
+                         ;; youdao-diction     ;; theme
                          color-theme-monokai
                          ;; sql mode
                          sql-indent sqlup-mode
@@ -78,11 +80,6 @@
                          browse-kill-ring
                          ;;
                          evil
-                         ;; flymake
-                         flymake-ruby flymake-yaml
-                         ;;
-                         markdown-mode
-                         django-mode django-snippets
                          )
     "Default packages")
   ;; Install default packages

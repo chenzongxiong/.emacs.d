@@ -1,4 +1,4 @@
-;; Time-stamp: <>
+; Time-stamp: <[general-settings.el] modified by BrownBear on Friday, 2015-05-08 at 20:15:14 on czxczf.local>
 ;; User details
 (setq user-full-name "chenzongxiong")
 (setq user-mail-address "czxczf@gmail.com")
@@ -41,10 +41,9 @@
 (global-set-key (kbd "C-r") 'isearch-backward-regexp)
 (global-set-key (kbd "M-%") 'query-replace-regexp)
 ;; Emacs starts up with way too much enabled. Turn off the scroll bar, menu bar, and tool bar. There isn't really a reason to have them on
-;; (scroll-bar-mode nil)
-;; (tool-bar-mode nil)
-;; (menu-bar-mode nil)
-
+(scroll-bar-mode nil)
+(tool-bar-mode nil)
+(menu-bar-mode nil)
 ;; backups
 (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
 (setq delete-old-version t)
@@ -52,6 +51,14 @@
 (setq menu-bar-mode nil)
 (setq tool-bar-mode nil)
 (setq scroll-bar-mode nil)
+;; disable mouse action, I don't like to use it
+(setq mouse-wheel-mode nil)
+(dolist (k '([mouse-1] [down-mouse-1] [drag-mouse-1] [double-mouse-1] [triple-mouse-1]
+             [mouse-2] [down-mouse-2] [drag-mouse-2] [double-mouse-2] [triple-mouse-2]
+             [mouse-3] [down-mouse-3] [drag-mouse-3] [double-mouse-3] [triple-mouse-3]
+             [mouse-4] [down-mouse-4] [drag-mouse-4] [double-mouse-4] [triple-mouse-4]
+             [mouse-5] [down-mouse-5] [drag-mouse-5] [double-mouse-5] [triple-mouse-5]))
+  (global-unset-key k))
 ;; (setq version-control t)
 ;; (setq vc-make-backup-files nil)
 ;; (setq auto-save-file-name-transforms '((".*" "~/.emacs.d/auto-save-list/" t)))
@@ -121,6 +128,24 @@
   (interactive)
   (message "%s" major-mode))
 
+;; ;; redo and undo
+;; (defvar undo-toggle t)
+;; (defun undo-by-u ()
+;;   "when `undo-by-u' is invoked, just type the `u' and it'll do the `undo' action until
+;; `C-x, C-s' is typed. And then you still type `u', it'll do the `redo' action. To
+;; enable this function you should type `C-c . u'"
+;;   (interactive)
+;;   (if undo-toggle
+;;       (progn
+;;         (message "open")
+;;         (local-set-key "u" 'undo)
+;;         (setq undo-toggle nil))
+;;     (progn
+;;       (message "close")
+;;       (local-unset-key "u")
+;;       (setq undo-toggle t))))
+;; (global-set-key (kbd "C-c . u") 'undo-by-u)
+
 ;; insert time-stamp before saving
 ;; Time-stamp:
 ;; (add-hook 'before-save-hook 'time-stamp)
@@ -139,3 +164,5 @@
     (open-line 1)
     (highlight-lines-matching-regexp "^[ ]*Time-stamp: <>")
     ))
+;; (gl-set-key (kbd "C-x t") 'my/insert-time-stamp)
+(setq c-default-style "linux" c-basic-offset 4)
