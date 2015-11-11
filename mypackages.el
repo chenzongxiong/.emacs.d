@@ -60,7 +60,7 @@
                          ;; magit-gitflow magit-gerrit
                          ;; dictionary
                          dictionary
-                         ;; youdao-diction     ;; theme
+                         youdao-dictionary     ;; theme
                          color-theme-monokai
                          ;; sql mode
                          sql-indent sqlup-mode
@@ -80,6 +80,9 @@
                          browse-kill-ring
                          ;;
                          evil
+                         dropbox org-dropbox org-password-manager
+	;;                         gnuplot gnuplot-mode puml-mode
+
                          )
     "Default packages")
   ;; Install default packages

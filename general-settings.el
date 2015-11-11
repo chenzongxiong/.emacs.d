@@ -95,7 +95,7 @@
 (global-set-key (kbd "C-c n") 'goto-next-window)
 (global-set-key (kbd "C-c p") 'goto-previous-window)
 ;; unset `C-x o' key bound, for I just want to use `C-c p' or `C-c n'
-(global-unset-key (kbd "C-x o"))
+(global-set-key (kbd "C-x o") 'other-window)
 
 (defun show-all-activate-windows ()
   "list all activate windows in current frame"
@@ -166,3 +166,14 @@
     ))
 ;; (gl-set-key (kbd "C-x t") 'my/insert-time-stamp)
 (setq c-default-style "linux" c-basic-offset 4)
+
+;; set proxy
+;; (setenv "http_proxy" "http://zongxiongchen%40163.com:czx001@tw1.nhpass.com:110")
+;; (setq url-proxy-services
+;;       '(("http" . "http://zongxiongchen%40163.com:czx001@tw1.nhpass.com:110")))
+(setq url-proxy-services nil)
+
+;; (global-set-key (kbd "C-S-<up>") 'enlarge-window)
+;; (global-set-key (kbd "C-S-<down>") 'shirink-window)
+;; (global-set-key (kbd "C-S-<left>") 'enlarge-window-horizontally)
+;; (global-set-key (kbd "C-S-<right>") 'shrink-window-horizontally)

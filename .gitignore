@@ -1,6 +1,7 @@
+*.dat
 eshell/*
 elpa/*
 backups/*
 auto-save-list/*
-\.python-environments/*
+.python-environments/*
 %backup%~
