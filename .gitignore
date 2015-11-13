@@ -5,3 +5,14 @@ backups/*
 auto-save-list/*
 .python-environments/*
 %backup%~
+.semanticdb/*
+abbrev_defs
+recentf
+request/*
+url/*
+tramp
+notes
+games/*
+.youdao
+.#recentf
+*.dat
