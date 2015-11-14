@@ -34,7 +34,6 @@
 (setq helm-semantic-fuzzy-match t
       helm-imenu-fuzzy-match    t)
 (setq helm-M-x-fuzzy-match t) ;; optional fuzzy matching for helm-M-x
-
 ;; Python Ide
 ;; TODO:
 ;;   cannot pop up python function information
@@ -49,50 +48,9 @@
 (require 'jedi)
 (setq jedi:complete-on-dot t)
 (setq jedi:tooltip-method t)
-
-(defun my/python-mode ()
-  ;; ipython setting
-  (setq py-install-directory "~/.emacs.d/")
-  (require 'python-mode)
-  (require 'ipython)
-  (setq
-   python-shell-interpreter "ipython"
-   python-shell-interpreter-args ""
-   python-shell-prompt-regexp "In \\[[0-9]+\\]: "
-   python-shell-prompt-output-regexp "Out\\[[0-9]+\\]: "
-   python-shell-completion-setup-code
-   "from IPython.core.completerlib import module_completion"
-   python-shell-completion-module-string-code
-   "';'.join(module_completion('''%s'''))\n"
-   python-shell-completion-string-code
-   "';'.join(get_ipython().Completer.all_completions('''%s'''))\n"
-   )
-  ;; add break point for debugging
-  (defun my/python-add-breakpoint ()
-    "Add a break point"
-    (interactive)
-    (newline-and-indent)
-    (insert "import ipdb; ipdb.set_trace()")
-    (open-line 1)
-    (highlight-lines-matching-regexp "^[ ]*import ipdb; ipdb.set_trace()"))
-  (local-set-key (kbd "C-c C-b") 'my/python-add-breakpoint)
-  ;; invoke an interactive interpreter.
-  (defun my/python-interactive ()
-    "Enter the interactive python enviroment"
-    (interactive)
-    (progn
-      (insert "!import code; code.interact(local=vars())")
-      (move-end-of-line 1)
-      (comint-send-input)))
-  (local-set-key (kbd "C-c i") 'my/python-interactive)
-  (local-set-key [f5] 'pdb)
-  (message "Hello, I'm trampped in python-mode.")
-  )
-(add-hook 'python-mode-hook 'my/python-mode)
 ;; turn on autopair mode
 (require 'autopair)
 (autopair-global-mode)
-
 ;; org-mode
 (require 'org)
 (org-babel-do-load-languages
@@ -119,8 +77,8 @@
 ;; C-c a t  --> org-todo-list
 ;; C-c, / t --> org-show-todo-list
 ;; S-M-RET  --> org-insert-todo-heading
-(setq org-agenda-files
-      (directory-files "/home/czx/test/snippets/org" t "org$"))
+;; (setq org-agenda-files
+;;      (directory-files "/home/czx/test/snippets/org" t "org$"))
 
 ;; ibuffer settings
 ;; make ibuffer default
@@ -172,7 +130,6 @@
   (interactive)
   (setq sql-user "root")
   (setq sql-password "")
-  (setq sql-database "mysql")
   (setq sql-server "localhost")
   (sql-mysql)
   (other-window -1)
@@ -210,7 +167,7 @@
 ;; C-c C-f: format the region/buffer with json-reformat (https://github.com/gongo/json-reformat)
 ;; C-c C-p: display a path to the object at point with json-snatcher (https://github.com/Sterlingg/json-snatcher)
 (require 'web-mode)
-(require 'web-beautify)
+;; (require 'web-beautify)
 (add-to-list 'auto-mode-alist '("\\.html$" . web-mode))
 (require 'yaml-mode)
 (require 'flymake-yaml)

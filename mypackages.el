@@ -15,12 +15,9 @@
                          auto-complete
                          auto-complete-c-headers
                          iedit
-                         flymake-google-cpplint
-                         google-c-style
                          flymake-cursor
                          ;; python
                          autopair
-                         ;; coffee-mode
                          ;; markdown-mode
                          ;; puppet-mode
                          ;; ;; python
@@ -30,37 +27,20 @@
                          ;; dired
                          ;; dired-avfs
                          dired-rainbow dired-filter
-                         ;; ;;
-                         ;; web-mode
+                         ;;
+                         web-mode
                          ;; writegood-mode
-                         ;; ;; yaml
-                         ;; yaml-mode
-                         ;; ;; highlighting
-                         ;; idle-highlight-mode highlight-symbol highlight-numbers highlight-quoted
-                         ;; LaTeX
-                         auctex
-                         ;; ;; themeing
-                         ;; rainbow-mode leuven-theme dakrone-theme
-                         ;; color-identifiers-mode moe-theme nyan-mode
-                         ;; flatui-theme smyx-theme monokai-theme
-                         ;; ;; helm
-                         ;; helm-descbinds helm-ag helm-projectile helm-swoop
+                         ;; yaml
+                         yaml-mode
+                         ;; helm
                          helm
                          helm-gtags
-                         ;; ggtags
-                         ;; ;; eshell
-                         ;; eshell-prompt-extras
-                         ;; ;;
-                         ecb
-                         ;; function-args
                          plantuml-mode
                          ;; git
                          ;; magit
                          ;; git github-theme gitignore-mode magit magit-popup
                          ;; magit-gitflow magit-gerrit
                          ;; dictionary
-                         dictionary
-                         youdao-dictionary     ;; theme
                          color-theme-monokai
                          ;; sql mode
                          sql-indent sqlup-mode
@@ -68,21 +48,10 @@
                          http httpcode
                          ;; json mode
                          json-mode
-                         ;;
-                         golden-ratio god-mode
-                         ;;
-                         w3
                          ;; javascript
                          js-doc js2-refactor js3-mode ac-js2
-                         ;; php
-                         php-auto-yasnippets ac-php ac-html php-mode
-                         ;;
+                         ;; kill rings
                          browse-kill-ring
-                         ;;
-                         evil
-                         dropbox org-dropbox org-password-manager
-	;;                         gnuplot gnuplot-mode puml-mode
-
                          )
     "Default packages")
   ;; Install default packages
