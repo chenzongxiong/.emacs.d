@@ -11,6 +11,10 @@
   ;; Define default packages
   (defvar czx/packages '(
                          ;; packages management
+                         ;; helm
+                         helm
+                         helm-gtags
+
                          yasnippet
                          auto-complete
                          auto-complete-c-headers
@@ -32,9 +36,7 @@
                          ;; writegood-mode
                          ;; yaml
                          yaml-mode
-                         ;; helm
-                         helm
-                         helm-gtags
+                         flymake-yaml
                          plantuml-mode
                          ;; git
                          ;; magit

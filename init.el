@@ -1,9 +1,11 @@
 (if (>= emacs-major-version 24)
     (progn
       (require 'cl)
+      (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
       (load-file "~/.emacs.d/general-settings.el")
       (load-file "~/.emacs.d/mypackages.el")
-      (load-file "~/.emacs.d/packages-settings.el")
+      ;; (load-file "~/.emacs.d/packages-settings.el")
+      (require 'packages-settings)
   (message "Please Update the emacs")))
 
 (custom-set-faces

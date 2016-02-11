@@ -1,4 +1,3 @@
-; Time-stamp: <[general-settings.el] modified by BrownBear on Friday, 2015-05-08 at 20:15:14 on czxczf.local>
 ;; User details
 (setq user-full-name "chenzongxiong")
 (setq user-mail-address "czxczf@gmail.com")
@@ -113,5 +112,7 @@
 (defun show-curr-major-mode ()
   (interactive)
   (message "%s" major-mode))
-
 (setq c-default-style "linux" c-basic-offset 4)
+
+;; (setq ad-handle-definition 'accept)     ;;
+(setq ad-redefinition-action 'accept)
