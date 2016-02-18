@@ -1,16 +1,16 @@
 (require 'yaml-mode)
 (require 'flymake-yaml)
-(require 'json)
-(require 'json-mode)
+;; (require 'json)
+;; (require 'json-mode)
 
 (require 'init-autopair)
 (require 'init-helm)
 
-;; (require 'init-ibuffer)
-;; (require 'init-python)
+(require 'init-ibuffer)
+(require 'init-python)
+(require 'init-code-folding)
 ;; (require 'init-auto-complete)
 ;; (require 'init-sql)
-;; (require 'init-code-folding)
 
 ;; (require 'init-org)
 ;; (require 'init-simple-httpd)

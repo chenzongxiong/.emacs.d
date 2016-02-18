@@ -1,13 +1,11 @@
 ;; package management
 (when (>= emacs-major-version 24)
-  (require 'package)
   (add-to-list 'package-archives
                 '("gnu" . "http://elpa.gnu.org/packages/"))
   (add-to-list 'package-archives
                '("marmalade" . "http://marmalade-repo.org/packages/"))
   (add-to-list 'package-archives
                '("melpa" . "http://melpa.milkbox.net/packages/") t)
-  (package-initialize)
   ;; Define default packages
   (defvar czx/packages '(
                          ;; packages management
@@ -54,6 +52,10 @@
                          js-doc js2-refactor js3-mode ac-js2
                          ;; kill rings
                          browse-kill-ring
+                         vlf
+                         gnugo
+                         ace-window
+                         windresize
                          )
     "Default packages")
   ;; Install default packages
@@ -68,3 +70,5 @@
     (dolist (pkg czx/packages)
       (when (not (package-installed-p pkg))
         (package-install pkg)))))
+
+(provide 'mypackage)

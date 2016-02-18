@@ -116,3 +116,6 @@
 
 ;; (setq ad-handle-definition 'accept)     ;;
 (setq ad-redefinition-action 'accept)
+
+
+(provide 'general-settings)
