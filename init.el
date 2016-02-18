@@ -8,7 +8,7 @@
       ;; (load-file "~/.emacs.d/general-settings.el")
       (require 'general-settings)
       ;; (load-file "~/.emacs.d/mypackages.el")
-      ;; (require 'mypackages)
+      (require 'mypackages)
       ;; (load-file "~/.emacs.d/packages-settings.el")
       (require 'packages-settings)
   (message "Please Update the emacs")))
