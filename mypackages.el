@@ -38,11 +38,8 @@
                          color-theme-monokai
                          sql-indent
                          sqlup-mode
-                         ; http
                          httpcode
-                         ;; json mode
                          json-mode
-                         ;; javascript
                          js-doc
                          js2-refactor
                          js3-mode

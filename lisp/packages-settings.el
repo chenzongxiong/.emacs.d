@@ -12,7 +12,7 @@
 ;; (require 'init-auto-complete)
 ;; (require 'init-sql)
 
-;; (require 'init-org)
+(require 'init-org)
 ;; (require 'init-simple-httpd)
 ;; (require 'init-web)
 
