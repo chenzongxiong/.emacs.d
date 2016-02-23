@@ -1,61 +1,55 @@
 ;; package management
 (when (>= emacs-major-version 24)
+  ;; (add-to-list 'package-archives
+  ;;               '("gnu" . "http://elpa.gnu.org/packages/"))
+  ;; (add-to-list 'package-archives
+  ;;              '("marmalade" . "http://marmalade-repo.org/packages/"))
   (add-to-list 'package-archives
-                '("gnu" . "http://elpa.gnu.org/packages/"))
-  (add-to-list 'package-archives
-               '("marmalade" . "http://marmalade-repo.org/packages/"))
-  (add-to-list 'package-archives
-               '("melpa" . "http://melpa.milkbox.net/packages/") t)
+               '("melpa" . "http://melpa.milkbox.net/packages/")
+               t)
   ;; Define default packages
   (defvar czx/packages '(
                          ;; packages management
-                         ;; helm
                          helm
                          helm-gtags
-
                          yasnippet
                          auto-complete
-                         auto-complete-c-headers
                          iedit
-                         flymake-cursor
-                         ;; python
                          autopair
                          ;; markdown-mode
-                         ;; puppet-mode
-                         ;; ;; python
-                         jedi elpy
+                         jedi
+                         elpy
                          python-pep8
-                         python-mode ipython
+                         python-mode
+                         ipython
                          ;; dired
                          ;; dired-avfs
-                         dired-rainbow dired-filter
+                         dired-filter
                          ;;
                          web-mode
                          ;; writegood-mode
-                         ;; yaml
                          yaml-mode
                          flymake-yaml
-                         plantuml-mode
-                         ;; git
+                         ;; plantuml-mode
                          ;; magit
                          ;; git github-theme gitignore-mode magit magit-popup
                          ;; magit-gitflow magit-gerrit
                          ;; dictionary
                          color-theme-monokai
-                         ;; sql mode
-                         sql-indent sqlup-mode
-                         ;; http
-                         http httpcode
-                         ;; json mode
+                         sql-indent
+                         sqlup-mode
+                         httpcode
                          json-mode
-                         ;; javascript
-                         js-doc js2-refactor js3-mode ac-js2
-                         ;; kill rings
+                         js-doc
+                         js2-refactor
+                         js3-mode
+                         ac-js2
                          browse-kill-ring
                          vlf
                          gnugo
                          ace-window
                          windresize
+                         nginx-mode
                          )
     "Default packages")
   ;; Install default packages
@@ -71,4 +65,5 @@
       (when (not (package-installed-p pkg))
         (package-install pkg)))))
 
-(provide 'mypackage)
+
+(provide 'mypackages)

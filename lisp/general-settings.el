@@ -117,5 +117,8 @@
 ;; (setq ad-handle-definition 'accept)     ;;
 (setq ad-redefinition-action 'accept)
 
+;; define the const variable
+(defconst httpd-port 18080)
+
 
 (provide 'general-settings)
