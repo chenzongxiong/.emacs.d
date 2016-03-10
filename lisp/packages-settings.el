@@ -1,4 +1,5 @@
 (require 'yaml-mode)
+(add-to-list 'auto-mode-alist '("\\.sls$" . yaml-mode))
 (require 'flymake-yaml)
 ;; (require 'json)
 ;; (require 'json-mode)
