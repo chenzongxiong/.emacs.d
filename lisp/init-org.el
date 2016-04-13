@@ -11,6 +11,7 @@
    (ruby . t)
    (java . t)
    (js . t)
+   (plantuml . t)
    ))
 
 ;; Extended use of TODO keywords
@@ -25,5 +26,8 @@
 ;; S-M-RET  --> org-insert-todo-heading
 ;; (setq org-agenda-files
 ;;      (directory-files "/home/czx/test/snippets/org" t "org$"))
+
+(setq org-plantuml-jar-path
+      (expand-file-name "~/.emacs.d/third-parts/plantuml.jar"))
 
 (provide 'init-org)

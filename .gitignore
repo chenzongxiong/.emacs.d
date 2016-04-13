@@ -2,8 +2,9 @@
 eshell/*
 elpa/*
 backups/*
+snippets/*
 auto-save-list/*
-.python-environments/*
+*python-environments/*
 %backup%~
 .semanticdb/*
 abbrev_defs
@@ -16,3 +17,6 @@ games/*
 .youdao
 .#recentf
 *.dat
+network-security.data
+*org-id-locations*
+third-parts/*
