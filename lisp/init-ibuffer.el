@@ -1,4 +1,3 @@
-(require 'ibuffer)
 (defalias 'list-buffers 'ibuffer)
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 (setq ibuffer-saved-filter-groups
@@ -27,6 +26,7 @@
                ))))
 (add-hook 'ibuffer-mode-hook
           (lambda ()
+            (require 'ibuffer)
             (ibuffer-switch-to-saved-filter-groups "default")))
 
 (provide 'init-ibuffer)

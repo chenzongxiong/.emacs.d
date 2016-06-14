@@ -43,9 +43,14 @@
 (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
 (setq delete-old-version t)
 ;; dont' show menu-bar, tool-bar, scroll-bar
-(setq menu-bar-mode nil)
-(setq tool-bar-mode nil)
-(setq scroll-bar-mode nil)
+;; (setq menu-bar-mode nil)
+;; (setq tool-bar-mode nil)
+;; (setq scroll-bar-mode nil)
+(menu-bar-mode nil)
+(tool-bar-mode nil)
+(scroll-bar-mode nil)
+(toggle-frame-fullscreen)
+
 ;; (setq auto-save-file-name-transforms '((".*" "~/.emacs.d/auto-save-list/" t)))
 ;;Hide the mouse while typing
 (setq make-pointer-invisible t)
@@ -119,6 +124,27 @@
 
 ;; define the const variable
 (defconst httpd-port 18080)
+(auto-fill-mode)
+;; set the size of font
+(set-face-attribute 'default nil :height 140)
+;; add pbpaste and pbcodpy
+;;;###autoload
+(defun pbpaste ()
+  "Paste data from clipboard"
+  (interactive)
+  (shell-command-on-region
+   (point)
+   (if mark-active (mark) (point))
+      "pbpaste" nil t))
 
+;;;###autoload
+(defun pbcopy ()
+  "Copy region to pasteboard."
+  (interactive)
+  (print (mark))
+  (when mark-active
+    (shell-command-on-region
+     (point) (mark) "pbcopy")
+    (kill-buffer "*Shell Command Output*")))
 
 (provide 'general-settings)

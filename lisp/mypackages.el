@@ -35,7 +35,6 @@
                          ;; git github-theme gitignore-mode magit magit-popup
                          ;; magit-gitflow magit-gerrit
                          ;; dictionary
-                         color-theme-monokai
                          sql-indent
                          sqlup-mode
                          httpcode
@@ -51,6 +50,7 @@
                          windresize
                          nginx-mode
                          go-mode
+                         circe
                          )
     "Default packages")
   ;; Install default packages

@@ -1,10 +1,13 @@
 ;; Python Ide
-(require 'jedi)
 (setq jedi:complete-on-dot t)
 (setq jedi:tooltip-method t)
-
-(require 'elpy)
-(elpy-enable)
 (setq elpy-rpc-backend "jedi")
+(setq python-indent-guess-indent-offset nil)
+
+(add-hook 'python-mode-hook (lambda ()
+                              (require 'jedi)
+                              (require 'elpy)
+                              (jedi:setup)
+                              (elpy-enable)))
 
 (provide 'init-python)
