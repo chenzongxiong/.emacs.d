@@ -147,4 +147,8 @@
      (point) (mark) "pbcopy")
     (kill-buffer "*Shell Command Output*")))
 
+;; setting for ecb
+(setq ecb-layout-name "left9")
+(setq ecb-tip-of-the-day nil)
+
 (provide 'general-settings)

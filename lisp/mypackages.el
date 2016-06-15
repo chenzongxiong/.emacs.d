@@ -10,6 +10,7 @@
   ;; Define default packages
   (defvar czx/packages '(
                          ;; packages management
+                         ecb
                          helm
                          helm-gtags
                          yasnippet

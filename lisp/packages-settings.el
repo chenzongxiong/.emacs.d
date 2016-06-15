@@ -9,6 +9,7 @@
 (require 'init-helm)
 (require 'init-ibuffer)
 (require 'init-python)
+(require 'init-c)
 ;; (require 'yasnippet) ; cost less
 ;; (require 'init-code-folding)
 ;; (require 'init-auto-complete)

@@ -20,3 +20,5 @@ games/*
 network-security.data
 *org-id-locations*
 third-parts/*
+semanticdb/*
+ede-projects.el
