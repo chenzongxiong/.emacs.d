@@ -11,6 +11,7 @@
   (defvar czx/packages '(
                          ;; packages management
                          ecb
+                         scala-mode
                          helm
                          helm-gtags
                          yasnippet
