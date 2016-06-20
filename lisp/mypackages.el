@@ -12,6 +12,8 @@
                          ;; packages management
                          ecb
                          scala-mode
+                         dockerfile-mode
+
                          helm
                          helm-gtags
                          yasnippet
@@ -33,12 +35,16 @@
                          yaml-mode
                          flymake-yaml
                          ;; plantuml-mode
-                         ;; magit
                          ;; git github-theme gitignore-mode magit magit-popup
                          ;; magit-gitflow magit-gerrit
                          ;; dictionary
-                         sql-indent
-                         sqlup-mode
+                         ;; sql-indent
+                         ;; sqlup-mode
+                         gerrit-download
+                         magit
+                         password-generator
+                         password-vault
+                         format-sql
                          httpcode
                          json-mode
                          js-doc
