@@ -13,52 +13,25 @@
                          ecb
                          scala-mode
                          dockerfile-mode
-
                          helm
                          helm-gtags
                          yasnippet
                          auto-complete
                          iedit
                          autopair
-                         ;; markdown-mode
                          jedi
                          elpy
                          python-pep8
                          python-mode
-                         ipython
-                         ;; dired
-                         ;; dired-avfs
                          dired-filter
-                         ;;
-                         web-mode
-                         ;; writegood-mode
                          yaml-mode
                          flymake-yaml
-                         ;; plantuml-mode
-                         ;; git github-theme gitignore-mode magit magit-popup
-                         ;; magit-gitflow magit-gerrit
-                         ;; dictionary
-                         ;; sql-indent
-                         ;; sqlup-mode
-                         gerrit-download
-                         magit
-                         password-generator
-                         password-vault
-                         format-sql
                          httpcode
                          json-mode
-                         js-doc
-                         js2-refactor
-                         js3-mode
-                         ac-js2
                          browse-kill-ring
                          vlf
-                         gnugo
-                         ace-window
-                         windresize
                          nginx-mode
                          go-mode
-                         circe
                          )
     "Default packages")
   ;; Install default packages

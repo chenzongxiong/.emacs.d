@@ -31,6 +31,7 @@
    (quote
     (("left9"
       (ecb-methods-buffer-name 0.24 . 0.9821428571428571)))))
+ '(ecb-options-version "2.40")
  '(package-selected-packages
    (quote
     (go-mode yaml-mode windresize web-mode vlf sqlup-mode sql-indent python-pep8 python-mode plantuml-mode nginx-mode json-mode js3-mode js2-refactor js-doc jedi ipython iedit httpcode helm-gtags gnugo flymake-yaml flymake-cursor elpy dired-rainbow dired-filter color-theme-monokai browse-kill-ring autopair auto-complete-c-headers ace-window ac-js2)))
