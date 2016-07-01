@@ -10,7 +10,6 @@
 (require 'init-ibuffer)
 (require 'init-python)
 (require 'init-c)
-(require 'init-circe)
 ;; (require 'yasnippet) ; cost less
 (require 'init-code-folding)
 ;; (require 'init-auto-complete)
@@ -18,7 +17,7 @@
 
 ;; (require 'init-org)
 ;; ;; (require 'init-simple-httpd)
-;; ;; (require 'init-web)
+(require 'init-web)
 
 ;; ;; ;; start yasnippet with emacs
 ;; ;; (setq yas-snippet-dirs yas-installed-snippets-dir)

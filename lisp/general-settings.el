@@ -49,7 +49,9 @@
 (menu-bar-mode nil)
 (tool-bar-mode nil)
 (scroll-bar-mode nil)
-(toggle-frame-fullscreen)
+(when (eq system-type 'darwin)
+  (toggle-frame-fullscreen))
+
 
 ;; (setq auto-save-file-name-transforms '((".*" "~/.emacs.d/auto-save-list/" t)))
 ;;Hide the mouse while typing

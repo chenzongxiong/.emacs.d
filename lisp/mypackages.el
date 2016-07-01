@@ -11,27 +11,33 @@
   (defvar czx/packages '(
                          ;; packages management
                          ecb
-                         scala-mode
-                         dockerfile-mode
                          helm
                          helm-gtags
+                         jedi
+                         elpy
+
+                         angular-mode
+                         dockerfile-mode
+                         go-mode
+                         json-mode
+                         nginx-mode
+                         python-mode
+                         scala-mode
+                         yaml-mode
+
+                         angular-snippets
                          yasnippet
+                         ac-html
                          auto-complete
                          iedit
                          autopair
-                         jedi
-                         elpy
                          python-pep8
-                         python-mode
                          dired-filter
-                         yaml-mode
+                         flymake-jslint
                          flymake-yaml
                          httpcode
-                         json-mode
                          browse-kill-ring
                          vlf
-                         nginx-mode
-                         go-mode
                          )
     "Default packages")
   ;; Install default packages
