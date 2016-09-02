@@ -18,7 +18,7 @@
 ;; (require 'init-org)
 ;; ;; (require 'init-simple-httpd)
 (require 'init-web)
-
+(require 'init-mouse)
 ;; ;; ;; start yasnippet with emacs
 ;; ;; (setq yas-snippet-dirs yas-installed-snippets-dir)
 ;; ;; (yas-global-mode 1)

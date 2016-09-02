@@ -38,8 +38,8 @@
                          httpcode
                          browse-kill-ring
                          vlf
-                         edbi-sqlite
-                         eshell-git-prompt
+                         ;; edbi-sqlite
+                         ;; eshell-git-prompt
                          ;; git
                          ;; gerrit-download
                          )
