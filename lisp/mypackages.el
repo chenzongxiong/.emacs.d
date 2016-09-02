@@ -38,6 +38,10 @@
                          httpcode
                          browse-kill-ring
                          vlf
+                         edbi-sqlite
+                         eshell-git-prompt
+                         ;; git
+                         ;; gerrit-download
                          )
     "Default packages")
   ;; Install default packages
