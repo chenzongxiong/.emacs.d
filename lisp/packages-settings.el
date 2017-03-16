@@ -1,9 +1,5 @@
 (add-to-list 'auto-mode-alist '("\\.sls$" . yaml-mode))
-;; (require 'yaml-mode)
 
-;; (require 'flymake-yaml)
-;; (require 'json)
-;; (require 'json-mode)
 (require 'init-dired)
 (require 'init-autopair)
 (require 'init-helm)
@@ -15,7 +11,7 @@
 ;; (require 'init-auto-complete)
 ;; (require 'init-sql) ; cost less
 
-;; (require 'init-org)
+(require 'init-org)
 ;; ;; (require 'init-simple-httpd)
 (require 'init-web)
 (require 'init-mouse)

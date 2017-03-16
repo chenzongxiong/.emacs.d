@@ -3,7 +3,7 @@
       (require 'cl)
       (require 'package)
       (package-initialize)
-      (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
+      (push "~/.emacs.d/lisp" load-path)
       (setq dired-use-ls-dired nil)
       (require 'general-settings)
       (require 'mypackages)

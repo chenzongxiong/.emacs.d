@@ -1,5 +1,5 @@
 ;; User details
-(setq user-full-name "chenzongxiong")
+(setq user-full-name "Zongxiong Chen")
 (setq user-mail-address "czxczf@gmail.com")
 ;; Turn on debugging, it will be turned off at the end. In case something happens during loading that breaks something, it's nice to have a debug information.
 ;;  (setq debug-on-error t)
