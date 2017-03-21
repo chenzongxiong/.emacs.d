@@ -1,0 +1,2 @@
+(setq url-proxy-servers '(("no_proxy" . "localhost")
+                          ("http" . "proxy.host:port")))

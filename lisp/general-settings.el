@@ -42,13 +42,7 @@
 ;; backups
 (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
 (setq delete-old-version t)
-;; dont' show menu-bar, tool-bar, scroll-bar
-;; (setq menu-bar-mode nil)
-;; (setq tool-bar-mode nil)
-;; (setq scroll-bar-mode nil)
-(menu-bar-mode nil)
-(tool-bar-mode nil)
-(scroll-bar-mode nil)
+
 (when (eq system-type 'darwin)
   (toggle-frame-fullscreen))
 
@@ -153,4 +147,5 @@
 (setq ecb-layout-name "left9")
 (setq ecb-tip-of-the-day nil)
 
+(setq package-check-signature nil)
 (provide 'general-settings)

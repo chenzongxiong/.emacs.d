@@ -1,11 +1,9 @@
 ;; package management
-(when (>= emacs-major-version 24)
+(when (>= (string-to-number emacs-version) 24.4)           ; helm needs 24.4 or above
   (add-to-list 'package-archives
                 '("gnu" . "http://elpa.gnu.org/packages/"))
   (add-to-list 'package-archives
-               '("marmalade" . "http://marmalade-repo.org/packages/"))
-  (add-to-list 'package-archives
-               '("melpa" . "http://melpa.milkbox.net/packages/")
+               '("popkit" . "http://elpa.popkit.org/packages/") ; packages maintained in China
                t)
   ;; Define default packages
   (defvar czx/packages '(
@@ -38,6 +36,8 @@
                          httpcode
                          browse-kill-ring
                          vlf
+                         web-mode
+                         magit
                          )
     "Default packages")
   ;; Install default packages
