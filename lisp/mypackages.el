@@ -3,10 +3,7 @@
   (add-to-list 'package-archives
                 '("gnu" . "http://elpa.gnu.org/packages/"))
   (add-to-list 'package-archives
-               '("marmalade" . "http://marmalade-repo.org/packages/"))
-  (add-to-list 'package-archives
-               '("melpa" . "http://melpa.org/packages/")
-
+               '("melpa" . "https://melpa.org/packages/")
   ;; (add-to-list 'package-archivesn
   ;;              '("popkit" . "http://elpa.popkit.org/packages/") ; packages maintained in China
                t)
@@ -16,33 +13,52 @@
                          ecb
                          helm
                          helm-gtags
+
                          jedi
                          elpy
+                         py-autopep8
 
-                         angular-mode
+                         ;; angular-mode
                          dockerfile-mode
-                         go-mode
+                         ;; go-mode
                          json-mode
                          nginx-mode
                          python-mode
                          scala-mode
                          yaml-mode
 
-                         angular-snippets
-                         yasnippet
-                         ac-html
-                         auto-complete
+                         ;; angular-snippets
+                         ;; yasnippet
+                         ;; ac-html
+                         ;; auto-complete
                          iedit
                          autopair
-                         python-pep8
+                         ;; python-pep8
+
                          dired-filter
-                         flymake-jslint
+                         ;; flymake-jslint
+
+                         flycheck
                          flymake-yaml
                          httpcode
                          browse-kill-ring
                          vlf
                          web-mode
-                         magit
+                         ;; magit
+                         ;; c++ ide
+                         cmake-ide
+                         cmake-mode
+                         rtags
+                         modern-cpp-font-lock
+                         flymake-google-cpplint
+                         flymake-cppcheck
+                         google-c-style
+
+                         irony
+                         flycheck-irony
+                         rtags
+                         company-rtags
+                         company-irony-c-headers
                          )
     "Default packages")
   ;; Install default packages

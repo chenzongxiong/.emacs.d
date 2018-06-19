@@ -1,5 +1,6 @@
 ;; User details
-(setq user-full-name "chenzongxiong")
+;;; Code:
+(setq user-full-name "Zongxiong Chen")
 (setq user-mail-address "czxczf@gmail.com")
 ;; Turn on debugging, it will be turned off at the end. In case something happens during loading that breaks something, it's nice to have a debug information.
 ;;  (setq debug-on-error t)
@@ -125,27 +126,29 @@
 (set-face-attribute 'default nil :height 140)
 ;; add pbpaste and pbcodpy
 ;;;###autoload
-(defun pbpaste ()
-  "Paste data from clipboard"
-  (interactive)
-  (shell-command-on-region
-   (point)
-   (if mark-active (mark) (point))
-      "pbpaste" nil t))
+;; (defun pbpaste ()
+;;   "Paste data from clipboard"
+;;   (interactive)
+;;   (shell-command-on-region
+;;    (point)
+;;    (if mark-active (mark) (point))
+;;       "pbpaste" nil t))
 
 ;;;###autoload
-(defun pbcopy ()
-  "Copy region to pasteboard."
-  (interactive)
-  (print (mark))
-  (when mark-active
-    (shell-command-on-region
-     (point) (mark) "pbcopy")
-    (kill-buffer "*Shell Command Output*")))
+;; (defun pbcopy ()
+;;   "Copy region to pasteboard."
+;;   (interactive)
+;;   (print (mark))
+;;   (when mark-active
+;;     (shell-command-on-region
+;;      (point) (mark) "pbcopy")
+;;     (kill-buffer "*Shell Command Output*")))
 
 ;; setting for ecb
 (setq ecb-layout-name "left9")
 (setq ecb-tip-of-the-day nil)
 
 (setq package-check-signature nil)
+
+(global-flycheck-mode)
 (provide 'general-settings)

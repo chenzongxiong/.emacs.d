@@ -8,14 +8,14 @@
       (require 'general-settings)
       (require 'mypackages)
       (require 'packages-settings)
-  (message "Please Update the emacs")))
+      (message "Please Update the emacs")))
 
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(company-tooltip ((t (:foreground "magenta")))))
+;; (custom-set-faces
+;;  ;; custom-set-faces was added by Custom.
+;;  ;; If you edit it by hand, you could mess it up, so be careful.
+;;  ;; Your init file should contain only one such instance.
+;;  ;; If there is more than one, they won't work right.
+;;  '(company-tooltip ((t (:foreground "magenta")))))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -34,6 +34,16 @@
  '(ecb-options-version "2.40")
  '(package-selected-packages
    (quote
-    (go-mode yaml-mode windresize web-mode vlf sqlup-mode sql-indent python-pep8 python-mode plantuml-mode nginx-mode json-mode js3-mode js2-refactor js-doc jedi ipython iedit httpcode helm-gtags gnugo flymake-yaml flymake-cursor elpy dired-rainbow dired-filter color-theme-monokai browse-kill-ring autopair auto-complete-c-headers ace-window ac-js2)))
- '(python-shell-interpreter "ipython")
- '(python-shell-virtualenv-path "/usr/local/bin/virtualenv"))
+    (php-mode flycheck-irony irony google-c-style yaml-mode web-mode vlf scala-mode rtags python-mode py-autopep8 nginx-mode modern-cpp-font-lock json-mode jedi iedit httpcode helm-gtags flymake-yaml flymake-google-cpplint flymake-cppcheck flycheck elpy ecb dockerfile-mode dired-filter cmake-mode cmake-ide browse-kill-ring autopair))))
+;; (custom-set-faces
+;;  ;; custom-set-faces was added by Custom.
+;;  ;; If you edit it by hand, you could mess it up, so be careful.
+;;  ;; Your init file should contain only one such instance.
+;;  ;; If there is more than one, they won't work right.
+;;  )
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
