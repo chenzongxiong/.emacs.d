@@ -114,7 +114,7 @@
 (defun show-curr-major-mode ()
   (interactive)
   (message "%s" major-mode))
-(setq c-default-style "linux" c-basic-offset 4)
+(setq c-default-style "linux" c-basic-offset 2)
 
 ;; (setq ad-handle-definition 'accept)     ;;
 (setq ad-redefinition-action 'accept)

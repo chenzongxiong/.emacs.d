@@ -1,17 +1,19 @@
-(require 'org)
-(org-babel-do-load-languages
- 'org-babel-load-languages
+require 'org)
+(setq org-babel-load-languages
  '(
    (ditaa . t)
    (python . t)
    (perl . t)
    (C . t)
+   (C++ . t)
    (sh . t)
    (sql . t)
    (ruby . t)
    (java . t)
    (js . t)
    (plantuml . t)
+   (lisp . t)
+   (emacs-lisp . t)
    ))
 
 ;; Extended use of TODO keywords
@@ -29,5 +31,14 @@
 
 (setq org-plantuml-jar-path
       (expand-file-name "~/.emacs.d/third-parts/plantuml.jar"))
+
+(setq ditaa-cmd "java -jar ~/tools/ditaa.jar")
+(defun ditaa-generate()
+  (interactive)
+  (shell-command
+   (concat ditaa-cmd " " buffer-file-name)))
+(setq org-ditaa-jar-path "~/tools/ditaa.jar")
+
+(require 'ob-C)
 
 (provide 'init-org)

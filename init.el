@@ -34,7 +34,7 @@
  '(ecb-options-version "2.40")
  '(package-selected-packages
    (quote
-    (php-mode flycheck-irony irony google-c-style yaml-mode web-mode vlf scala-mode rtags python-mode py-autopep8 nginx-mode modern-cpp-font-lock json-mode jedi iedit httpcode helm-gtags flymake-yaml flymake-google-cpplint flymake-cppcheck flycheck elpy ecb dockerfile-mode dired-filter cmake-mode cmake-ide browse-kill-ring autopair))))
+    (org-ac pbcopy php-mode flycheck-irony irony google-c-style yaml-mode web-mode vlf scala-mode rtags python-mode py-autopep8 nginx-mode modern-cpp-font-lock json-mode jedi iedit httpcode helm-gtags flymake-yaml flymake-google-cpplint flymake-cppcheck flycheck elpy ecb dockerfile-mode dired-filter cmake-mode cmake-ide browse-kill-ring autopair))))
 ;; (custom-set-faces
 ;;  ;; custom-set-faces was added by Custom.
 ;;  ;; If you edit it by hand, you could mess it up, so be careful.

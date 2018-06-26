@@ -8,12 +8,16 @@
                               ;; pip install jedi, epc
                               (require 'jedi)
                               (require 'elpy)
+                              ;; (elpy-use-ipython)
                               (jedi:setup)
                               (elpy-enable)))
 
 (setq py-autopep8-options
       '("--max-line-length=100"))
-(setq python-shell-interpreter "ipython")
+(setq python-shell-interpreter "ipython"
+      python-shell-interpreter-args "-i --simple-prompt")
+;; (setenv "IPY_TEST_SIMPLE_PROMPT" "1")
+
 (setq python-shell-virtualenv-path "/usr/local/bin/virtualenv")
 
 (provide 'init-python)
