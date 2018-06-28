@@ -59,6 +59,11 @@
                          rtags
                          company-rtags
                          company-irony-c-headers
+
+                         ;; solidity
+                         company-solidity
+                         flymake-solidity
+                         solidity-mode
                          )
     "Default packages")
   ;; Install default packages

@@ -32,18 +32,4 @@
     (("left9"
       (ecb-methods-buffer-name 0.24 . 0.9821428571428571)))))
  '(ecb-options-version "2.40")
- '(package-selected-packages
-   (quote
-    (org-ac pbcopy php-mode flycheck-irony irony google-c-style yaml-mode web-mode vlf scala-mode rtags python-mode py-autopep8 nginx-mode modern-cpp-font-lock json-mode jedi iedit httpcode helm-gtags flymake-yaml flymake-google-cpplint flymake-cppcheck flycheck elpy ecb dockerfile-mode dired-filter cmake-mode cmake-ide browse-kill-ring autopair))))
-;; (custom-set-faces
-;;  ;; custom-set-faces was added by Custom.
-;;  ;; If you edit it by hand, you could mess it up, so be careful.
-;;  ;; Your init file should contain only one such instance.
-;;  ;; If there is more than one, they won't work right.
-;;  )
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
  )
