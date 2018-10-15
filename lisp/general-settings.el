@@ -150,5 +150,5 @@
 
 (setq package-check-signature nil)
 
-(global-flycheck-mode)
+;;(global-flycheck-mode)
 (provide 'general-settings)
