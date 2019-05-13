@@ -1,0 +1,358 @@
+* Archecture of Saber Streaming Processing
+** QueryApplication
+*** variables
+    - Set<Query> queries
+    - ITaskDispatcher [] dispatchers
+    - TaskQueue queue
+    - TaskProcessorPool workerPool
+    - Executor executor
+    - N: number of Queries
+
+*** functions
+    - processData(byte[] values, int length)
+    - processFirstStream(byte[] values, int length)
+    - processSecondStream(byte[] values, int length)
+    - setup()
+      + this.queue = new TaskQueue(N)
+      + this.workerPool = new TaskProcessorPool(threads, queue, ...)
+      + this.executor = Executors.newCachedThreadPool()
+      + this.queue = workerPool.start(executor)
+      + setup queries
+*** extra:
+    - bind main thread to core 0. Line#129
+
+** Query
+*** variables
+    - QueryApplication parent
+    - Set<QueryOperator> operators
+    - Query[] upstreamQueries, downstreamQueries
+    - ITaskDispatcher dispatcher
+      + TaskDispatcher
+      + JoinTaskDispatcher
+    - ITupleSchema firstSchema, secondSchema
+    - QueryOperator mostUpstreamOperator, mostDownstreamOperator
+
+*** functions
+    - connectTo(Query query)
+      #+BEGIN_SRC java
+      int idx = this.numberOfDownStreamQueries ++;
+      this.downstreamQueries[idx] = query;
+      query.setUpstreamQuery(this);
+      #+END_SRC
+    - setUpStreamQuery(Query query)
+      #+BEGIN_SRC java
+      int idx = this.numberOfUpstreamQueries ++;
+      this.upstreamQueries[idx] = query;
+      #+END_SRC
+    - setup() { dispatcher.setup(); }
+
+** QueryOperator
+*** variables
+    - Query parent
+    - QueryOperator upstream, downstream
+    - IOperatorCode cpuCode, gpuCode
+*** functions
+    - connectTo(QueryOperator operatror) { this.downstream = operator; operator.setUpstream(this); }
+    - setUpstream(QueryOperator operator) { this.upstream = operator; }
+    - process(WindowBatch batch, IWindowAPI api, boolean GPU) { cpuCode.processData(batch, api); }
+    - process(WindowBatch first, WindowBatch second, IWindow api, boolean GPU) { cpuCode.processData(first, second, api); }
+** QueryConf
+** TaskQueue
+*** variables
+    -
+*** functions
+** IWindowAPI
+** AbstractTask : IWindowAPI
+*** variable
+    - int taskid
+    - queryid
+    - AtomicMarkableReference<AbstractTask> next
+*** functions
+    - run
+    - free
+** Task : AbstractTask
+*** variables
+    - WindowBatch batch1, batch2
+*** functions
+    - run
+      #+BEGIN_SRC java
+        Query query = batch1.getQuery();
+        QueryOperator next = query.getMostUpstreamOperator();
+        if (batch2 == null)
+          next.process(batch1, this, ...);
+        else
+          next.process(batch1, batch2, this, ...);
+
+        WindowBatchFactory.free(batch2)
+        ResultHandler handler = batch1.getQuery().getTaskDispatcher().getHandler();
+        ResultCollector.forwardAndFree(handler, batch1);
+        WindowBatchFactory.free(batch1)
+      #+END_SRC
+    - free
+** TaskFactory
+*** variables
+    - static int _pool_size = 1
+    - staitc AtomicLong count
+    - CoccurrentLinkedQueue<Task> pool;
+*** functions
+    - free(Task task)
+      #+BEGIN_SRC java
+        pool.offer(task)
+      #+END_SRC
+    - newInstance(int taskid, WindowBatch batch1, WindowBatch batch2)
+      #+BEGIN_SRC java
+        Task task = pool.pool();
+        if (task == null) {
+          count.increamentAndGet();
+          return new Task(taskid, batch1, batch2);
+        }
+        task.set(taskid, batch1, batch2);
+        return task;
+      #+END_SRC
+*** WindowBatch
+*** variables
+    - int batchSize
+    - int taskId
+    - int freePointer1, freePointer2
+    - Query query
+    - IQueryBuffer buffer
+    - WindowDefinition windowDefinition
+    - ITupleSchema schema
+    - int startPointer, endPointer
+    - long streamStartPointer, streamEndPointer
+    - long startTimestamp, endTimestamp
+    - int[] windowStartPointers, windowEndPointers
+    - boolean fragmentWindows, hasPendingWindows
+    - PartialWindowResults openingWindows, closingWindows, pendingWindows, completeWindows
+*** functions
+    - initPartialWindowPointers
+    - initPartialRangeBasedWindowPointers
+    - initPartialRowBasedWindowPointers
+    - setClosingWindows, setOpeningWindows, setPendingWindows, setCompleteWindows
+    - getClosingWindwos, getOpendingWindows, getPendingWindows, getCompleteWindows
+    - setSchema, getSchema
+
+** TaskWindow
+*** variables
+    - AbstractTask pred, curr
+*** functions
+    # bad implementations
+    - TaskWindow findTail(AbstractTask head)
+    - TaskWindow findHead(AbstractTask tail)
+    - TaskWindow findQueryTask(AbstractTask head, int query)
+** ResultHandler
+*** variables
+    - int numberOfSlots
+    - Query query
+    - IQueryBuffer freeBuffer1, freeBuffer2
+    - AtomicIntegerArray slots
+    - PaddedAtomicLong paddedSlots [];
+    - IQueryBuffer results = new IQueryBuffer[numberofSlots]
+    - Semaphore semaphore
+    - int [] freePointers1 = new int [numberOfSlots]
+    - int [] freePointers2 = new int [numberOfSlots]
+    - int [] latch = new int [numberOfSlots]
+    - int [] mark = new int [numberOfSlots]
+    - int next
+    - long totalOutputBytes
+    - ResultAggregator resultAggregator
+*** functions
+** ResultAggregator
+*** variables
+*** functions
+    - add(WindowBatch batch)
+    -
+** PartialResultSlot
+*** variables
+    - index
+    - int freePointer1, freePointer2
+    - int mark
+    - latch
+    - PartialResultSlot next
+    - PartialWindowResults closingWindows, openingWindows, pendingWindows, completeWindows
+    - ByteBuffer w3
+    - boolean [] b2found
+    - boolean [] w3found
+
+*** functions
+
+** WindowHashTableWrapper
+*** variables
+*** functions
+
+** ResultCollector
+** WindowDefinition
+*** variables
+    - WindowType type
+      #+BEGIN_SRC java
+        public enum WindowType { ROW_BASED, RANGE_BASED }
+      #+END_SRC
+    - long size, slide, paneSize
+      #+BEGIN_SRC java
+      this.paneSize = gcd(size, slide);
+      #+END_SRC
+*** functions
+    - isTumbling()
+      #+BEGIN_SRC java
+      return this.size == this.slide
+      #+END_SRC
+    - numberOfPanes()
+      #+BEGIN_SRC java
+      return this.size / this.paneSize;
+      #+END_SRC
+
+** ITaskDispatcher
+*** variables
+*** functions
+** TaskDispatcher
+*** variable
+    - TaskQueue workerQueue
+    - IQueryBuffer buffer
+    - WindowDefinition window
+    - ITupleSchema schema
+    - ResultHandler handler
+    - Query parent
+    - int batchSize, tupleSize
+      # POINTERS
+    - long mask, f (free),
+    - thisBatchStartPointer, nextBatchEndPointer
+*** function
+    - setup
+      #+BEGIN_SRC java
+        handler = new ResultHandler(parent, buffer, null);
+        workerQueue = parent.getExecutorQueue();
+      #+END_SRC
+    - dispatch(byte[] data, int length)
+      #+BEGIN_SRC java
+        int idx;
+        while ((idx = buffer.put(data, length)) < 0) {
+          Thread.yield();
+        }
+        assemble(idx, length);
+      #+END_SRC
+    - dispatchToFirstStream(byte[] data, int length)
+    - dispatchToSecondStream(byte[] data, int length)
+    - IQueryBuffer getBuffer()
+    - IQueryBuffer getFirstBuffer()
+    - IQueryBuffer getSecondBuffer()
+    - long getBufferGenerated()
+    - void setAggregationOperator (IAggregateOperator operator)
+    - ResultHandler getHandler()
+    - assemble(int index, int length)
+      #+BEGIN_SRC java
+        this.accumulated += (length);
+        while (this.accumulated >= nextBatchEndpointer) {
+          f = nextBatchEndPointer & mask;
+          f = (f == 0) ? buffer.capacity : f;
+          f --;
+          this.newTaskFor(
+            thisBatchStartPointer & mask // p
+            nextBatchEndPointer & mask // q
+            f,
+            thisBatchStartPointer,
+            nextBatchEndPointer
+            );
+          thisBatchStartPointer += batchSize;
+          nextBatchEndPointer += batchSize;
+        }
+      #+END_SRC
+    - newTaskFor(long p, long q, long free, long b_, long _d)
+      #+BEGIN_SRC java
+        this.batch = WindowBatchFactor.newInstance(this.bathSize, taskid, (int) free, Integer.MIN_VALUE, this.parent, this.buffer, this.window, this.schema, mark);
+      #+END_SRC
+
+** PartialWindowResults
+*** variables
+    - IQueryBuffer buffer
+    - boolean empty
+    - int count; number of windows
+    - int [] startPointers
+*** functions
+    - getBuffer()
+      #+BEGIN_SRC java
+        if (this.buffer)
+          buffer = UnboundedQueryBufferFactory.newInstance();
+        return buffer;
+      #+END_SRC
+    - append(ByteBuffer windowBuffer)
+      #+BEGIN_SRC java
+        startPointers[count++] = this.getBuffer().position();
+        this.buffer.put(windowBuffer.array(), 0, windowBuffer.posistion());
+      #+END_SRC
+    - append(PartialWindowResults closingWindows)
+      #+BEGIN_SRC java
+        int offset = this.buffer.position();
+        for (int wid = 0; wid < closingWindows.numberOfWindows; wid ++) {
+          if (this.count > N)
+            error;
+
+          startPosition[count++] = offset + closingWindows.getStartPointer(wid);
+        }
+        buffer.put(closingWindows.getBuffer(), 0, closingWindows.getBuffer().position());
+      #+END_SRC
+    - prepend(PartialWindowResults openingWindows, int start, int added, int windowSize)
+      #+BEGIN_SRC java
+        int count_ = this.count + added;
+        int norm = openingWindows.getStartPointer(start);
+        int end = start + added - 1;
+        int offset = openingWindows.getStartPointer(end) - norm + windowSize;
+        for (int i = this.count - 1; i >= 0; i --) {
+          this.startPointers[i+added] = this.startPointers[i] + offset;
+          int src = this.startPointers[i];
+          int dst = this.startPointers[i+added];
+          buffer.position(dst);
+          buffer.put(buffer, src, windowSize);
+        }
+        for (int i = 0, w = start; i < added; i ++) {
+          this.startPointers[i] = openingWindows.getStartPointers(w) - norm;
+          int src = openWindows.getStartPointer(w);
+          int dst = this.startPointers[i];
+          buffer.position(dst);
+          buffer.put(openWindows.getBuffer(), src, windowSize);
+        }
+
+        this.count = count_;
+        buffer.position(this.count * windowSize);
+      #+END_SRC
+** IOperatorCode
+*** variables
+    -
+*** functions
+    - processData(WindowBatch batch, IWindowAPI api)
+    - processData(WindowBatch first, WindowBatch second, IWindowAPI api)
+    - processOutput(int queryId, WindowBatch batch)
+    - configureOutput(int queryId)
+    - void setup
+** IPredicate
+*** functions
+    - boolean sastified(IQueryBuffer buffer, ITupleSchema schema, int offset)
+    - boolean sastified(IQueryBuffer buffer1, ITupleSchema schema1, int offset1, IQueryBuffer buffer2, ITupleSchema schema2, int offset2)
+    - int numberOfPredicates()
+    - Expression getFirstExpression()
+    - Expression getSecondExpression()
+** IAggregateOperator
+*** variables
+
+*** functions
+    - boolean hasGroupBy()
+    - ITupleSchema getOutputSchema()
+    - int getKeyLength()
+    - int getValueLength()
+    - int numberOfValues()
+    - AggregationType getAggregationType()
+    - AggregationType getAggregationType(int idx)
+** AggregationType
+   #+BEGIN_SRC java
+     enum AggregationType {
+       MIN, MAX, AVG, SUM, COUNT
+     }
+   #+END_SRC
+** Aggregation
+*** variables
+*** functions
+    - void enterWindow(int workerId, IQueryBuffer buffer, ITupleSchema schema, int tupleOffset, WindowHashTable windowHashTable, byte[] tupleKey, boolean[] found)
+    - void exitWindow(IQueryBuffer buffer, ITupleSchema schema, int tupleOffset, WindowHashTable windowHashTable, byte[] tupleKey, boolean[] found)
+    - void evaluateWindow(WindowHashTable windowHashTable, IQueryBuffer buffer, boolean pack)
+    - void processDataPerWindow(WindowBatch batch, IWindowAPI api)
+    - void processDataPerWindowIncrementally(WindowBatch batch, IWindowAPI api)
+    - int numberOfValues() { return aggregationAttributes.length; }
