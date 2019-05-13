@@ -18,6 +18,6 @@
       python-shell-interpreter-args "-i --simple-prompt")
 ;; (setenv "IPY_TEST_SIMPLE_PROMPT" "1")
 
-(setq python-shell-virtualenv-path "/usr/local/bin/virtualenv")
+(setq python-shell-virtualenv-path "~/.emacs.d/.python-environments/default")
 
 (provide 'init-python)

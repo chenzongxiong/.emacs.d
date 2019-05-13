@@ -12,7 +12,7 @@ recentf
 request/*
 url/*
 tramp
-notes
+notes/*.html
 games/*
 .youdao
 .#recentf

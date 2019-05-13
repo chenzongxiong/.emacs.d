@@ -30,7 +30,7 @@
 (setq line-move-visual t)
 ;; Set up the fill-column to 80 characters and set tab width to 2
 (setq-default fill-column 80)
-(setq-default default-tab-width 4)
+(setq-default default-tab-width 2)
 (setq-default indent-tabs-mode nil)
 ;; Require a newline at the end of files
 (setq require-final-newline t)
@@ -149,6 +149,7 @@
 (setq ecb-tip-of-the-day nil)
 
 (setq package-check-signature nil)
-
+(setq js-indent-level 2)
+(xterm-mouse-mode)
 ;;(global-flycheck-mode)
 (provide 'general-settings)

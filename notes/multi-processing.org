@@ -1,0 +1,192 @@
+* Outlines
+  - A *parallel computer* is a *collection of processing elements* (PEs) that *communicate* and *cooperate* to *solve large problems fast*.
+  - A *multicore processor* is a parallel computer w/ serveral but not many PEs(cores) on a *single chip*.
+  - The term *many-core* describes multi-cores with an especially high number of cores ( 10s or 100s ).
+
+
+  - How ?
+    + *How large* should the collection be ?
+    + *How powerful* the PEs ?
+    + Can their *number* be *increased* straightforwardly ?
+    + *How is data transimitted* between PEs ?
+    + *What sort of interconnect* is provided ?
+    + What *operations* are available to *coordinate* the *cooperation* ?
+
+
+  - Power Density
+  - Moore's Law is actually about transistor density, not performance !!!
+
+
+  - Coordination: Flynn's Classification
+    + MIMD: Machines using MIMD have a number of processors that function asynchronously and independently. different processors may be executing different instructions on different pieces of data
+    + TODO: specs for SISD, MISD, SIMD
+    |                             | Single Data Stream  | Multiple Data Stream         |
+    | Single Instruction Stream   | SISD [Uniprocessor] | SIMD                         |
+    | Multiple Instruction Stream | MISD                | MIMD [Clusters, SMP Servers] |
+
+  - How do Cores *Communicates* ?
+    + Shared addresss space
+      - need for *synchronization* (if MIMD)
+        using *warning flag* and *busy waiting*
+      - need to know how hardware *interleaves different accesses*
+      - similar to *builletin board* - a processor writes to a location visible to reads by other threads
+      - Cores communicate via shared memory using conventional *loads* and *stores*
+
+      [[./images/multi-processing/shared-memory-space.png]]
+
+    + Message passing
+      - Cores comunicate by exchaning explicit messages
+      - Need to know destination and what to send
+      - Implicit synchronization
+
+      [[./images/multi-processing/message-passing.png]]
+
+
+  - Parallel Machine Classes
+    + Shared-memory multiprocessors
+      - Address space is shared: any core can directly access any core can directly access any memory location w/load/store instructions
+
+        [[./images/multi-processing/shared-memory-multiprocesor.png]]
+
+    + Distributed memory multiprocessors
+      - PEs have their own (private) address spaces and communicate by exchanging messages
+      - Message-passing programming model can apply to clusters of workstations, cluster of multiprocessors of multiprocessors, even a uniprocessor
+
+        [[./images/multi-processing/distributed-memory-multiprocesor.png]]
+    + Symmetric Multiprocessor (SMP)
+      SMP with *private L1 caches* and *shared L2 caches*
+      - Also called *Uniform Memory Access* (UMA) architecture
+
+        *Uniform* because takes same time to access each memory location
+      [[../images/multi-processing/smp.png]]
+    + Non-Uniform Memory Access (NUMA)
+      - Because *no broadcast-based interconnect*, need different kind of coherence protocol
+      - Access to *local memories faster* than to remote memories
+        + If cache miss, preferably find data in local memory
+        + *Page distribution* and *replication* important
+      [[../images/multi-proccessing/numa.png]]
+
+      [[http://lse.sourceforge.net/numa/faq/index.html#what_is_distance][FAQ of NUMA]]
+
+
+  - Cache coherence problem
+    + W/o action cores may read different values of same data
+
+  - Performance Metrics
+    + Parallel program not finished until *last* thread terminates, *maximum* over threads, *not average*
+
+    \(Speedup(p procs) = \frac{Time(1 proc)}{Time(p procs)}\)
+
+    + What's the *baseline* (time on 1 processor) ?
+      1. Time of *parallel program* running on 1 processor ?
+      2. Time of *sequential implementation of same algorithm* on 1 processor?
+      3. Time of "bestt" sequential algorithm on 1 processor ?
+
+    + Linear speedup best possible, superlinear speedup sometimes due to cache effects.
+* Snoop-Based multiprocessor designs
+  - Cache Write Strategies
+    + Write Hit?
+      - write through: write new data to cache and to memory
+      - write back: write new data only to cache, write back to memory when cache line is replaced (using *dirty bit*)
+    + Write miss ?
+      - write allocate: fetch the missing cache line into the cache, then write
+      - write no-allocate: do not fetch teh missing cache line into the cache, only write to memory
+
+  - Definition of Cache coherence
+    + all processors
+    + at any time
+    + have consistent view of the last globally written value to each location
+
+  - How to achieve cache coherence ?
+    + Leverage bus interconnect - broadcast medium
+    + All cores / their cache controllers *snoop* the bus
+      - Listen if cache block written is contained in their cache(s)
+      - If so, take appropriate action
+
+    + write invalidate
+      - when writing block B, invalidate all other copies
+      - next time other core reads B, it has to get most recent copy
+    + write update/write broadcast
+      - when writing block B, update all other copies
+
+    + Protocols
+      - Simple Write Invalid Protocol: write-through, write-allocate cache
+        [[./images/multi-processing/validation-invalidation.png]]
+      - process read/process write
+      - bus requests:
+        + bus read -> memory replies
+        + bus write -> invalidate all other copies
+        + bus read exclusive -> read block from memory + invalidate all other copies
+        + bus upgrade: invalidate other copies (if you're a remote cache, invalidate yours), no read block from memory
+      - flush: supply block to requesting cache
+
+      - MSI protocol (Modified, Shared, Invalid) -> possible write-back, less bandwidth on bus
+        + BusRd/BusRdX/BusUpgr/Flush; PrRd/PrWr
+        + Modified
+          - Block has been written since it was brought from memory
+          - Can write block without placing request on bus
+          - Can be /*modified*/ in only *one* cache, in all other caches must be /*invalid*/
+        + Shared
+          - Block is /*clean*/ w.r.t memory copy
+          - Other caches can have same block in S state
+        + Invalid
+          - block is not present
+
+        [[./images/multi-processing/msi.png]]
+
+
+      - MOESI: (Modified, Owned, Exclusive, Shared, Invalid)
+        + Exclusive: cache line is *only cached copy* in the system
+          - can be implemented by adding handshake bus signal Shared that is 1 if at least one other cache has copy
+        + Owned: similar to S but *only one cache can have line in O* state, others must have it in S state
+          - used to determine *which cache supplies* copy if another cache reqquests it
+          - must be a way to *transfer ownership* if block is evicted
+            + cache with B in state E or M is implicitly owner of B
+            + when supplying cache block in state M or E, state becomes O
+        + MESI: (Modified, Exclusive, Shared, Invalid)
+
+  - write buffer
+    + must processor stall (write stall) when data is written to memory ?
+      - using write buffer to hold data waiting to be written to memory
+
+  - inefficiencies of simple protocol
+    + write-back cache generally consumes *less bus bandwidth* than write-through cache
+    + all write requests launch bus transactions, even for non-shared blocks
+      - want *write hits* to be serviced locally
+      - how ? -> introduce state *modified*
+
+  - protocol optimizations: Motivated by common read/write sequences
+    + Producer-consumer sharing: one or more producers write data that one or more consumers subsequently read
+      - proposed solution: read snarfing/ read broadcast
+        + load block in all 3 casches at time PE_{2} requests block A
+        + all caches grab block if their copy is in state I
+        + not useful if block not need in near future.
+    + Migratory Sharing
+
+  - write-invalidation vs. write-update
+    [[./images/multi-processing/write-update-vs-write-invalidation.png]]
+
+  - Quantifying Performance Difference
+    + Write-run model: sequences of *writes from same PE* ended by *read or write from other PE*.
+    + Bandwidth consumed by write-invalidate:
+      B_{invalidation} = B_{BusUpgr} + B_{BusRd}
+    + Bandwidth consumed by write-update:
+      B_{update} = N * B_{BusUpdate}
+
+  - Why Transient States ?
+    Assume MSI and suppose that PE_{1} and PE_{n} simultaneously issue write to block B, that is in state S in both caches.
+    This situation is called *race*. Can deal with races by introducing *transient (non-atomic) states*
+  - Split-Transaction Bus
+    + Decouples requests from responses
+      - responses include block flushes from memory or from another cache
+    + Requests need to carry *block address and request type*
+    + Responses need to carry *data + address*
+    + handle requests and responses in parallel, need 2 address buses. *costly*
+      - Solved by using *unique identifier* with each request(Eg. 128 requests. only needs 7 bits vs. 32-64 bits for address)
+
+  - Design Issues for Cache Protocols
+    + confliction requests ?
+      - transient states
+      - bookkeep table
+    + snoop results ?
+    + buffer overflow ?
