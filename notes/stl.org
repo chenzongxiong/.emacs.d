@@ -1,0 +1,97 @@
+* Item 4 Call empty instead of checking size() against zero
+  You should prefer the construct using ~empty~, and the reason is simple: empty is a constant-time operation for all standard containers, but for some list implementation, ~size~ takes linear time.
+  #+BEGIN_SRC c++
+    list<int> list1;
+    list<int> list2;
+
+    list1.splice(
+      list1.end(), list2,
+      find(list2.begin(), list2.end(), 5),
+      find(list2.rbegin(), list2.rend(), 10).base()
+      );
+  #+END_SRC
+  without traversing the range and couting ~list2~, there is no way to know how many items will be in ~list1~
+* Item 5 Prefer range member functions to their single-element counterparts
+  #+BEGIN_SRC c++
+    v1.assign(v2.begin() + v2.size() / 2, v2.end());
+  #+END_SRC
+  /range member functions/ are superior to their single-element alternatives.
+  The loop also happens to impose an efficiency penalty.
+
+  poor code
+  #+BEGIN_SRC c++
+    vector<Widget> v1, v2;
+    v1.clear();
+    for (vector<Widget>::const_iterator ci = v2.begin() + v2.size() / 2; ci != v2.end(); ++ ci) {
+      v1.push_back(*ci);
+    }
+  #+END_SRC
+
+  There is no more loop presented in the code, one certainly exists inside copy.
+  As a result, the efficiency *penalty* remains. (poor code)
+  #+BEGIN_SRC c++
+    copy(v2.begin() + v2.size()/2, v2.end(), back_inserter(v1));
+  #+END_SRC
+
+
+  Using /range functions/ such as ~assign~ and ~insert~ instead of ~back_inserter~, ~front_inserter~, ~inserter~
+  #+BEGIN_SRC c++
+  v1.insert(v1.end(), v2.begin() + v2.size()/2, v2.end());
+  #+END_SRC
+
+  - It's generally less work to write the code using the range member functions
+  - Range member functions tend to lead to code that is clearer and more straightforward.
+
+    #+BEGIN_SRC c++
+      int data[numValues];
+
+      vector<int> v1;
+      v1.insert(v1.begin(), data, data+numValues);
+    #+END_SRC
+
+    poor code
+    #+BEGIN_SRC c++
+      vector<int>::iterator insertLoc(v.begin());
+      for (int i = 0; i < numValues; i++) {
+        insertLoc = v.insert(insertLoc, data[i]);
+      }
+    #+END_SRC
+
+    poor code
+    #+BEGIN_SRC c++
+      copy(data, data + numValues, inserter(v, v.begin()));
+    #+END_SRC
+    the code based on copy and the code using the explicit loop will be almost identical.
+
+    the code using the single-element version of insert levies up to three different performance taxes on you, none of which you pay if you use the range version of insert.
+    - The first tax consists of unnecessary function calls.
+      + call ~insert~ function ~numValues~ times, whereas using range functions, only one function call
+    - The cost of inefficiently moving the existing elements in v to their final post-insertion positions
+    - Has to do with memory allocation, though it has a nasty copying side to it. the vector allocates new memory with more capacity,
+      copies its elements from the old memory to the new memory, destroys the elements in the old memory, and deallocates the old memory.
+      Then it adds the element that is being inserted.
+
+  The only standard iterators that don't offer forward iterator capabilities are input iterators and output iterators. In that only case, range insert must move elements
+  into their final positions one place at a time, too.
+
+  - Range contruction: all standard containers offer a constructor of this form:
+    #+BEGIN_SRC c++
+      container::container(InputIterator begin, InputIterator end);
+    #+END_SRC
+    be aware of ~istream_iterators~ and ~istreambuf_iterators~
+  - Range insertion
+    #+BEGIN_SRC c++
+    void container::insertr(iteration pos, InputIterator begin, InputIterator end);
+    #+END_SRC
+  - Range erasure
+    #+BEGIN_SRC c++
+      void container::erase(InputIterator begin, InputIterator end); // associative container
+      iterator container::erase(InputIterator begin, InputIterator end); // sequence container
+    #+END_SRC
+  - Range assignment
+    #+BEGIN_SRC c++
+    void container::assign(iterator pos, InputIterator begin, InputIterator end);
+    #+END_SRC
+* Item 6
+
+* Item 29

@@ -1,0 +1,15 @@
+* array in bash
+  #+BEGIN_SRC sh
+    array=(1 2 3)
+    for x in "${array[@]}"
+    do
+        echo $x
+    done
+    array=(one two three)
+    for x in "${array[@]}"
+    do
+    echo $x
+    done
+  #+END_SRC
+
+  #+RESULTS:

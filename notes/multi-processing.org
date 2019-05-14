@@ -190,3 +190,70 @@
       - bookkeep table
     + snoop results ?
     + buffer overflow ?
+* Directory-Based Cache Coherence
+  - Presence-flag vector or full directory protocol
+  - memory requirements of full directory protocol
+  - Cache-centric directory protocols
+  - Cache-Only Memory Architecture (COMAs)
+
+  - Motivation: Buses scale poorly
+    + Per-node bandwidth descreases as we connect more PEs/nodes
+    + Wire length and hence *latency increasese* with the number of nodes
+    + Number of nodes that can be connected limited to handful
+
+  - Goals of scale
+    + Aggregate *interconnect bandwidth should scale* proportionally
+    + Latency should stay constant or increase slowly
+
+  - Memory distributed across the nodes
+    + faster to access *local memory* than *remote memory*
+
+  - Dance-Hall organization (PEs on one side of interconnection and memory modules on the other)
+
+  - Motivation of Directory Protocol
+    + Suppose only 2 nodes have block copy in cc-NUMA with 100 nodes
+      - if one node writes, snoopy cache protocol would need to send /BusUpgr/ to all 99 other nodes but concerns only one
+      - Waste of bandwidth
+    + Directory protocols maintain /per memory block/ a *directory* indicating which nodes have a copy
+      - 3 types of nodes involved in transaction:
+        + *Local node*: node that indicates request
+        + *Home node*: node that hold directory information( can be L )
+        + *Remote node*: any other node participanting (e.g. node holding latest(dirty) copy)
+
+  - Design Challenges
+    + How to deal with conflicting requests ?
+      - system-wide request table not possible because relies on broadcast capability of bus
+    + /Home node/ of block B can act as /central arbiter/ for all requests to B
+      - Associate /Busy bit/ with each block, signals pending transation
+      - If busy bit set, home node can block other requests.
+      - How block incoming requests ?
+        + NACK incoming requests: send NACK to local node asking to retry
+        + queue incoming requests
+          - Pros: keeps latency of servicing requests short and saves bandwidth by avoiding back and forth messages
+          - Cons: extra complexity of request queue that can overflow
+          - deal overflow by sending NACK when request queue is full.
+    + when is safe to turn off the busy bit ?
+    + reduce latency: Stanford DASH reduces latency
+  - Memory requirements of full directory protocol
+    + N nodes, M memory blocks, B bits per block: N / (N+B)
+    + reduce memory requirements
+      - avoid having presence bit for every node: typically few nodes actually share a block
+      - avoid having directory for every block
+        + few memory blocks indeed shared
+        + few memory blocks are cached
+  - Limited-Pointer Directory Protocol
+    + How to deal with /pointer overflows/
+      - resort to broadcast when pointers are exhaust
+      - handle pointer overflows in software
+        + When hardware pointers are exhausted, trap to software that allocates new pointers in regular memory
+
+  - memory-centric directory protocols: sharing information maintained for each and every memory block
+  - Number of blocks cached typically 1000x smaller
+  - Cache-centric directory protocols keep directory information only for cached blocks
+  - Directory cache
+    + directory entry is allocated whenever memory block is cached
+    + when directory entry is replaced, correpsonding block is invalidated throughout the system
+    + Downside: directory cache miss
+  - Coarse-Vector Directory Protocol
+  - Cache-centric Directory Protocol: Scalable Coherence Interface
+  - Replacement Strategy
