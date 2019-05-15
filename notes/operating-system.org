@@ -1,0 +1,126 @@
+* virtual memory
+  - address translation
+    + Logical address space, program address space
+    + Physical address space (defined by the width of the address bus)
+  - Two-stage hierarchical addresss translation
+    + table base address
+    + program/data address: segment/page/byte
+    + segment table
+    + page table
+    + memory
+  - example:
+    + 32 bit address
+    + 4 GB logical address space
+    + 64 MB RAM (physical)
+    + Pages of 1 KB
+    + One page table for the whole logical address space
+    + page table
+      - address (32 bits) = page address (22 bits) + offset in page (10 bits)
+      - offset (inside pages): 10 bit (2^10 = 1 KB)
+      - Page address: 22 bits ( 32 - 10)
+      - number of entries in page table: 2^22 = 4M
+      - size of an entry: 16 bits = 2 bytes, 64 MB = 2^26 B = 2^16 frames
+      - size of page table (ignoring managament information such as dirty bits etc. and ignoring alignment): 8 MB ( 4 M * 2 bytes)
+    + inverted page table
+      - offset (inside pages): 10 bits
+      - number of frames: 65536 = 2 ^ 16
+      - frame address: 16 bit
+      - number of entries in inverted page table: 2^16 = 64K
+      - size of an entry: 22 bit = 2.75 bytes, page addresses are 22 bit
+      - size of page table: 176KB = 64K * 2.75 Bytes
+
+  - acceleration of address translation
+    + problems:
+      - segment and page tables are so large that they have to be kept in main memory.
+      - to build an effective main memory address, we first need to get the page and/or segment address
+      - thus, the processing speed is reduced by a factor of 2
+    + solution:
+      - to prevent that, the currently used parts of the segment/page tables are stored in a fast set of registers (TLB = Translation Lookaside Buffer, part of MMU)
+      - The TLB is an completely associative memory, i.e. a table in which the entry to be found is being searched simultaneously in all lines of the table
+      - it's used as a sort of cache for page/segment tables
+      - usually, the search can be performed in one processor cycle.
+
+    + properities of TLB
+      - line width: 4-8 bytes: logical page/segment number, page frame number, management bits
+      - time for address translation:
+        + hit: less than 1 processor cycle
+        + miss: 10 - 200 processor cycles (depending on memory speed)
+      - hit rate: 99.0% - 99.99%
+      - tlb-size: 32 - 1024 lines(entries)
+      - why not larger TLB?
+      - what happens when a thread switch occurs
+    + memory protection for hierarchical address translation
+  - locality
+    + spatial locality: when a program accesses an address /a/, then another access to a nearby address is very likely
+    + temporal locality: when a program accesses an address /a/, then a repeated access to the same address within short time is very likely
+    + why ?
+      - mostly, instructions are executed sequentially.
+      - programs spend the most time in loops
+      - some parts of the program are executed only in exceptional cases
+      - many arrays are only partially filled.
+      - 90/10 rules: a thread spends 90% of its time in 10 ^ of its address space.
+
+  - virtual memory
+    + the pages needed are loaded only when addressed(demand paging)
+    + requirements for efficient operation
+    + noncontiguous allocation ( page tables ), pages are the units of transfer
+    + automatic detection of missing pages
+      - access to missing page triggers interrupt.
+      - loading of page from disk is initiated as part of the interrupt handling.
+
+    + components:
+      - page table
+        + function: address transformationo
+        + content: for each page:
+          - usage and presence information
+          - physical address (page frame number)
+        + presences bit/valid bit, reference bit, modification bit/dirty bit
+      - page frame table, inverted page table
+        + function: memory management
+        + content: for each page frame
+          - state(free/occupied)
+          - owner
+          - occupying page
+      - swap area (paging area)
+        + function: areas of storage to store the pages that are swapped out
+          - usually mass storage such as magnetic or solid state disks
+          - seldom network devices
+
+  - page fault
+  - parallelization of paing
+    + paging is a time-critical component, we therefore try to speed it up by parallelizatioin
+    + buffering:
+      - since page faults often occur in bulks, it is recommend to have some amount of free page
+        frames available to avoid costly page-out operations when time is tight.
+      - to that purpose we parallelize by applying the buffering principle to get a stock of free page
+  - page replacement strategies
+    + it's of utmost importance to keep the number of page faults extremely low
+  - selection strategy: when a page fault occurs and no page frame is free, which page frame should be emptied?
+    + local selection strategy: we clear a page frame of *that process* that caused the page fault
+    + global selection strategy: an arbitrary page frame (maybe belonging to *other processes*) is cleared.
+    + FIFO/LFU/LRU/RNU/Clock-Algorithm/
+  - locality is good, if few pages are referenced with high probability, and many pages with low probability
+  - Thrashing effect: the system is completely occupied with paging and cannot perform regular useful work.
+    + goal: high processor utilization
+    + many programs executed simultaneously
+    + high multiprogramming degree n
+    + low memory space s per process
+    + short time between successive page faults
+    + congestion at paging device(disk)
+    + almost all processes blocked
+    + result: poor processor utilization
+  - overload phenomena
+    + computer networks: too many packets
+    + telephone networks, too many calls
+    + database system, too many transactions
+    + parallel computing, too many processors
+    + reason is, overhead for coordination grows overlinearly
+  - trashing prevention
+  - local control of paging activity
+    + the working-set model
+    + page fault frequency model (PFF)
+  - global control of pagin activity
+    + the criterion of the interpagefault time (L = S-criterion)
+    + the time between two page faults t_s (or L resp.) should be roughly the same as the page transfer time t_{T} (or S, resp)
+    + the resulting operation point is in most cases too far at the right which can be taken into account in the control laws
+    + parabola approximation: the thrashing curve can be approximated by a parabola in the region of the maximum.
