@@ -1,3 +1,104 @@
+* threads
+  - thread control block
+    + thread characteristics: thread id, name of program
+    + state informaation: instruction counter, stack pointer, register contents
+    + management data: priority, rights, statistics
+
+      [[./images/opearting-system/process-control-block.png]]
+  - static operating system: all threads are known in advance and statically defined
+  - dynamic operating system: the threads are createed and delted by kernel operations
+
+  - threads and address spaces
+    + an arbitrary number of /logical address spaces/ that can be mapped to the physical address space automatically
+    + mutual protection of address spaces
+    + address spaces are independent of threads
+    + a thread owns exactly one private address space( unix process)
+    + several threads share an address space (threads)
+    + a thread switches from one address space to another
+  - Thread switch: means that the processor stops the execution of the current thread and continues with the execution of another thread
+    + by jumping: apply in real-time system, but inflexible and applicable only in very special cases
+    + In general the thread switch will be costly
+      - we don't know , from where we return to the interrupted thread (memorizing the continuation address)
+        before switching to the new thread, we store the address of next instruction to be executed in a dedicated variable ~ni~ (next instruction) of thread control block
+      - the next thread, to which we switch, is not always the same (selection of next thread)
+        #+BEGIN_EXAMPLE
+          t_next := TSelect()              // select next thread to run
+          t_run.ni := L                    // store address L in variable ni
+          jmp (t_next.ni)
+        L:
+        #+END_EXAMPLE
+      - the processor contains essential part of the thread description that must not get lost( register reload)
+    + criteria for selection: number of thread (cyclic switching), order of arrival, priority (urgency)
+    + processor registers
+      - threads use arithmetic registers of the processor to store intermediate results, simply jump to next thread, their content will be lost
+    + thread context:
+      - instruction pointer
+      - contents of arithmetic registers, index registers, processor state, which represent the *state of the execution* of the program
+      - contents of address registers, segment tables, interrupt masks, access control information, thread's execution environment
+    + context switch: the most time consuming part of thread switch
+      - by special instructions that allow storing the complete set of registers to the memory in one instruction
+      - by providing several sets of registers on the processor, such that at thread switch only the register need to be saved that indicates the
+        number of the currently valid register set.
+
+      - Thread switch can be comparably fast, if only the arithmetic registers need to saved and reloaded while the addressing environment remain constant (lightweight threads)
+
+  #+BEGIN_EXAMPLE
+  switch -> save context of t_run -> select t_next -> save next instruction of t_run -> jump to t_next.ni -> t_run := t_next -> load context of t_run
+  #+END_EXAMPLE
+
+  - thread states: running/ready/waiting/suspend(swaping)/creation/termination
+    + we used the *conditioned switch* to release the processor, when the current thread could not continue execution for some reason
+    + in this case we switch to another thread. This new thread, however, may also be blocked, e.g. because it waits for the completion of an I/O operation.
+      If we switch to such a thread, the processor would be immediately released again.
+    + This way, we could try one thread after another until we finally may detect a thread that is ready to resume execution.
+    + to speed up the search for a ready thread, we combine threads according to their state(resumable, not resumable) to thread subsets
+
+  - state change operations
+    + relinquish: voluntary switching to another thread.
+    + assign: take the next thread from the ready set to resume its operation on the processor
+    + deblock: if the event happened for which the blocked thread waited it changes its state from waiting to ready and is inserted into the set of ready threads
+    + block: leave the processor since some condition does not hold (conditioned switch).
+
+  - when execution the state transitions we have to distinguish:
+    + the state change operation themselves
+    + other actions that may be neccessasry related to the state change
+  - the state chagne as an operation at the TCP data structure.
+    [[./images/operating-system/thread-state-transition.png]]
+
+    [[./images/operating-system/thread-states-in-unix.png]]
+
+  - a thread reamins being executed until:
+    + it voluntarily gives up the execution (relinquish)
+    + it is forced to give up execution by a clock interrupt
+    + it cannot continue due to some condition it is waiting for
+  - the current thread is being *preempted* by the thread with the higher priority
+
+  - Idle problem
+    + when operating with waiting states it may happen that all threads are blocked since they are waiting for something. In this case the processor has nothing to do
+    + to handle this situation in an elegant and consistent way we simply introduce an *idle thread*.
+      - must not stop (cyclic thread, endless loop)
+      - lowest priority(to be preempted by any real thread)
+      - must be preemptable at any time
+      - examples:
+        + loop while true; wastes energy
+        + dynamic stop
+        + insertion of useful housekeeping tasks: checks, reorganizations, garbage collections.
+
+  - Initialization  problem
+    + the thread starts and ends in the "kernel of the kernel", in the procedure "switch"
+
+  - Kernel operations for thread management !
+    + CREATE_THREAD
+    + DELETE_THREAD
+    + SET_ATTRIBUTE
+    + READ_ATTRIBUTE
+    + RELINQUISH_THREAD
+    + BLOCK_THREAD
+    + DEBLOCK_THREAD
+    + ACTIVATE_THREAD
+    + DEACTIVATE_THREAD
+  - relation of programming language threads to OS threads
+    +
 * virtual memory
   - address translation
     + Logical address space, program address space
