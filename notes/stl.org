@@ -92,6 +92,53 @@
     #+BEGIN_SRC c++
     void container::assign(iterator pos, InputIterator begin, InputIterator end);
     #+END_SRC
-* Item 6
+* Item 6 Be alert for C++'s most vexing parse
+  #+BEGIN_SRC c++
+    ifstream dataFile("ints.dat");
+    list<int> data(istream_iterator<int>(dataFile), istream_iterator<int>());
+  #+END_SRC
+  The idea here is to pass a pair of istream_iterators to list's range constructor, thus coping the ints in thefile into the list.
+  compile successfully, but at runtime, do nothing.
+  #+BEGIN_SRC c++
+    int f(double d);                //
+    int f(double (d));              // same as above; parens around ~d~ are ignored
+    int f(double);                  // same as above; parameter name is omitted
+  #+END_SRC
+  function pointer
+  #+BEGIN_SRC c++
+    int g(double (*pf)());          // ~g~ takes a pointer to a function as paramter
+    int g(double pf());             // same as above; pf is implicitly a pointer
+    int g(double ())                // same as above; parametr name is omitted
+  #+END_SRC
 
+  Notice the difference between parentheses aroud /a parameter name/ (such as ~d~ in the second declaration for ~f~) and /standing by themselves/.
+  Parentheses around a parameter name are ignored, but parentheses sstanding by themselves indicate the existence of a parameter list: they announce the
+  presence of a parameter that is itself a pointer to a function.
+
+  #+BEGIN_SRC c++
+  list<int> data(istream_iterator<int>(dataFile), istream_iterator<int>());
+  #+END_SRC
+  This declares a /function/, ~data~, whose return type is ~list<int>~. The function data takes two parameters:
+  - the first parameter is named ~dataFile~. the paraentheses around dataFile are superfluous and are ignored
+  - The second parameter has no name. Its type is pointer to function taking nothing and returning an istream_iterator<int>
+
+
+  #+BEGIN_SRC c++
+    class Widget {};
+    Widget w();
+  #+END_SRC
+  This doesn't declare a ~Widget~ named ~w~, it declares a function named ~w~ that takes nothing and returns a ~Widget~
+
+  #+BEGIN_SRC c++
+    list<int> data( (istream_iterator<int>(dataFile)), istream_iterator<int>());
+  #+END_SRC
+  This is the proper way to declare data, and given the utility of istream_iterators and range constructors.
+
+  #+BEGIN_SRC c++
+    ifstream dataFile("ints.dat");
+    istream_iterator<int> dataBegin(dataFile);
+    istream_iterator<int> dataEnd;
+    list<int> data(dataBegin, dataEnd);
+  #+END_SRC
+  work everywhere.
 * Item 29
