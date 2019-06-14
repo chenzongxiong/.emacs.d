@@ -97,7 +97,7 @@
     ifstream dataFile("ints.dat");
     list<int> data(istream_iterator<int>(dataFile), istream_iterator<int>());
   #+END_SRC
-  The idea here is to pass a pair of istream_iterators to list's range constructor, thus coping the ints in thefile into the list.
+  The idea here is to pass a pair of istream_iterators to list's range constructor, thus coping the ints in the file into the list.
   compile successfully, but at runtime, do nothing.
   #+BEGIN_SRC c++
     int f(double d);                //

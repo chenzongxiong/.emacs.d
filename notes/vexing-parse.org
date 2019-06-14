@@ -1,0 +1,21 @@
+* The Most Vexing Parse
+** Root Cause
+   In C++, it's universal that
+#+BEGIN_SRC c++
+  class Timer {
+  public:
+    Timer();
+  };
+
+  class TimeKeeper {
+  public:
+    TimeKeeper(const Timer& t);
+
+    int get_time();
+  };
+
+  int main() {
+    TimeKeeper time_keeper(Timer());
+    return time_keeper.get_time();
+  }
+#+END_SRC
