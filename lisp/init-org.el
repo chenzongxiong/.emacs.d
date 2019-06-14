@@ -40,5 +40,6 @@ require 'org)
 (setq org-ditaa-jar-path "~/tools/ditaa.jar")
 
 (require 'ob-C)
-
+(require 'ob-shell)
+;; (require 'ob-c++)
 (provide 'init-org)
