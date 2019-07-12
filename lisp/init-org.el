@@ -43,5 +43,6 @@ require 'org)
 '((sequence "TODO(t)" "DOING" "|" "DONE(d!)" "CANCELED(c@)")))
 
 (require 'ob-C)
-
+(require 'ob-shell)
+;; (require 'ob-c++)
 (provide 'init-org)

@@ -50,7 +50,7 @@
                          cmake-mode
                          rtags
                          modern-cpp-font-lock
-                         flymake-google-cpplint
+v                         flymake-google-cpplint
                          flymake-cppcheck
                          google-c-style
 

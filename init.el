@@ -34,7 +34,7 @@
  '(ecb-options-version "2.40")
  '(package-selected-packages
    (quote
-    (php-mode company-auctex company-bibtex bibtex-utils auctex latex-math-preview pug-mode js2-mode markdown-preview-eww markdown-mode htmlize flymake-solidity company-irony-c-headers company-rtags flycheck-irony irony google-c-style flymake-cppcheck flymake-google-cpplint modern-cpp-font-lock rtags cmake-mode cmake-ide web-mode vlf browse-kill-ring httpcode flymake-yaml flycheck dired-filter autopair iedit yaml-mode scala-mode python-mode nginx-mode json-mode dockerfile-mode py-autopep8 elpy jedi helm-gtags helm ecb))))
+    (typescript-mode company-math math-symbol-lists flycheck-swift flycheck-swiftlint swift-mode htmlize xcode-project xcode-mode tide markdown-mode markdown-mode+ markdown-preview-eww graphql graphql-mode rjsx-mode company-auctex groovy-mode gradle-mode jscs js2-highlight-vars js-auto-beautify js2-refactor xref-js2 flymake-solidity company-solidity company-irony-c-headers company-rtags flycheck-irony irony google-c-style flymake-cppcheck flymake-google-cpplint modern-cpp-font-lock rtags cmake-mode cmake-ide web-mode vlf browse-kill-ring httpcode flymake-yaml flycheck dired-filter autopair iedit yaml-mode scala-mode python-mode nginx-mode json-mode dockerfile-mode py-autopep8 elpy jedi helm-gtags helm ecb))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

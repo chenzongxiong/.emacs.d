@@ -149,7 +149,7 @@
 (setq ecb-tip-of-the-day nil)
 
 (setq package-check-signature nil)
-(setq js-indent-level 4)
+(setq js-indent-level 2)
 (xterm-mouse-mode)
 ;; (global-flycheck-mode)
 (provide 'general-settings)
