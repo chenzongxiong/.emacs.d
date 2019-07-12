@@ -61,7 +61,7 @@
                          company-irony-c-headers
 
                          ;; solidity
-                         company-solidity
+                         ;; company-solidity
                          flymake-solidity
                          solidity-mode
                          )

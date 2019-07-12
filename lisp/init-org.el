@@ -39,6 +39,9 @@ require 'org)
    (concat ditaa-cmd " " buffer-file-name)))
 (setq org-ditaa-jar-path "~/tools/ditaa.jar")
 
+(setq org-todo-keywords
+'((sequence "TODO(t)" "DOING" "|" "DONE(d!)" "CANCELED(c@)")))
+
 (require 'ob-C)
 
 (provide 'init-org)

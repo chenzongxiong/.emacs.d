@@ -114,7 +114,7 @@
 (defun show-curr-major-mode ()
   (interactive)
   (message "%s" major-mode))
-(setq c-default-style "linux" c-basic-offset 2)
+(setq c-default-style "linux" c-basic-offset 4)
 
 ;; (setq ad-handle-definition 'accept)     ;;
 (setq ad-redefinition-action 'accept)
@@ -126,29 +126,30 @@
 (set-face-attribute 'default nil :height 140)
 ;; add pbpaste and pbcodpy
 ;;;###autoload
-;; (defun pbpaste ()
-;;   "Paste data from clipboard"
-;;   (interactive)
-;;   (shell-command-on-region
-;;    (point)
-;;    (if mark-active (mark) (point))
-;;       "pbpaste" nil t))
+(defun pbpaste ()
+  "Paste data from clipboard"
+  (interactive)
+  (shell-command-on-region
+   (point)
+   (if mark-active (mark) (point))
+      "pbpaste" nil t))
 
 ;;;###autoload
-;; (defun pbcopy ()
-;;   "Copy region to pasteboard."
-;;   (interactive)
-;;   (print (mark))
-;;   (when mark-active
-;;     (shell-command-on-region
-;;      (point) (mark) "pbcopy")
-;;     (kill-buffer "*Shell Command Output*")))
+(defun pbcopy ()
+  "Copy region to pasteboard."
+  (interactive)
+  (print (mark))
+  (when mark-active
+    (shell-command-on-region
+     (point) (mark) "pbcopy")
+    (kill-buffer "*Shell Command Output*")))
 
 ;; setting for ecb
 (setq ecb-layout-name "left9")
 (setq ecb-tip-of-the-day nil)
 
 (setq package-check-signature nil)
-
-(global-flycheck-mode)
+(setq js-indent-level 4)
+(xterm-mouse-mode)
+;; (global-flycheck-mode)
 (provide 'general-settings)
