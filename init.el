@@ -31,5 +31,10 @@
    (quote
     (("left9"
       (ecb-methods-buffer-name 0.24 . 0.9821428571428571)))))
- '(ecb-options-version "2.40")
+ '(ecb-options-version "2.50"))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  )

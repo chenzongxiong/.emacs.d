@@ -106,7 +106,7 @@
 ;; To scroll the window smoothly, line by line scroll
 (setq scroll-step 1)
 ;; Display buffer name style
-(setq frame-title-format "%b@czx")
+(setq frame-title-format "%b@zxchen")
 ;; Enable version-control
 ;; (setq version-control t)
 ;; Copy and Paste in Emacs
@@ -114,7 +114,7 @@
 (defun show-curr-major-mode ()
   (interactive)
   (message "%s" major-mode))
-(setq c-default-style "linux" c-basic-offset 2)
+(setq c-default-style "linux" c-basic-offset 4)
 
 ;; (setq ad-handle-definition 'accept)     ;;
 (setq ad-redefinition-action 'accept)
@@ -150,5 +150,5 @@
 
 (setq package-check-signature nil)
 
-(global-flycheck-mode)
+;; (global-flycheck-mode)
 (provide 'general-settings)
