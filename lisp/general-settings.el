@@ -106,7 +106,7 @@
 ;; To scroll the window smoothly, line by line scroll
 (setq scroll-step 1)
 ;; Display buffer name style
-(setq frame-title-format "%b@czx")
+(setq frame-title-format "%b@zxchen")
 ;; Enable version-control
 ;; (setq version-control t)
 ;; Copy and Paste in Emacs
@@ -149,7 +149,6 @@
 (setq ecb-tip-of-the-day nil)
 
 (setq package-check-signature nil)
-(setq js-indent-level 2)
 (xterm-mouse-mode)
-;; (global-flycheck-mode)
+
 (provide 'general-settings)

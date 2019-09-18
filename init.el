@@ -31,10 +31,11 @@
    (quote
     (("left9"
       (ecb-methods-buffer-name 0.24 . 0.9821428571428571)))))
- '(ecb-options-version "2.40")
+ '(ecb-options-version "2.50")
  '(package-selected-packages
    (quote
-    (typescript-mode company-math math-symbol-lists flycheck-swift flycheck-swiftlint swift-mode htmlize xcode-project xcode-mode tide markdown-mode markdown-mode+ markdown-preview-eww graphql graphql-mode rjsx-mode company-auctex groovy-mode gradle-mode jscs js2-highlight-vars js-auto-beautify js2-refactor xref-js2 flymake-solidity company-solidity company-irony-c-headers company-rtags flycheck-irony irony google-c-style flymake-cppcheck flymake-google-cpplint modern-cpp-font-lock rtags cmake-mode cmake-ide web-mode vlf browse-kill-ring httpcode flymake-yaml flycheck dired-filter autopair iedit yaml-mode scala-mode python-mode nginx-mode json-mode dockerfile-mode py-autopep8 elpy jedi helm-gtags helm ecb))))
+    (rjsx-mode eslint-fix yaml-mode web-mode vlf scala-mode python-mode py-autopep8 pug-mode php-mode nginx-mode modern-cpp-font-lock markdown-preview-eww markdown-mode latex-math-preview json-mode jedi iedit httpcode htmlize helm-gtags google-c-style flymake-yaml flymake-solidity flymake-google-cpplint flymake-eslint flymake-cppcheck flycheck-irony elpy ecb dockerfile-mode dired-filter company-solidity company-rtags company-irony-c-headers company-bibtex company-auctex cmake-mode cmake-ide browse-kill-ring bibtex-utils autopair ac-js2))))
+
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
