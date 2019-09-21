@@ -1,3 +1,7 @@
+;;; Package -- Summary
+;;; Code:
+;;; Commentary:
+
 (require 'auto-complete)
 (require 'auto-complete-config)
 (global-auto-complete-mode t)
@@ -62,3 +66,6 @@
 
 
 (provide 'init-auto-complete)
+
+
+;;; init-auto-complete.el ends here

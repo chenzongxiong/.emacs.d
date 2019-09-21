@@ -1,3 +1,7 @@
+;;; Package -- Summary
+;;; Code:
+;;; Commentary:
+
 ;; Python Ide
 (setq jedi:complete-on-dot t)
 (setq jedi:tooltip-method t)
@@ -21,3 +25,5 @@
 (setq python-shell-virtualenv-path "/usr/local/bin/virtualenv")
 
 (provide 'init-python)
+
+;;; init-python.el ends here

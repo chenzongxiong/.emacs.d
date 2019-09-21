@@ -1,3 +1,7 @@
+;;; Package -- Summary
+;;; Code:
+;;; Commentary:
+
 (add-hook 'dired-load-hook '(lambda ()
                               (require 'wdired)))
 ;; you can modify the files attributes in dired
@@ -7,3 +11,5 @@
 (setq dired-omit-mode t)
 (setq dired-omit-files "^\\.?#\\|^\\.$\\|^\\.\\.$|.pyc$")
 (provide 'init-dired)
+
+;;; init-dired.el ends here

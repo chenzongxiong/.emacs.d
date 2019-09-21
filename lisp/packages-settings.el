@@ -1,3 +1,7 @@
+;;; Package -- Summary
+;;; Code:
+;;; Commentary:
+
 (add-to-list 'auto-mode-alist '("\\.sls$" . yaml-mode))
 ;; (require 'yaml-mode)
 
@@ -44,3 +48,5 @@
 (require 'utils)
 (require 'init-js)
 (provide 'packages-settings)
+
+;;; packages-settings.el ends here

@@ -1,3 +1,7 @@
+;;; Package -- Summary
+;;; Code:
+;;; Commentary:
+
 ;; User details
 ;;; Code:
 (setq user-full-name "Zongxiong Chen")
@@ -152,3 +156,6 @@
 (xterm-mouse-mode)
 
 (provide 'general-settings)
+
+
+;;; general-settings.el ends here
