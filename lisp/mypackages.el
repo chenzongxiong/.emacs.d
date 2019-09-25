@@ -69,8 +69,8 @@
                          flymake-solidity
                          solidity-mode
 
-                         jdee
-                         rjsx
+                         ;; jdee
+                         rjsx-mode
                          )
     "Default packages")
   ;; Install default packages
