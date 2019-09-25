@@ -1,3 +1,8 @@
+;;; Package -- Summary
+;;; Code:
+;;; Commentary:
+
+
 (require 'sql)
 (defun my/sql-mode ()
   (interactive)
@@ -25,3 +30,5 @@
 
 
 (provide 'init-sql)
+
+;;; init-sql.el ends here

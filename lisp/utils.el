@@ -1,3 +1,6 @@
+;;; Package -- Summary
+;;; Code:
+;;; Commentary:
 
 ;;;###autoload
 (defun create-tags (dir-name suffix)
@@ -16,3 +19,5 @@
 ;;; create-c++-tags
 
 (provide 'utils)
+
+;;; utils.el ends here

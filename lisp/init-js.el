@@ -1,4 +1,7 @@
+;;; Package -- Summary
 ;;; Code:
+;;; Commentary:
+
 (setq my/indent-offset 4)
 (setq js2-include-node-externs t)
 
@@ -49,7 +52,7 @@
 
 ;; adjust indents for web-mode to my/indent-offset spaces
 (defun my-web-mode-hook ()
-  "Hooks for Web mode. Adjust indents"
+  "Hooks for Web mode. Adjust indents."
   ;;; http://web-mode.org/
   (setq web-mode-markup-indent-offset my/indent-offset)
   (setq web-mode-css-indent-offset my/indent-offset)

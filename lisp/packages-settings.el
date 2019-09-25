@@ -1,9 +1,14 @@
+;;; Package -- Summary
+;;; Code:
+;;; Commentary:
+
 (add-to-list 'auto-mode-alist '("\\.sls$" . yaml-mode))
 ;; (require 'yaml-mode)
 
 ;; (require 'flymake-yaml)
 ;; (require 'json)
 ;; (require 'json-mode)
+
 (require 'init-dired)
 (require 'init-autopair)
 (require 'init-helm)
@@ -43,4 +48,7 @@
 ;; (require 'init-tags)
 (require 'utils)
 (require 'init-js)
+;; (require 'init-java)
 (provide 'packages-settings)
+
+;;; packages-settings.el ends here

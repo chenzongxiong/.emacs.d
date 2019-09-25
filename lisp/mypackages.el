@@ -1,3 +1,7 @@
+;;; Package -- Summary
+;;; Code:
+;;; Commentary:
+
 ;; package management
 (when (>= (string-to-number emacs-version) 24.4)           ; helm needs 24.4 or above
   (add-to-list 'package-archives
@@ -64,6 +68,9 @@
                          ;; company-solidity
                          flymake-solidity
                          solidity-mode
+
+                         ;; jdee
+                         rjsx-mode
                          )
     "Default packages")
   ;; Install default packages
@@ -81,3 +88,5 @@
 
 
 (provide 'mypackages)
+
+;;; mypackages.el ends here

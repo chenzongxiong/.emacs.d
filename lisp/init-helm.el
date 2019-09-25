@@ -1,3 +1,8 @@
+;;; Package -- Summary
+;;; Code:
+;;; Commentary:
+
+
 ;; helm settings
 (require 'helm)
 (require 'helm-config)
@@ -17,3 +22,5 @@
 ;; the following command will take a second
 ;; (helm-mode 1)
 (provide 'init-helm)
+
+;;; init-helm.el ends here

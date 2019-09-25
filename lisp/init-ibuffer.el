@@ -1,3 +1,7 @@
+;;; Package -- Summary
+;;; Code:
+;;; Commentary:
+
 (defalias 'list-buffers 'ibuffer)
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 (setq ibuffer-saved-filter-groups
@@ -30,3 +34,5 @@
             (ibuffer-switch-to-saved-filter-groups "default")))
 
 (provide 'init-ibuffer)
+
+;;; init-ibuffer.el ends here

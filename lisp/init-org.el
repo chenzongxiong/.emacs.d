@@ -1,3 +1,8 @@
+;;; Package -- Summary
+;;; Code:
+;;; Commentary:
+
+
 require 'org)
 (setq org-babel-load-languages
  '(
@@ -46,3 +51,5 @@ require 'org)
 (require 'ob-shell)
 ;; (require 'ob-c++)
 (provide 'init-org)
+
+;;; init-org.el ends here
