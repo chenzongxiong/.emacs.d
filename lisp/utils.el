@@ -3,20 +3,24 @@
 ;;; Commentary:
 
 ;;;###autoload
-(defun create-tags (dir-name suffix)
-  (setq command-str (format "find %s -type f -iname \"*.%s\" | etags -o %sTAGS -" dir-name suffix (file-name-directory (directory-file-name dir-name))))
-  (message "Command to run: %s" command-str)
+(defun create-java-tags (dir-name)
+  "Create Java TAGS file.  `DIR-NAME`."
+  (interactive "DDirectory: ")
+  (defvar command-str
+    (format "find %s -type f -iname \"*.java\" | etags -o %sTAGS -" dir-name (file-name-directory (directory-file-name dir-name))))
   (eshell-command command-str))
 
 
 ;;;###autoload
-(defun create-java-tags (dir-name)
-     "Create Java TAGS file."
-     (interactive "DDirectory: ")
-     (create-tags dir-name "java"))
+(defun create-c++-tags (dir-name)
+  "Create C++ TAGS file.  `DIR-NAME`."
+  (interactive "DDirectory: ")
+  (defvar command-str
+    (format "find %s -type f -iname \"*.hpp\" -o -iname \"*.cpp\" -o -iname \"*.c\" -o -iname \"*.h\" | etags -o %sTAGS -" dir-name
+            (file-name-directory (directory-file-name dir-name))))
+  (message "Command to run: %s" command-str)
+  (eshell-command command-str))
 
-;;;TODO
-;;; create-c++-tags
 
 (provide 'utils)
 

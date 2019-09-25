@@ -71,6 +71,7 @@
 
                          ;; jdee
                          rjsx-mode
+                         simple-httpd
                          )
     "Default packages")
   ;; Install default packages
