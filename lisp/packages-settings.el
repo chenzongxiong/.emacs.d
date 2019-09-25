@@ -16,7 +16,7 @@
 ;; (require 'init-sql) ; cost less
 
 ;; (require 'init-org)
-;; ;; (require 'init-simple-httpd)
+(require 'init-simple-httpd)
 (require 'init-web)
 
 ;; ;; ;; start yasnippet with emacs
