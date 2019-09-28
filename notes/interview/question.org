@@ -1,0 +1,53 @@
+# 什么是 garbage collector ，并且它是如何工作的？以下代码在 GC 的时候会产生什么问题，该如何解决（不一定是JVM的实现方案）?
+
+# ArrayList<Object> a = new ArrayList<Object>();
+# a.add(a);
+
+  - android 中的线程问题
+
+     #+BEGIN_SRC java
+       public class ExampleThread extends Thread {
+           public Looper looper;
+           @Override
+           public void run() {
+
+               Looper.prepare();
+               looper = Looper.myLooper();
+               looper.loop();
+
+               System.out.println("Terminate Example Thread");
+           }
+       }
+     #+END_SRC
+
+     #+BEGIN_SRC java
+
+       public class MainActivity extends AppCompatActivity {
+           private ExampleThread exampleThread = new ExampleThread();
+
+           @Override
+           public void onCreate(Bundle savedInstanceState) {
+               super.onCreate(savedInstanceState);
+               setContentView(R.layout.activity_main);
+           }
+
+           public void startThread(View view) {
+               exampleThread.start();
+           }
+           public void stopThread(View view) {
+               exampleThread.looper.quit();
+           }
+
+           public taskA(View view) {
+               Handler threadHandler = new Handler(exampleThread.looper);
+               threadHandler.post(new Runnable() {
+                       @Override
+                       public void run() {
+                           for (int i = 0; i < 5; i ++) {
+                               System.out.println("TaskA: " + i);
+                           }
+                       }
+                   });
+           }
+       }
+     #+END_SRC

@@ -1,0 +1,51 @@
+- Retrofit: A type-safe HTTP client for Android and Java
+- EventBus: is an open-source library for Android and Java using the publisher/subscriber pattern for loose coupling.
+- MVP: Model, View, Presenter.
+- RxJava: Reactive Extensions for the JVM. A library for composing asynchronous and event-based programs by using observable sequences.
+- Semphore vs. Mutex vs. Monitor
+  + Monitor: mutex (lock) object and condition variables
+  + Semphore: a critical section can be locked multiple times
+-【Android 高级开发工程师_北京】王兆森 5年的副本
+- The AsyncTask and Activity life cycle
+  AsyncTasks don't follow Activity instances' life cycle. If you start an AsyncTask inside an Activity and you rotate the device, the Activity will be destroyed and a new instance will be created. But the AsyncTask will not die. It will go on living until it completes.
+  And when it completes, the AsyncTask won't update the UI of the new Activity. Indeed it updates the former instance of the activity that is not displayed anymore. This can lead to an Exception of the type java.lang.IllegalArgumentException: View not attached to window manager if you use, for instance, findViewById to retrieve a view inside the Activity.
+- Memory leak issue
+  It is very convenient to create AsyncTasks as inner classes of your Activities. As the AsyncTask will need to manipulate the views of the Activity when the task is complete or in progress, using an inner class of the Activity seems convenient : inner classes can access directly any field of the outer class.
+  Nevertheless, it means the inner class will hold an invisible reference on its outer class instance : the Activity.
+  On the long run, this produces a memory leak : if the AsyncTask lasts for long, it keeps the activity "alive" whereas Android would like to get rid of it as it can no longer be displayed. The activity can't be garbage collected and that's a central mechanism for Android to preserve resources on the device.
+
+- 【Android 高级开发工程师_北京】韩甲龙 4年
+  + 三级缓存
+  + 在内存有限的情况下，如何对缓存进行控制（常用的一些缓存控制机制是？）
+    - ~LRU~, ~MRU~, ~ARC(adpative repleacement cache)~, ~FIFO~，~FILO~, ~LFU~, ~MFU~ 等
+  + ~LRU~ 策略的例子, 假设有一个 ~cache~ 采用 ~LRU~ 策略，并且它的缓存大小是3。 我们在操作缓存的时候，执行操作 ~put~ 添加一个item 到缓存中, ~get~ 从缓存中取出一个元素，假设我们不考虑缓存不命中的 (~cache-miss~) 的情况
+    那么我们在执行以下一系列操作的时候，缓存中的数据从左到右表示 most recently used --> least recently used。缓存中有空位置用 ~None~, ~Null~ 表示
+    如：
+    #+BEGIN_EXAMPLE
+    - put(1): [1, None, None]
+    - put(2): [2, 1, None]
+    - put(3): [3, 2, 1]
+    - get(2): ?
+    - put(4): ?
+    - get(4): ?
+    - get(3): ?
+    * get(1): 在操作会产生什么结果?
+    #+END_EXAMPLE
+
+  + 多线程和多进程的区别（一个进程可以有多个线程），本质区别是什么（多线程共享数据内容，共享代码段，但是 instruction pointer 不一样，多进程不共享数据和代码）
+  + 在HTTP/1.1 中我们要如何对http 下的TCP 链接进行重用？(keep-alive: true)
+  + 简单描述一下一个TCP 链接的建立过程和销毁过程（3次握手，4次挥手， SYN， SYN+ACK， ACK， FIN， ACK, FIN, ACK)
+  + 如果让你自己设计一个简易的，类似Glide 的图片资源加载器，你会考虑如何设计？（使用内存池，多线程（线程池）下载数据）
+- 【Android 高级开发工程师_北京】李旭阳 3年的副本
+  + 常见的 ~android~ 性能优化方式
+  + 视频播放的开发的过程中遇见哪些问题？有无性能问题
+  + 什么是 ~garbage collector~ ，并且它是如何工作的？以下代码在 ~GC~ 的时候会产生什么问题，该如何解决（不一定是JVM的实现方案）?
+    #+BEGIN_SRC java
+      ArrayList<Object> a = new ArrayList<Object>();
+      a.add(a);
+    #+END_SRC
+
+- 【Android 高级开发工程师_北京】刘海涛 4年的副本
+  + 直播推流和拉流过程需要注意的问题
+  + 简单描述一下如果让你设计一个EventBus，你会涉及到哪些数据结构变量。（即如何让publisher和subscriber和进行数据交互。）
+  + android 的内存优化？

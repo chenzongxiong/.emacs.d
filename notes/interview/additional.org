@@ -1,0 +1,277 @@
+- Semphore vs. Mutex vs. Monitor
+》- The AsyncTask and Activity life cycle
+- Memory leak issue
+- 三级缓存
+- 在内存有限的情况下，如何对缓存进行控制（常用的一些缓存控制机制是？）
+
+- ~LRU~ 策略的例子, 假设有一个 ~cache~ 采用 ~LRU~ 策略，并且它的缓存大小是3。 我们在操作缓存的时候，执行操作 ~put~ 添加一个item 到缓存中, ~get~ 从缓存中取出一个元素，假设我们不考虑缓存不命中的 (~cache-miss~) 的情况
+   那么我们在执行以下一系列操作的时候，缓存中的数据从左到右表示 most recently used --> least recently used。缓存中有空位置用 ~None~, ~Null~ 表示
+   如：
+    #+BEGIN_EXAMPLE
+    - put(1): [1, None, None]
+    - put(2): [2, 1, None]
+    - put(3): ?
+    - get(2): ?
+    - put(4): ?
+    - get(4): ?
+    - get(3): ?
+    * get(1): 操作会产生什么结果?
+    #+END_EXAMPLE
+- 简单描述一下一个 ~TCP~ 链接的建立(~setup~)和销毁(~close~)过程？
+- ~websocket~ 和 ~HTTP~ 请求的主要区别是区别？在 ~HTTP/1.1~ 中我们要如何对 ~TCP~ 链接进行重用？
+- ~keep-alive~ 可能带来的潜在问题是？
+- 在HTTP/1.1 中我们要如何对http 下的TCP 链接进行重用？
+- 多线程和多进程的区别？为什么要使用线程池，使用线程池带来哪些好处？
+- 进程间常见的通信方式？
+- 常见的 ~android~ 性能优化方式
+- 视频播放的开发的过程中遇见哪些问题？有无性能问题
+- 什么是 ~garbage collector~ ，并且它是如何工作的？以下代码在 ~GC~ 的时候会产生什么问题，该如何解决（不一定是JVM的实现方案）?
+  #+BEGIN_SRC java
+    ArrayList<Object> a = new ArrayList<Object>();
+    a.add(a);
+  #+END_SRC
+- 直播推流和拉流过程需要注意的问题
+- 简单描述一下如果让你设计一个EventBus，你会涉及到哪些数据结构变量。（即如何让publisher和subscriber和进行数据交互。）
+- android 的内存优化？
+- 假设你买了一台新的电脑，所有的配置都是空的（如DNS table，ARP table 等)  那么你在浏览器中输入 www.bing.com 这个url 过程中，浏览器背后经历那些流程，才把这个最后Bing服务器的主页，返回到你的浏览器页面（越详细越好，不考虑CDN的问题，也不考虑该电脑在某个子网内部）
+- https和http有什么区别?
+- 其中的s是在TCP/IP 中那一层实现的在应用层实现的?
+- 在HTTP/1.1 中我们要如何对http 下的TCP 链接进行重用？
+- 简单描述一下一个TCP 链接的建立过程和销毁过程?
+
+* android
+  - ANR（application not response ？） 如何产生以及解决方法。（main thread is block due to rendering some UI)
+  - 基本组件:
+  - Difference between AsyncTasks & Threads & Handlers?
+Handlers are objects for managing threads. It receives messages and writes code on how to handle the message. They run outside of the activity’s lifecycle, so they need to be cleaned up properly or else you will have thread leaks.
+Handlers allow communicating between the background thread and the main thread.
+A Handler class is preferred when we need to perform a background task repeatedly after every x seconds/minutes.
+  - Service 和 Activity 的区别
+     Activities are basically containers or windows to the user interface. Services is a component that is used to perform operations on the background. It does not have an UI.
+  - 如何通过ListView 来实现一个简易的RecyclerView
+  - 简单描述一下 ~android app~ 的 ~build~ 过程?
+  - android 中的线程问题
+     问题1：
+     #+BEGIN_SRC java
+       public class ExampleThread extends Thread {
+           @Override
+           public void run() {
+               for (int i = 0; i < 5; i ++) {
+                   System.out.println("i: " + i);
+                   System.Clock.sleep(1000);
+               }
+           }
+       }
+     #+END_SRC
+
+     #+BEGIN_SRC java
+       public class MainActivity extends AppCompatActivity {
+           private ExampleThread exampleThread = new ExampleThread();
+           @Override
+           public void onCreate(Bundle savedInstanceState) {
+               super.onCreate(savedInstanceState);
+               setContentView(R.layout.activity_main);
+           }
+
+           public void startThread(View view) {
+               exampleThread.start();
+           }
+           public void stopThread(View view) {
+
+           }
+           public taskA(View view) {
+
+           }
+       }
+     #+END_SRC
+     问题2:
+     #+BEGIN_SRC java
+       public class ExampleThread extends Thread {
+           public Looper looper;
+           @Override
+           public void run() {
+
+               Looper.prepare();
+               looper = Looper.myLooper();
+               looper.loop();
+
+               System.out.println("Terminate Example Thread");
+           }
+       }
+     #+END_SRC
+
+     #+BEGIN_SRC java
+
+       public class MainActivity extends AppCompatActivity {
+           private ExampleThread exampleThread = new ExampleThread();
+
+           @Override
+           public void onCreate(Bundle savedInstanceState) {
+               super.onCreate(savedInstanceState);
+               setContentView(R.layout.activity_main);
+           }
+
+           public void startThread(View view) {
+               exampleThread.start();
+           }
+           public void stopThread(View view) {
+               exampleThread.looper.quit();
+           }
+
+           public taskA(View view) {
+               Handler threadHandler = new Handler(exampleThread.looper);
+               threadHandler.post(new Runnable() {
+                       @Override
+                       public void run() {
+                           for (int i = 0; i < 5; i ++) {
+                               System.out.println("TaskA: " + i);
+                           }
+                       }
+                   });
+           }
+       }
+     #+END_SRC
+
+* java
+  - 简述 ~sychronized~ 关键字的作用? ~static~, ~final~ 变量的特点？
+  - 如果让你自己设计一个简易高效的图片资源加载器，该加载器主要加载网络资源（类似 ~Glide~ 的图片资源加载器），你会考虑如何设计，使得该加载器尽可能的高效？
+  - 如何通过 ~ListView~ 来实现一个简易的 ~RecyclerView~ (性能要求不需要很完美)?
+  - 简单描述一下 ~android app~ 的 ~build~ 过程？
+  - 什么是 ~garbage collector~ ，并且它是如何工作的？以下代码在 ~GC~ 的时候会产生什么问题，该如何解决（不一定是JVM的实现方案）?
+    #+BEGIN_SRC java
+      ArrayList<Object> a = new ArrayList<Object>();
+      a.add(a);
+    #+END_SRC
+
+* 算法
+  - 给定两个二叉树，写一个函数判断这两个二叉树的结构和节点内的数据是否相同这两个二叉树相同的条件是结构相同，并且节点内部的值相同
+    Example 1:
+    #+BEGIN_EXAMPLE
+   nput:     1         1
+            / \       / \
+           2   3     2   3
+
+          [1,2,3],   [1,2,3]
+   utput: true
+     #+END_EXAMPLE
+    Example 2:
+    #+BEGIN_EXAMPLE
+   nput:     1         1
+            /           \
+           2             2
+
+          [1,2],     [1,null,2]
+   utput: false
+     #+END_EXAMPLE
+    Example 3:
+    #+BEGIN_EXAMPLE
+  nput:     1         1
+           / \       / \
+          2   1     1   2
+
+         [1,2,1],   [1,1,2]
+  utput: false
+    #+END_EXAMPLE
+    #+BEGIN_SRC python
+     class TreeNode:
+         def __init__(self, val=0):
+             self.val = val
+             self.left = None
+             self.right = None
+
+
+     class Solution:
+         def __init__(self):
+             self.p_list = []
+             self.q_list = []
+
+         def isSame(self, p, q):
+             '''
+             :type p: TreeNode
+             :type q: TreeNode
+             :rtype: Boolean
+             '''
+             self._preOrderP(p)
+             self._preOrderQ(q)
+             return self.p_list == self.q_list
+
+         def _preOrderP(self, p):
+             if p is None:
+                 self.p_list.append(None)
+                 return
+             self.p_list.append(p.val)
+             self._preOrder(p.left)
+             self._preOrder(p.right)
+
+         def _preOrderQ(self, q):
+             if q is None:
+                 self.q_list.append(None)
+                 return
+
+             self.q_list.append(q.val)
+             self._preOrder(q.left)
+             self._preOrder(q.right)
+
+
+   #+END_SRC
+  - 使用java 实现一个简单的单例模式
+    #+BEGIN_SRC java
+      public class Singleton {
+          private static Singleton instance = new Singleton();
+          public static Singleton getInstance() {
+              return instance;
+          }
+      }
+    #+END_SRC
+    #+BEGIN_SRC java
+      public class Singleton {
+          private static Singleton instance;
+
+          public static Singleton getInstance() {
+              if (instance == null) {
+                  synchronized (Singleton.class) {
+                      if (instance == null) {
+                          instance = new Singleton();
+                      }
+                  }
+              }
+              return instance;
+          }
+      }
+    #+END_SRC
+
+  - 高性能代码
+    #+BEGIN_SRC java
+      final int SIZE = 1000;
+      final int loop = 100;
+      int [][] x = new int[SIZE][SIZE];
+      long start, end, elpased;
+      start = System.nanoTime();
+      for (int k = 0; k < loop; k ++) {
+          for (int i = 0; i < SIZE; i ++) {
+              for (int j = 0; j < SIZE; j ++) {
+                  sum += x[i][j];
+              }
+          }
+      }
+      end = System.nanoTime();
+      elpased = end-start;
+      System.out.println(elpased);
+
+      start = System.nanoTime();
+      for (int k = 0; k < loop; k ++) {
+          for (int i = 0; i < SIZE; i ++) {
+              for (int j = 0; j < SIZE; j ++) {
+                  sum += x[j][i];
+              }
+          }
+      }
+      end = System.nanoTime();
+      elpased = end-start;
+      System.out.println(elpased);
+    #+END_SRC
+    如果把size 换成100， 我们发现下面的代码执行速度会比上面的快，试分析其中的原因
+
+  - 算法
+    F(0) = F(1) = 1
+    F(n) = F(n-1) + F(n-2)

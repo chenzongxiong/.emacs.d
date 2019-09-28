@@ -1,0 +1,88 @@
+#+OPTIONS: toc:nil
+* http & https
+  - ~https~ 和 ~http~ 有什么区别？其中的 ~https~ 中的 ~s~ 过程是在是在 ~TCP/IP~ 协议模型（不是 ~ISO~ 模型）中哪一层实现的？
+  - 假设你买了一台新的电脑，里面的跟网络相关的配置是空的（如 ~DNS table，ARP table~ 等），但是可以联网。那么你在浏览器中输入 ~www.bing.com~ 后并且按下回车键(~Enter~)，浏览器背后经历那些流程，才把这个 ~Bing~ 的主页，返回到你的浏览器页面（越详细越好，不考虑 ~CDN~ 的问题，也不考虑该电脑在某个子网内部）。
+
+* java
+  - 简述 ~sychronized~ 关键字的作用? ~static~, ~final~ 变量的特点？
+  - 试写出以下代码的输出
+    #+BEGIN_SRC java
+      public class HelloWorld {
+          public static void main(String[] args) {
+              BaseClass base = new BaseClass();
+              ChildClass child = new ChildClass();
+              BaseClass.printStatic();
+              base.printStatic();
+              child.printStatic();
+              ChildClass.printStatic();
+          }
+      }
+
+      public class BaseClass {
+          private static String x = "OtherClass";
+          public BaseClass() {
+          }
+          static public void printStatic() {
+              System.out.println(x);
+          }
+      }
+
+      public class ChildClass extends BaseClass {
+          private static String x = "MyClass";
+      }
+    #+END_SRC
+
+* android
+  - android中的基本组件(注意不是UI组件)，试列举出3个，并且简易描述每个组件的作用？
+  - 图解整个 ~Activity~ 的流程。
+  - ~ANR(application not response)~ 如何产生以及解决方法？ ~OOM(out-of-memory)~ 为什么会在android中出现？
+  - ~AsyncTasks~ 和 ~Threads~ 和 ~Handlers~ 的区别?
+
+* React Native 面试题
+  - 请画图描述 ~React Native~ 组件生命周期的调用顺序。
+  - 请描述一下 ~props~ 和 ~state~ 的区别。
+  - 请描述一下对 ~Promise~ 的认识。
+
+* 代码
+  - 使用 ~java~ 实现一个简单的单例模式
+  - 给定两个二叉树，写一个函数判断这两个二叉树的结构和节点内的数据是否相同这两个二叉树相同的条件是结构相同，并且节点内部的值相同(也可以使用其他的语言)
+  Example 1:
+  #+BEGIN_EXAMPLE
+Input:     1         1
+          / \       / \
+         2   3     2   3
+
+        [1,2,3],   [1,2,3]
+Output: true
+   #+END_EXAMPLE
+Example 2:
+  #+BEGIN_EXAMPLE
+Input:     1         1
+          /           \
+         2             2
+        [1,2],     [1,null,2]
+Output: false
+   #+END_EXAMPLE
+
+Example 3:
+  #+BEGIN_EXAMPLE
+Input:     1         1
+          / \       / \
+         2   1     1   2
+        [1,2,1],   [1,1,2]
+Output: false
+   #+END_EXAMPLE
+   #+BEGIN_SRC java
+     /**
+      ,* Definition for a binary tree node.
+      ,* public class TreeNode {
+      ,*     int val;
+      ,*     TreeNode left, right;
+      ,*     TreeNode(int x) { val = x; }
+      ,* }
+      ,*/
+     class Solution {
+         public boolean isSameTree(TreeNode p, TreeNode q) {
+         }
+     }
+   #+END_SRC

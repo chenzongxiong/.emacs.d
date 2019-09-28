@@ -1,0 +1,578 @@
+- Retrofit: A type-safe HTTP client for Android and Java
+- EventBus: is an open-source library for Android and Java using the publisher/subscriber pattern for loose coupling.
+- MVP: Model, View, Presenter.
+- RxJava: Reactive Extensions for the JVM. A library for composing asynchronous and event-based programs by using observable sequences.
+- Semphore vs. Mutex vs. Monitor
+  + Monitor: mutex (lock) object and condition variables
+  + Semphore: a critical section can be locked multiple times
+-【Android 高级开发工程师_北京】王兆森 5年的副本
+- The AsyncTask and Activity life cycle
+  AsyncTasks don't follow Activity instances' life cycle. If you start an AsyncTask inside an Activity and you rotate the device, the Activity will be destroyed and a new instance will be created. But the AsyncTask will not die. It will go on living until it completes.
+  And when it completes, the AsyncTask won't update the UI of the new Activity. Indeed it updates the former instance of the activity that is not displayed anymore. This can lead to an Exception of the type java.lang.IllegalArgumentException: View not attached to window manager if you use, for instance, findViewById to retrieve a view inside the Activity.
+- Memory leak issue
+  It is very convenient to create AsyncTasks as inner classes of your Activities. As the AsyncTask will need to manipulate the views of the Activity when the task is complete or in progress, using an inner class of the Activity seems convenient : inner classes can access directly any field of the outer class.
+  Nevertheless, it means the inner class will hold an invisible reference on its outer class instance : the Activity.
+  On the long run, this produces a memory leak : if the AsyncTask lasts for long, it keeps the activity "alive" whereas Android would like to get rid of it as it can no longer be displayed. The activity can't be garbage collected and that's a central mechanism for Android to preserve resources on the device.
+
+- 【Android 高级开发工程师_北京】韩甲龙 4年
+  + 三级缓存
+  + 在内存有限的情况下，如何对缓存进行控制（常用的一些缓存控制机制是？）
+    - ~LRU~, ~MRU~, ~ARC(adpative repleacement cache)~, ~FIFO~，~FILO~, ~LFU~, ~MFU~ 等
+  + ~LRU~ 策略的例子, 假设有一个 ~cache~ 采用 ~LRU~ 策略，并且它的缓存大小是3。 我们在操作缓存的时候，执行操作 ~put~ 添加一个item 到缓存中, ~get~ 从缓存中取出一个元素，假设我们不考虑缓存不命中的 (~cache-miss~) 的情况
+    那么我们在执行以下一系列操作的时候，缓存中的数据从左到右表示 most recently used --> least recently used。缓存中有空位置用 ~None~, ~Null~ 表示
+    如：
+    #+BEGIN_EXAMPLE
+    - put(1): [1, None, None]
+    - put(2): [2, 1, None]
+    - put(3): [3, 2, 1]
+    - get(2): ?
+    - put(4): ?
+    - get(4): ?
+    - get(3): ?
+    * get(1): 在操作会产生什么结果?
+    #+END_EXAMPLE
+
+  + 多线程和多进程的区别（一个进程可以有多个线程），本质区别是什么（多线程共享数据内容，共享代码段，但是 instruction pointer 不一样，多进程不共享数据和代码）
+  + 在HTTP/1.1 中我们要如何对http 下的TCP 链接进行重用？(keep-alive: true)
+  + 简单描述一下一个TCP 链接的建立过程和销毁过程（3次握手，4次挥手， SYN， SYN+ACK， ACK， FIN， ACK, FIN, ACK)
+  + 如果让你自己设计一个简易的，类似Glide 的图片资源加载器，你会考虑如何设计？（使用内存池，多线程（线程池）下载数据）
+- 【Android 高级开发工程师_北京】李旭阳 3年的副本
+  + 常见的 ~android~ 性能优化方式
+  + 视频播放的开发的过程中遇见哪些问题？有无性能问题
+  + 什么是 ~garbage collector~ ，并且它是如何工作的？以下代码在 ~GC~ 的时候会产生什么问题，该如何解决（不一定是JVM的实现方案）?
+    #+BEGIN_SRC java
+      ArrayList<Object> a = new ArrayList<Object>();
+      a.add(a);
+    #+END_SRC
+
+- 【Android 高级开发工程师_北京】刘海涛 4年的副本
+  + 直播推流和拉流过程需要注意的问题
+  + 简单描述一下如果让你设计一个EventBus，你会涉及到哪些数据结构变量。（即如何让publisher和subscriber和进行数据交互。）
+  + android 的内存优化？
+
+
+* Docker
+* http & https
+  - 假设你买了一台新的电脑，所有的配置都是空的（如DNS table，ARP table 等。使用默认DNS Server 是8.8.8.8）
+    那么你在浏览器中输入 www.bing.com 这个url 过程中，浏览器背后经历那些流程，才把这个最后Bing服务器的主页，返回到你的浏览器页面（越详细越好，不考虑CDN的问题，也不考虑该电脑在某个子网内部）
+    #+BEGIN_EXAMPLE
+    www.bing.com 需要转化成 32bit 的ip，domain name to ip address
+    但是由于我们的本地没有对应的mapping，在linux 系统下一般放在 /etc/hosts或者查询DNS，让DNS服务器告诉浏览器
+
+    DNS也是空的，所以访问根DNS服务器，根DNS告诉返回说需要去访问 .com 的DNS 服务器，如此反复知道解析到 具体的ip地址位置
+
+    (dig/nslookup)
+    (.venv3) ➜  ~ dig @8.8.8.8 www.bing.com
+
+    ; <<>> DiG 9.10.6 <<>> @8.8.8.8 www.bing.com
+    ; (1 server found)
+    ;; global options: +cmd
+    ;; Got answer:
+    ;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 1583
+    ;; flags: qr rd ra; QUERY: 1, ANSWER: 4, AUTHORITY: 0, ADDITIONAL: 1
+
+    ;; OPT PSEUDOSECTION:
+    ; EDNS: version: 0, flags:; udp: 512
+    ;; QUESTION SECTION:
+    ;www.bing.com.			IN	A
+
+    ;; ANSWER SECTION:
+    www.bing.com.		2968	IN	CNAME	a-0001.a-afdentry.net.trafficmanager.net.
+    a-0001.a-afdentry.net.trafficmanager.net. 24 IN	CNAME dual-a-0001.a-msedge.net.
+    dual-a-0001.a-msedge.net. 8	IN	A	204.79.197.200
+    dual-a-0001.a-msedge.net. 8	IN	A	13.107.21.200
+
+    ;; Query time: 18 msec
+    ;; SERVER: 8.8.8.8#53(8.8.8.8)
+    ;; WHEN: Mon Sep 23 17:32:55 CEST 2019
+    ;; MSG SIZE  rcvd: 162
+
+    到目前为止，我们已经完成了 domain name 到ip address 的转化。
+    下一步就是要根后台的服务建立HTTP链接。
+    浏览器发送
+    GET / HTTP/1.1
+
+    bing服务器收到请求后，返回结果给 浏览器，浏览器根据返回的结果创建一个DOM 的界面，并且进行渲染。
+
+https://juejin.im/entry/59e1d31f51882578c3411c77
+DNS 查询
+TCP 连接
+HTTP 请求即响应
+服务器响应
+客户端渲染
+    #+END_EXAMPLE
+  - https和http有什么区别（加密传输和不加密传输）
+  - 其中的s是在TCP/IP 中那一层实现的（物理层，链路层，TCP/IP 层，应用层）在应用层实现的
+  - 在HTTP/1.1 中我们要如何对http 下的TCP 链接进行重用？(keep-alive: true)
+  - 简单描述一下一个TCP 链接的建立过程和销毁过程（3次握手，4次挥手， SYN， SYN+ACK， ACK， FIN， ACK, FIN, ACK)
+  - 使用keep alive 可能带来的潜在问题是？(在最后一次send ack 的时候，一端可能没有关闭（采用超时机制进行关闭,  但是另外一端已经收到了ack 关闭了，这就导致了tcp可能处于半开半关的状态。也有可能一端已经关闭了，但是另外一端ack还没有收到)
+
+* 三级缓存
+  - 按照网上说的（我觉得不准确），内存，磁盘，服务器上的数据。
+  - 在内存有限的情况下，如何对缓存进行控制（常用的一些缓存控制机制是？）
+  - LRU, MRU, ARC（adpative repleacement cache）, FIFO，FILO, LFU, MFU 等
+  - 使用伪代码实现其中的一个缓存控制器
+* 多线程，多进程
+  - 多线程和多进程的区别（一个进程可以有多个线程）
+  - 本质区别是什么（多线程共享数据内容，共享代码段，但是 instruuction pointer 不一样，多进程不共享数据和代码）
+  - 为什么要使用线程池（创建线程是一个很消耗资源的操作）
+  - 进程间常见的通信方式（socket，signal，rpc，ipc， pipeline）
+
+* 算法
+  给定两个二叉树，写一个函数判断这两个二叉树的结构和节点内的数据是否相同
+  这两个二叉树相同的条件是结构相同，并且节点内部的值相同
+
+  Example 1:
+  #+BEGIN_EXAMPLE
+Input:     1         1
+          / \       / \
+         2   3     2   3
+
+        [1,2,3],   [1,2,3]
+Output: true
+   #+END_EXAMPLE
+Example 2:
+  #+BEGIN_EXAMPLE
+Input:     1         1
+          /           \
+         2             2
+
+        [1,2],     [1,null,2]
+Output: false
+   #+END_EXAMPLE
+
+Example 3:
+  #+BEGIN_EXAMPLE
+Input:     1         1
+          / \       / \
+         2   1     1   2
+
+        [1,2,1],   [1,1,2]
+Output: false
+   #+END_EXAMPLE
+   #+BEGIN_SRC python
+     class TreeNode:
+         def __init__(self, val=0):
+             self.val = val
+             self.left = None
+             self.right = None
+
+
+     class Solution:
+         def __init__(self):
+             self.p_list = []
+             self.q_list = []
+
+         def isSame(self, p, q):
+             '''
+             :type p: TreeNode
+             :type q: TreeNode
+             :rtype: Boolean
+             '''
+             self._preOrderP(p)
+             self._preOrderQ(q)
+             return self.p_list == self.q_list
+
+         def _preOrderP(self, p):
+             if p is None:
+                 self.p_list.append(None)
+                 return
+             self.p_list.append(p.val)
+             self._preOrder(p.left)
+             self._preOrder(p.right)
+
+         def _preOrderQ(self, q):
+             if q is None:
+                 self.q_list.append(None)
+                 return
+
+             self.q_list.append(q.val)
+             self._preOrder(q.left)
+             self._preOrder(q.right)
+
+
+   #+END_SRC
+
+* 设计模式
+  - 使用java 实现一个简单的单例模式
+    #+BEGIN_SRC java
+      public class Singleton
+      {
+          private static Singleton instance = new Singleton();
+
+          public static Singleton getInstance()
+          {
+              return instance;
+          }
+      }
+    #+END_SRC
+    #+BEGIN_SRC java
+      public class Singleton
+      {
+          private static Singleton instance;
+
+          public static Singleton getInstance()
+          {
+              if (instance == null)
+              {
+                  synchronized (Singleton.class)
+                  {
+                      if (instance == null)
+                      {
+                          instance = new Singleton();
+                      }
+                  }
+              }
+              return instance;
+          }
+      }
+
+    #+END_SRC
+* android
+  - 基本组件
+    1) Activities,
+    2) Intent and broadcast receivers,
+    3) Services,
+    4) Content Providers,
+    5) Widgets and Notifications
+    6) Content Providers − It will share the data between applications
+    7) Resource Externalization − strings and graphics
+
+       - Activity:
+         + What’s the difference between onCreate() and onStart()?
+           The onCreate() method is called once during the Activity lifecycle, either when the application starts, or when the Activity has been destroyed and then recreated, for example during a configuration change.
+           The onStart() method is called whenever the Activity becomes visible to the user, typically after onCreate() or onRestart().
+         + Scenario in which only onDestroy is called for an activity without onPause() and onStop()?
+           If finish() is called in the OnCreate method of an activity, the system will invoke onDestroy() method directly.
+
+         + onSavedInstanceState() and onRestoreInstanceState() in activity?
+           OnRestoreInstanceState() - When activity is recreated after it was previously destroyed, we can recover the saved state from the Bundle that the system passes to the activity. Both the onCreate() and onRestoreInstanceState() callback methods receive the same Bundle that contains the instance state information. But because the onCreate() method is called whether the system is creating a new instance of your activity or recreating a previous one, you must check whether the state Bundle is null before you attempt to read it. If it is null, then the system is creating a new instance of the activity, instead of restoring a previous one that was destroyed.
+           onSaveInstanceState() - is a method used to store data before pausing the activity.
+
+         + Difference between AsyncTasks & Threads?
+           Thread should be used to separate long running operations from main thread so that performance is improved. But it can't be cancelled elegantly and it can't handle configuration changes of Android. You can't update UI from Thread.
+           AsyncTask can be used to handle work items shorter than 5ms in duration. With AsyncTask, you can update UI unlike java Thread. But many long running tasks will choke the performance.
+
+What are Handlers?
+
+Handlers are objects for managing threads. It receives messages and writes code on how to handle the message. They run outside of the activity’s lifecycle, so they need to be cleaned up properly or else you will have thread leaks.
+Handlers allow communicating between the background thread and the main thread.
+A Handler class is preferred when we need to perform a background task repeatedly after every x seconds/minutes.
+
+       - Intent: a messaging object you can use to request an action from another app component
+
+  - ANR（application not response ？） 如何产生以及解决方法。（main thread is block due to rendering some UI)
+
+  - 如果让你自己设计一个简易的，类似Glide 的图片资源加载器，你会考虑如何设计？（使用内存池，多线程（线程池）下载数据，
+     渲染图片的时候自动down sampling）
+    - Loading Large Bitmaps Efficiently in Android
+    - Glide supports fetching, decoding, and displaying video stills, images, and animated GIFs.
+    - Glide takes in to account two key aspects of image loading performance on Android:
+      The speed at which images can be decoded.
+      The amount of jank incurred while decoding images.
+      For users to have a great experience with an app, images must not only appear quickly, but they must also do so without causing lots of jank and stuttering from main thread I/O or excessive garbage collections.
+      Glide takes a number of steps to ensure image loading is both as fast and as smooth as possible on Android:
+      Smart and automatic downsampling and caching minimize storage overhead and decode times.
+      Aggressive re-use of resources like byte arrays and Bitmaps minimizes expensive garbage collections and heap fragmentation.
+      Deep lifecycle integration ensures that only requests for active Fragments and Activities are prioritized and that Applications release resources when neccessary to avoid being killed when backgrounded.
+  - Service 和 Activity 的区别
+     Activities are basically containers or windows to the user interface. Services is a component that is used to perform operations on the background. It does not have an UI.
+  - RecyclerView/ListView
+  https://android.jlelse.eu/android-interview-questions-cheat-sheet-96ea01c88def
+    如何通过ListView 来实现一个简易的RecyclerView
+  - Explain the build process in Android:
+    First step involves compiling the resources folder (/res) using the aapt (android asset packaging tool) tool. These are compiled to a single class file called R.java. This is a class that just contains constants.
+Second step involves the java source code being compiled to .class files by javac, and then the class files are converted to Dalvik bytecode by the "dx" tool, which is included in the sdk 'tools'. The output is classes.dex.
+The final step involves the android apkbuilder which takes all the input and builds the apk (android packaging key) file.
+
+* java
+  - What does the keyword synchronized mean?
+    When you have two threads that are reading and writing to the same 'resource', say a variable named 'test', you need to ensure that these threads access the variable in an atomic way. Without the synchronized keyword, your thread 1 may not see the change thread 2 made to test.
+synchronized blocks the next thread's call to method as long as the previous thread's execution is not finished. Threads can access this method one at a time.
+  - What is garbage collector? How does it work?
+    All objects are allocated on the heap area managed by the JVM. As long as an object is being referenced, the JVM considers it alive. Once an object is no longer referenced and therefore is not reachable by the application code, the garbage collector removes it and reclaims the unused memory.
+  - Difference between ‘throw’ and ‘throws’ in Java Exception Handling?
+   throw keyword is used to throw Exception from any method or static block whereas throws is used to indicate that which Exception can possibly be thrown by this method.
+   - What is Method overriding?
+
+Method overriding occurs when sub class declares a method that has the same type arguments as a method declared by one of its superclass
+You can’t override a method marked public and make it protected
+You cannot override a method marked final
+You cannot override a method marked static
+Note: Static methods cannot be overridden. Overloaded methods can still be overridden.
+
+
+Final modifier?
+
+Final modifiers - once declared cannot be modified. A blank final variable in Java is a final variable that is not initialized during declaration.
+final Classes- A final class cannot have subclasses.
+final Variables- A final variable cannot be changed once it is initialized.
+final Methods- A final method cannot be overridden by subclasses.
+Finalize keyword?
+
+Finalize is a method used to perform clean up processing just before object is garbage collected.
+Finally keyword?
+
+finally is a code block and is used to place important code, it will be executed whether exception is handled or not.
+Static variables?
+
+Variables that have only one copy per class are known as static variables. They are not attached to a particular instance of a class but rather belong to a class as a whole.
+A static variable is associated with the class as a whole rather than with specific instances of a class. Non-static variables take on unique values with each object instance.
+
+
+
+
+- 简单描述一下一个 ~TCP~ 链接的建立(~setup~)和销毁(~close~)过程？
+
+- ~websocket~ 和 ~HTTP~ 请求的主要区别是区别？在 ~HTTP/1.1~ 中我们要如何对 ~TCP~ 链接进行重用？
+- ~keep-alive~ 可能导致的问题？
+- 多线程和多进程的区别？为什么要使用线程池，使用线程池带来哪些好处？
+- 进程间常见的通信方式？
+- 如果让你自己设计一个简易高效的图片资源加载器，该加载器主要加载网络资源（类似 ~Glide~ 的图片资源加载器），你会考虑如何设计，使得该加载器尽可能的高效？
+- 如何通过 ~ListView~ 来实现一个简易的 ~RecyclerView~ (性能要求不需要很完美)?
+- 简单描述一下 ~android app~ 的 ~build~ 过程？
+- 什么是 ~garbage collector~ ，并且它是如何工作的？以下代码在 ~GC~ 的时候会产生什么问题，该如何解决（不一定是JVM的实现方案）?
+  #+BEGIN_SRC java
+    ArrayList<Object> a = new ArrayList<Object>();
+    a.add(a);
+  #+END_SRC
+
+
+  #+BEGIN_SRC java
+    public class ExampleThread extends Thread {
+        @Override
+        public void run() {
+            for (int i = 0; i < 5; i ++) {
+                System.out.println("i: " + i);
+                System.Clock.sleep(1000);
+            }
+        }
+    }
+  #+END_SRC
+
+  #+BEGIN_SRC java
+    public class MainActivity extends AppCompatActivity {
+        private ExampleThread exampleThread = new ExampleThread();
+        @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_main);
+        }
+
+        public void startThread(View view) {
+            exampleThread.start();
+        }
+        public void stopThread(View view) {
+
+        }
+        public taskA(View view) {
+
+        }
+    }
+  #+END_SRC
+
+
+  #+BEGIN_SRC java
+    public class ExampleThread extends Thread {
+        public Looper looper;
+        @Override
+        public void run() {
+
+            Looper.prepare();
+            looper = Looper.myLooper();
+            looper.loop();
+
+            System.out.println("Terminate Example Thread");
+        }
+    }
+  #+END_SRC
+
+  #+BEGIN_SRC java
+
+    public class MainActivity extends AppCompatActivity {
+        private ExampleThread exampleThread = new ExampleThread();
+
+        @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_main);
+        }
+
+        public void startThread(View view) {
+            exampleThread.start();
+        }
+        public void stopThread(View view) {
+            exampleThread.looper.quit();
+        }
+
+        public taskA(View view) {
+            Handler threadHandler = new Handler(exampleThread.looper);
+            threadHandler.post(new Runnable() {
+                    // implicity reference 可以访问到MainActivity 的所有内容
+                    // 会导致memory leak，简单的解决方案是
+                    @Override
+                    public void run() {
+                        for (int i = 0; i < 5; i ++) {
+                            System.out.println("TaskA: " + i);
+                        }
+                    }
+                });
+        }
+        static class MyRunnable extends Runnable {
+
+        }
+    }
+  #+END_SRC
+
+- Retrofit: A type-safe HTTP client for Android and Java
+- EventBus: is an open-source library for Android and Java using the publisher/subscriber pattern for loose coupling.
+- MVP: Model, View, Presenter.
+- RxJava: Reactive Extensions for the JVM. A library for composing asynchronous and event-based programs by using observable sequences.
+- Semphore vs. Mutex vs. Monitor
+  + Monitor: mutex (lock) object and condition variables
+  + Semphore: a critical section can be locked multiple times
+-【Android 高级开发工程师_北京】王兆森 5年的副本
+- The AsyncTask and Activity life cycle
+  AsyncTasks don't follow Activity instances' life cycle. If you start an AsyncTask inside an Activity and you rotate the device, the Activity will be destroyed and a new instance will be created. But the AsyncTask will not die. It will go on living until it completes.
+  And when it completes, the AsyncTask won't update the UI of the new Activity. Indeed it updates the former instance of the activity that is not displayed anymore. This can lead to an Exception of the type java.lang.IllegalArgumentException: View not attached to window manager if you use, for instance, findViewById to retrieve a view inside the Activity.
+- Memory leak issue
+  It is very convenient to create AsyncTasks as inner classes of your Activities. As the AsyncTask will need to manipulate the views of the Activity when the task is complete or in progress, using an inner class of the Activity seems convenient : inner classes can access directly any field of the outer class.
+  Nevertheless, it means the inner class will hold an invisible reference on its outer class instance : the Activity.
+  On the long run, this produces a memory leak : if the AsyncTask lasts for long, it keeps the activity "alive" whereas Android would like to get rid of it as it can no longer be displayed. The activity can't be garbage collected and that's a central mechanism for Android to preserve resources on the device.
+
+- 【Android 高级开发工程师_北京】韩甲龙 4年
+  + 三级缓存
+  + 在内存有限的情况下，如何对缓存进行控制（常用的一些缓存控制机制是？）
+    - ~LRU~, ~MRU~, ~ARC(adpative repleacement cache)~, ~FIFO~，~FILO~, ~LFU~, ~MFU~ 等
+  + ~LRU~ 策略的例子, 假设有一个 ~cache~ 采用 ~LRU~ 策略，并且它的缓存大小是3。 我们在操作缓存的时候，执行操作 ~put~ 添加一个item 到缓存中, ~get~ 从缓存中取出一个元素，假设我们不考虑缓存不命中的 (~cache-miss~) 的情况
+    那么我们在执行以下一系列操作的时候，缓存中的数据从左到右表示 most recently used --> least recently used。缓存中有空位置用 ~None~, ~Null~ 表示
+    如：
+    #+BEGIN_EXAMPLE
+    - put(1): [1, None, None]
+    - put(2): [2, 1, None]
+    - put(3): [3, 2, 1]
+    - get(2): ?
+    - put(4): ?
+    - get(4): ?
+    - get(3): ?
+    * get(1): 在操作会产生什么结果?
+    #+END_EXAMPLE
+
+  + 多线程和多进程的区别（一个进程可以有多个线程），本质区别是什么（多线程共享数据内容，共享代码段，但是 instruction pointer 不一样，多进程不共享数据和代码）
+  + 在HTTP/1.1 中我们要如何对http 下的TCP 链接进行重用？(keep-alive: true)
+  + 简单描述一下一个TCP 链接的建立过程和销毁过程（3次握手，4次挥手， SYN， SYN+ACK， ACK， FIN， ACK, FIN, ACK)
+  + 如果让你自己设计一个简易的，类似Glide 的图片资源加载器，你会考虑如何设计？（使用内存池，多线程（线程池）下载数据）
+- 【Android 高级开发工程师_北京】李旭阳 3年的副本
+  + 常见的 ~android~ 性能优化方式
+  + 视频播放的开发的过程中遇见哪些问题？有无性能问题
+  + 什么是 ~garbage collector~ ，并且它是如何工作的？以下代码在 ~GC~ 的时候会产生什么问题，该如何解决（不一定是JVM的实现方案）?
+    #+BEGIN_SRC java
+      ArrayList<Object> a = new ArrayList<Object>();
+      a.add(a);
+    #+END_SRC
+
+- 【Android 高级开发工程师_北京】刘海涛 4年的副本
+  + 直播推流和拉流过程需要注意的问题
+  + 简单描述一下如果让你设计一个EventBus，你会涉及到哪些数据结构变量。（即如何让publisher和subscriber和进行数据交互。）
+  + android 的内存优化？
+
+- 简单描述一下一个 ~TCP~ 链接的建立(~setup~)和销毁(~close~)过程？
+- ~websocket~ 和 ~HTTP~ 请求的主要区别是区别？在 ~HTTP/1.1~ 中我们要如何对 ~TCP~ 链接进行重用？
+- ~keep-alive~ 可能导致的问题？
+- 多线程和多进程的区别？为什么要使用线程池，使用线程池带来哪些好处？
+- 进程间常见的通信方式？
+- 如果让你自己设计一个简易高效的图片资源加载器，该加载器主要加载网络资源（类似 ~Glide~ 的图片资源加载器），你会考虑如何设计，使得该加载器尽可能的高效？
+- 如何通过 ~ListView~ 来实现一个简易的 ~RecyclerView~ (性能要求不需要很完美)?
+- 简单描述一下 ~android app~ 的 ~build~ 过程？
+- 什么是 ~garbage collector~ ，并且它是如何工作的？以下代码在 ~GC~ 的时候会产生什么问题，该如何解决（不一定是JVM的实现方案）?
+  #+BEGIN_SRC java
+    ArrayList<Object> a = new ArrayList<Object>();
+    a.add(a);
+  #+END_SRC
+
+
+  #+BEGIN_SRC java
+    public class ExampleThread extends Thread {
+        @Override
+        public void run() {
+            for (int i = 0; i < 5; i ++) {
+                System.out.println("i: " + i);
+                System.Clock.sleep(1000);
+            }
+        }
+    }
+  #+END_SRC
+
+  #+BEGIN_SRC java
+    public class MainActivity extends AppCompatActivity {
+        private ExampleThread exampleThread = new ExampleThread();
+        @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_main);
+        }
+
+        public void startThread(View view) {
+            exampleThread.start();
+        }
+        public void stopThread(View view) {
+
+        }
+        public taskA(View view) {
+
+        }
+    }
+  #+END_SRC
+
+
+  #+BEGIN_SRC java
+    public class ExampleThread extends Thread {
+        public Looper looper;
+        @Override
+        public void run() {
+
+            Looper.prepare();
+            looper = Looper.myLooper();
+            looper.loop();
+
+            System.out.println("Terminate Example Thread");
+        }
+    }
+  #+END_SRC
+
+  #+BEGIN_SRC java
+
+    public class MainActivity extends AppCompatActivity {
+        private ExampleThread exampleThread = new ExampleThread();
+
+        @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_main);
+        }
+
+        public void startThread(View view) {
+            exampleThread.start();
+        }
+        public void stopThread(View view) {
+            exampleThread.looper.quit();
+        }
+
+        public taskA(View view) {
+            Handler threadHandler = new Handler(exampleThread.looper);
+            threadHandler.post(new Runnable() {
+                    // implicity reference 可以访问到MainActivity 的所有内容
+                    // 会导致memory leak，简单的解决方案是
+                    @Override
+                    public void run() {
+                        for (int i = 0; i < 5; i ++) {
+                            System.out.println("TaskA: " + i);
+                        }
+                    }
+                });
+        }
+        static class MyRunnable extends Runnable {
+
+        }
+    }
+  #+END_SRC

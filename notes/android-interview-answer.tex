@@ -1,0 +1,335 @@
+% Created 2019-09-23 一 21:33
+% Intended LaTeX compiler: pdflatex
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{grffile}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{amssymb}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\author{Zongxiong Chen}
+\date{\today}
+\title{}
+\hypersetup{
+ pdfauthor={Zongxiong Chen},
+ pdftitle={},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 26.1 (Org mode 9.1.9)},
+ pdflang={English}}
+\begin{document}
+
+\tableofcontents
+
+\section{Docker}
+\label{sec:org5790306}
+\section{http \& https}
+\label{sec:org6b5fce9}
+\begin{itemize}
+\item 假设你买了一台新的电脑，所有的配置都是空的（如DNS table，ARP table 等。使用默认DNS Server 是8.8.8.8）
+那么你在浏览器中输入 www.bing.com 这个url 过程中，浏览器背后经历那些流程，才把这个最后Bing服务器的主页，返回到你的浏览器页面（越详细越好，不考虑CDN的问题，也不考虑该电脑在某个子网内部）
+\begin{verbatim}
+    www.bing.com 需要转化成 32bit 的ip，domain name to ip address
+    但是由于我们的本地没有对应的mapping，在linux 系统下一般放在 /etc/hosts或者查询DNS，让DNS服务器告诉浏览器
+
+    DNS也是空的，所以访问根DNS服务器，根DNS告诉返回说需要去访问 .com 的DNS 服务器，如此反复知道解析到 具体的ip地址位置
+
+    (dig/nslookup)
+    (.venv3) ➜  ~ dig @8.8.8.8 www.bing.com
+
+    ; <<>> DiG 9.10.6 <<>> @8.8.8.8 www.bing.com
+    ; (1 server found)
+    ;; global options: +cmd
+    ;; Got answer:
+    ;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 1583
+    ;; flags: qr rd ra; QUERY: 1, ANSWER: 4, AUTHORITY: 0, ADDITIONAL: 1
+
+    ;; OPT PSEUDOSECTION:
+    ; EDNS: version: 0, flags:; udp: 512
+    ;; QUESTION SECTION:
+    ;www.bing.com.			IN	A
+
+    ;; ANSWER SECTION:
+    www.bing.com.		2968	IN	CNAME	a-0001.a-afdentry.net.trafficmanager.net.
+    a-0001.a-afdentry.net.trafficmanager.net. 24 IN	CNAME dual-a-0001.a-msedge.net.
+    dual-a-0001.a-msedge.net. 8	IN	A	204.79.197.200
+    dual-a-0001.a-msedge.net. 8	IN	A	13.107.21.200
+
+    ;; Query time: 18 msec
+    ;; SERVER: 8.8.8.8#53(8.8.8.8)
+    ;; WHEN: Mon Sep 23 17:32:55 CEST 2019
+    ;; MSG SIZE  rcvd: 162
+
+    到目前为止，我们已经完成了 domain name 到ip address 的转化。
+    下一步就是要根后台的服务建立HTTP链接。
+    浏览器发送
+    GET / HTTP/1.1
+
+    bing服务器收到请求后，返回结果给 浏览器，浏览器根据返回的结果创建一个DOM 的界面，并且进行渲染。
+
+https://juejin.im/entry/59e1d31f51882578c3411c77
+DNS 查询
+TCP 连接
+HTTP 请求即响应
+服务器响应
+客户端渲染
+\end{verbatim}
+\item https和http有什么区别（加密传输和不加密传输）
+\item 其中的s是在TCP/IP 中那一层实现的（物理层，链路层，TCP/IP 层，应用层）在应用层实现的
+\item 在HTTP/1.1 中我们要如何对http 下的TCP 链接进行重用？(keep-alive: true)
+\item 简单描述一下一个TCP 链接的建立过程和销毁过程（3次握手，4次挥手， SYN， SYN+ACK， ACK， FIN， ACK, FIN, ACK)
+\item 使用keep alive 可能带来的潜在问题是？(在最后一次send ack 的时候，一端可能没有关闭（采用超时机制进行关闭,  但是另外一端已经收到了ack 关闭了，这就导致了tcp可能处于半开半关的状态。也有可能一端已经关闭了，但是另外一端ack还没有收到)
+\end{itemize}
+
+\section{三级缓存}
+\label{sec:org5fec4f4}
+\begin{itemize}
+\item 按照网上说的（我觉得不准确），内存，磁盘，服务器上的数据。
+\item 在内存有限的情况下，如何对缓存进行控制（常用的一些缓存控制机制是？）
+\item LRU, MRU, ARC（adpative repleacement cache）, FIFO，FILO, LFU, MFU 等
+\item 使用伪代码实现其中的一个缓存控制器
+\end{itemize}
+\section{多线程，多进程}
+\label{sec:org6f57edd}
+\begin{itemize}
+\item 多线程和多进程的区别（一个进程可以有多个线程）
+\item 本质区别是什么（多线程共享数据内容，共享代码段，但是 instruuction pointer 不一样，多进程不共享数据和代码）
+\item 为什么要使用线程池（创建线程是一个很消耗资源的操作）
+\item 进程间常见的通信方式（socket，signal，rpc，ipc， pipeline）
+\end{itemize}
+
+\section{算法}
+\label{sec:org1c7abc9}
+给定两个二叉树，写一个函数判断这两个二叉树的结构和节点内的数据是否相同
+这两个二叉树相同的条件是结构相同，并且节点内部的值相同
+
+Example 1:
+\begin{verbatim}
+Input:     1         1
+          / \       / \
+         2   3     2   3
+
+        [1,2,3],   [1,2,3]
+Output: true
+\end{verbatim}
+Example 2:
+\begin{verbatim}
+Input:     1         1
+          /           \
+         2             2
+
+        [1,2],     [1,null,2]
+Output: false
+\end{verbatim}
+
+Example 3:
+\begin{verbatim}
+Input:     1         1
+          / \       / \
+         2   1     1   2
+
+        [1,2,1],   [1,1,2]
+Output: false
+\end{verbatim}
+\begin{verbatim}
+class TreeNode:
+    def __init__(self, val=0):
+        self.val = val
+        self.left = None
+        self.right = None
+
+
+class Solution:
+    def __init__(self):
+        self.p_list = []
+        self.q_list = []
+
+    def isSame(self, p, q):
+        '''
+        :type p: TreeNode
+        :type q: TreeNode
+        :rtype: Boolean
+        '''
+        self._preOrderP(p)
+        self._preOrderQ(q)
+        return self.p_list == self.q_list
+
+    def _preOrderP(self, p):
+        if p is None:
+            self.p_list.append(None)
+            return
+        self.p_list.append(p.val)
+        self._preOrder(p.left)
+        self._preOrder(p.right)
+
+    def _preOrderQ(self, q):
+        if q is None:
+            self.q_list.append(None)
+            return
+
+        self.q_list.append(q.val)
+        self._preOrder(q.left)
+        self._preOrder(q.right)
+
+
+\end{verbatim}
+
+\section{设计模式}
+\label{sec:orgda4e73f}
+\begin{itemize}
+\item 使用java 实现一个简单的单例模式
+\begin{verbatim}
+public class Singleton
+{
+    private static Singleton instance = new Singleton();
+
+    public static Singleton getInstance()
+    {
+        return instance;
+    }
+}
+\end{verbatim}
+\begin{verbatim}
+public class Singleton
+{
+    private static Singleton instance;
+
+    public static Singleton getInstance()
+    {
+        if (instance == null)
+        {
+            synchronized (Singleton.class)
+            {
+                if (instance == null)
+                {
+                    instance = new Singleton();
+                }
+            }
+        }
+        return instance;
+    }
+}
+
+\end{verbatim}
+\end{itemize}
+\section{android}
+\label{sec:org387e330}
+\begin{itemize}
+\item 基本组件
+\begin{enumerate}
+\item Activities,
+\item Intent and broadcast receivers,
+\item Services,
+\item Content Providers,
+\item Widgets and Notifications
+\item Content Providers − It will share the data between applications
+\item Resource Externalization − strings and graphics
+
+\begin{itemize}
+\item Activity:
+\begin{itemize}
+\item What’s the difference between onCreate() and onStart()?
+The onCreate() method is called once during the Activity lifecycle, either when the application starts, or when the Activity has been destroyed and then recreated, for example during a configuration change.
+The onStart() method is called whenever the Activity becomes visible to the user, typically after onCreate() or onRestart().
+\item Scenario in which only onDestroy is called for an activity without onPause() and onStop()?
+If finish() is called in the OnCreate method of an activity, the system will invoke onDestroy() method directly.
+
+\item onSavedInstanceState() and onRestoreInstanceState() in activity?
+OnRestoreInstanceState() - When activity is recreated after it was previously destroyed, we can recover the saved state from the Bundle that the system passes to the activity. Both the onCreate() and onRestoreInstanceState() callback methods receive the same Bundle that contains the instance state information. But because the onCreate() method is called whether the system is creating a new instance of your activity or recreating a previous one, you must check whether the state Bundle is null before you attempt to read it. If it is null, then the system is creating a new instance of the activity, instead of restoring a previous one that was destroyed.
+onSaveInstanceState() - is a method used to store data before pausing the activity.
+
+\item Difference between AsyncTasks \& Threads?
+Thread should be used to separate long running operations from main thread so that performance is improved. But it can't be cancelled elegantly and it can't handle configuration changes of Android. You can't update UI from Thread.
+AsyncTask can be used to handle work items shorter than 5ms in duration. With AsyncTask, you can update UI unlike java Thread. But many long running tasks will choke the performance.
+\end{itemize}
+\end{itemize}
+\end{enumerate}
+\end{itemize}
+
+What are Handlers?
+
+Handlers are objects for managing threads. It receives messages and writes code on how to handle the message. They run outside of the activity’s lifecycle, so they need to be cleaned up properly or else you will have thread leaks.
+Handlers allow communicating between the background thread and the main thread.
+A Handler class is preferred when we need to perform a background task repeatedly after every x seconds/minutes.
+
+\begin{itemize}
+\item Intent: a messaging object you can use to request an action from another app component
+\end{itemize}
+\begin{itemize}
+\item ANR（application not response ？） 如何产生以及解决方法。（main thread is block due to rendering some UI)
+
+\item 如果让你自己设计一个简易的，类似Glide 的图片资源加载器，你会考虑如何设计？（使用内存池，多线程（线程池）下载数据，
+渲染图片的时候自动down sampling）
+\begin{itemize}
+\item Loading Large Bitmaps Efficiently in Android
+\item Glide supports fetching, decoding, and displaying video stills, images, and animated GIFs.
+\item Glide takes in to account two key aspects of image loading performance on Android:
+The speed at which images can be decoded.
+The amount of jank incurred while decoding images.
+For users to have a great experience with an app, images must not only appear quickly, but they must also do so without causing lots of jank and stuttering from main thread I/O or excessive garbage collections.
+Glide takes a number of steps to ensure image loading is both as fast and as smooth as possible on Android:
+Smart and automatic downsampling and caching minimize storage overhead and decode times.
+Aggressive re-use of resources like byte arrays and Bitmaps minimizes expensive garbage collections and heap fragmentation.
+Deep lifecycle integration ensures that only requests for active Fragments and Activities are prioritized and that Applications release resources when neccessary to avoid being killed when backgrounded.
+\end{itemize}
+\item Service 和 Activity 的区别
+Activities are basically containers or windows to the user interface. Services is a component that is used to perform operations on the background. It does not have an UI.
+\item RecyclerView/ListView
+\end{itemize}
+\url{https://android.jlelse.eu/android-interview-questions-cheat-sheet-96ea01c88def}
+  如何通过ListView 来实现一个简易的RecyclerView
+\begin{itemize}
+\item Explain the build process in Android:
+First step involves compiling the resources folder (/res) using the aapt (android asset packaging tool) tool. These are compiled to a single class file called R.java. This is a class that just contains constants.
+\end{itemize}
+Second step involves the java source code being compiled to .class files by javac, and then the class files are converted to Dalvik bytecode by the "dx" tool, which is included in the sdk 'tools'. The output is classes.dex.
+The final step involves the android apkbuilder which takes all the input and builds the apk (android packaging key) file.
+
+\section{java}
+\label{sec:org768bead}
+\begin{itemize}
+\item What does the keyword synchronized mean?
+When you have two threads that are reading and writing to the same 'resource', say a variable named 'test', you need to ensure that these threads access the variable in an atomic way. Without the synchronized keyword, your thread 1 may not see the change thread 2 made to test.
+\end{itemize}
+synchronized blocks the next thread's call to method as long as the previous thread's execution is not finished. Threads can access this method one at a time.
+\begin{itemize}
+\item What is garbage collector? How does it work?
+All objects are allocated on the heap area managed by the JVM. As long as an object is being referenced, the JVM considers it alive. Once an object is no longer referenced and therefore is not reachable by the application code, the garbage collector removes it and reclaims the unused memory.
+\item Difference between ‘throw’ and ‘throws’ in Java Exception Handling?
+throw keyword is used to throw Exception from any method or static block whereas throws is used to indicate that which Exception can possibly be thrown by this method.
+\begin{itemize}
+\item What is Method overriding?
+\end{itemize}
+\end{itemize}
+
+Method overriding occurs when sub class declares a method that has the same type arguments as a method declared by one of its superclass
+You can’t override a method marked public and make it protected
+You cannot override a method marked final
+You cannot override a method marked static
+Note: Static methods cannot be overridden. Overloaded methods can still be overridden.
+
+
+Final modifier?
+
+Final modifiers - once declared cannot be modified. A blank final variable in Java is a final variable that is not initialized during declaration.
+final Classes- A final class cannot have subclasses.
+final Variables- A final variable cannot be changed once it is initialized.
+final Methods- A final method cannot be overridden by subclasses.
+Finalize keyword?
+
+Finalize is a method used to perform clean up processing just before object is garbage collected.
+Finally keyword?
+
+finally is a code block and is used to place important code, it will be executed whether exception is handled or not.
+Static variables?
+
+Variables that have only one copy per class are known as static variables. They are not attached to a particular instance of a class but rather belong to a class as a whole.
+A static variable is associated with the class as a whole rather than with specific instances of a class. Non-static variables take on unique values with each object instance.
+\end{document}

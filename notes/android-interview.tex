@@ -1,0 +1,132 @@
+% Created 2019-09-24 二 08:36
+% Intended LaTeX compiler: pdflatex
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{grffile}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{amssymb}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\author{Zongxiong Chen}
+\date{\today}
+\title{}
+\hypersetup{
+ pdfauthor={Zongxiong Chen},
+ pdftitle={},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 26.1 (Org mode 9.1.9)},
+ pdflang={English}}
+\begin{document}
+
+\section{http \& https}
+\label{sec:org8c55c21}
+\begin{itemize}
+\item 假设你买了一台新的电脑，里面的跟网络相关的配置是空的（如 \texttt{DNS table，ARP table} 等），但是可以联网。那么你在浏览器中输入 \texttt{www.bing.com} 后并且按下回车键(\texttt{Enter})，浏览器背后经历那些流程，才把这个 \texttt{Bing} 的主页，返回到你的浏览器页面（越详细越好，不考虑 \texttt{CDN} 的问题，也不考虑该电脑在某个子网内部）
+\item 简单描述一下一个 \texttt{TCP} 链接的建立(\texttt{setup})和销毁(\texttt{close})过程？
+\end{itemize}
+
+\section{java}
+\label{sec:orgce2e565}
+\begin{itemize}
+\item 简述 \texttt{sychronized} 关键字的作用? \texttt{static}, \texttt{final} 变量的特点？
+\item 写出以下代码的输出
+\begin{verbatim}
+public class HelloWorld {
+    public static void main(String[] args) {
+        BaseClass base = new BaseClass();
+        ChildClass child = new ChildClass();
+        BaseClass.printStatic();
+        base.printStatic();
+        child.printStatic();
+        ChildClass.printStatic();
+    }
+}
+
+public class BaseClass {
+    private static String x = "OtherClass";
+    public BaseClass() {
+    }
+    static public void printStatic() {
+        System.out.println(x);
+    }
+}
+
+public class ChildClass extends BaseClass {
+    private static String x = "MyClass";
+}
+\end{verbatim}
+\end{itemize}
+
+\section{android}
+\label{sec:orgcb46dc3}
+\begin{itemize}
+\item android中的基本组件，试列举出5个，并且简易描述每个组件的作用？
+\item 图解整个 \texttt{Activity} 的流程。
+\item \texttt{ANR(application not response)} 如何产生以及解决方法？ \texttt{OOM(out-of-memory)} 为什么会在android中出现？
+\item \texttt{AsyncTasks} 和 \texttt{Threads} 和 \texttt{Handlers} 的区别?
+\item 简单描述一下 \texttt{android app} 的 \texttt{build} 过程？
+\end{itemize}
+
+\section{React Native 面试题}
+\label{sec:orgc65f848}
+\begin{itemize}
+\item 请画图描述 \texttt{React Native} 组件生命周期的调用顺序。
+\item 请描述一下 \texttt{props} 和 \texttt{state} 的区别。
+\item 请描述一下对 \texttt{Promise} 的认识。
+\end{itemize}
+
+\section{代码}
+\label{sec:orgfcc0e6b}
+\begin{itemize}
+\item 使用 \texttt{java} 实现一个简单的单例模式
+\item 给定两个二叉树，写一个函数判断这两个二叉树的结构和节点内的数据是否相同这两个二叉树相同的条件是结构相同，并且节点内部的值相同(也可以使用其他的语言)
+\end{itemize}
+Example 1:
+\begin{verbatim}
+Input:     1         1
+          / \       / \
+         2   3     2   3
+
+        [1,2,3],   [1,2,3]
+Output: true
+\end{verbatim}
+Example 2:
+\begin{verbatim}
+Input:     1         1
+          /           \
+         2             2
+        [1,2],     [1,null,2]
+Output: false
+\end{verbatim}
+
+Example 3:
+\begin{verbatim}
+Input:     1         1
+          / \       / \
+         2   1     1   2
+        [1,2,1],   [1,1,2]
+Output: false
+\end{verbatim}
+\begin{verbatim}
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left, right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public boolean isSameTree(TreeNode p, TreeNode q) {
+    }
+}
+\end{verbatim}
+\end{document}
