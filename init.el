@@ -32,9 +32,10 @@
     (("left9"
       (ecb-methods-buffer-name 0.24 . 0.9821428571428571)))))
  '(ecb-options-version "2.50")
+ '(initial-frame-alist (quote ((fullscreen . maximized))))
  '(package-selected-packages
    (quote
-    (rjsx-mode eslint-fix yaml-mode web-mode vlf scala-mode python-mode py-autopep8 pug-mode php-mode nginx-mode modern-cpp-font-lock markdown-preview-eww markdown-mode latex-math-preview json-mode jedi iedit httpcode htmlize helm-gtags google-c-style flymake-yaml flymake-solidity flymake-google-cpplint flymake-eslint flymake-cppcheck flycheck-irony elpy ecb dockerfile-mode dired-filter company-solidity company-rtags company-irony-c-headers company-bibtex company-auctex cmake-mode cmake-ide browse-kill-ring bibtex-utils autopair ac-js2))))
+    (flymake-haskell-multi dante haskell-mode haskell-snippets haskell-tab-indent rjsx-mode eslint-fix yaml-mode web-mode vlf scala-mode python-mode py-autopep8 pug-mode php-mode nginx-mode modern-cpp-font-lock markdown-preview-eww markdown-mode latex-math-preview json-mode jedi iedit httpcode htmlize helm-gtags google-c-style flymake-yaml flymake-solidity flymake-google-cpplint flymake-eslint flymake-cppcheck flycheck-irony elpy ecb dockerfile-mode dired-filter company-solidity company-rtags company-irony-c-headers company-bibtex company-auctex cmake-mode cmake-ide browse-kill-ring bibtex-utils autopair ac-js2))))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

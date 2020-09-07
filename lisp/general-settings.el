@@ -127,7 +127,7 @@
 (defconst httpd-port 18080)
 (auto-fill-mode)
 ;; set the size of font
-(set-face-attribute 'default nil :height 140)
+(set-face-attribute 'default nil :height 100)
 ;; add pbpaste and pbcodpy
 ;;;###autoload
 (defun pbpaste ()
@@ -155,6 +155,13 @@
 (setq package-check-signature nil)
 (xterm-mouse-mode)
 
+(toggle-scroll-bar -1)
+(menu-bar-mode -1)
+(tool-bar-mode -1)
+(custom-set-variables
+ '(initial-frame-alist (quote ((fullscreen . maximized)))))
+
+(setq visible-bell 1)
 (provide 'general-settings)
 
 

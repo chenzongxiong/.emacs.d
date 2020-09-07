@@ -72,6 +72,14 @@
                          ;; jdee
                          rjsx-mode
                          simple-httpd
+
+                         ;; haskell
+                         haskell-mode
+                         haskell-tab-indent
+                         haskell-snippets
+                         dante
+                         ac-haskell-process
+                         flymake-haskell-multi
                          )
     "Default packages")
   ;; Install default packages
