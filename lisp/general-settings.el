@@ -162,6 +162,8 @@
  '(initial-frame-alist (quote ((fullscreen . maximized)))))
 
 (setq visible-bell 1)
+(global-set-key (kbd "C-2") 'set-mark-command)
+
 (provide 'general-settings)
 
 
