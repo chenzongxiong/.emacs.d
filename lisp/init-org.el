@@ -23,7 +23,7 @@ require 'org)
 
 ;; Extended use of TODO keywords
 (setq org-todo-keywords
-      '((sequence "TODO(t)" "DONE(d)" "MARK(m)")
+      '((sequence "TODO(t)" "GOING(g)" "DONE(d)")
         (sequence "REPORT(r)" "BUG(b)" "FIXED(f)")
         (sequence "CANCELD(c)")))
 ;; C-c '    --> org-edit-special & optional ARG

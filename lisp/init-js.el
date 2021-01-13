@@ -2,7 +2,7 @@
 ;;; Code:
 ;;; Commentary:
 
-(setq my/indent-offset 4)
+(setq my/indent-offset 2)
 (setq js2-include-node-externs t)
 
 ;; use web-mode for .jsx files
@@ -74,6 +74,7 @@
 (setq js-indent-level my/indent-offset)
 (setq js2-basic-offset my/indent-offset)
 (setq sgml-basic-offset my/indent-offset)
+(setq typescript-indent-level my/indent-offset)
 (setq indent-tabs-mode t)
 
 (provide 'init-js)

@@ -34,7 +34,7 @@
 (setq line-move-visual t)
 ;; Set up the fill-column to 80 characters and set tab width to 2
 (setq-default fill-column 80)
-(setq-default default-tab-width 4)
+(setq-default default-tab-width 2)
 (setq-default indent-tabs-mode nil)
 ;; Require a newline at the end of files
 (setq require-final-newline t)
@@ -64,9 +64,9 @@
 ;; display time
 (display-time-mode 1)
 ;; File association
-(setq auto-mode-alist (cons '("README" . text-mode) auto-mode-alist))
-(setq auto-mode-alist (cons '("README.md" . text-mode) auto-mode-alist))
-(setq auto-mode-alist (cons '("README.mk" . text-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("README" . markdown-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("README.md" . markdown-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("README.mk" . markdown-mode) auto-mode-alist))
 ;; Unicode on MacOSX
 (setenv "LC_CTYPE" "UTF-8")
 ;; enable narrow-to-region
@@ -155,15 +155,15 @@
 (setq package-check-signature nil)
 (xterm-mouse-mode)
 
-(toggle-scroll-bar -1)
-(menu-bar-mode -1)
-(tool-bar-mode -1)
+;; (toggle-scroll-bar -1)
+;; (menu-bar-mode -1)
+;; (tool-bar-mode -1)
 (custom-set-variables
  '(initial-frame-alist (quote ((fullscreen . maximized)))))
 
 (setq visible-bell 1)
 (global-set-key (kbd "C-2") 'set-mark-command)
-
+(setq tab-width 4)
 (provide 'general-settings)
 
 
