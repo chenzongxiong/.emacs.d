@@ -21,6 +21,15 @@
   (message "Command to run: %s" command-str)
   (eshell-command command-str))
 
+;;;###autoload
+(defun create-rust-tags (dir-name)
+  "Create Rust TAGS file. `DIR-NAME`. "
+  (interactive "DDirectory: ")
+  (defvar command-str
+    (format "find %s -type f  -not -path \"target\"  -iname \"*.hpp\" -o -iname \"*.rs\" -o -iname \"*.c\" -o -iname \"*.h\" | etags -o %sTAGS -" dir-name
+            (file-name-directory (directory-file-name dir-name))))
+  (message "Command to run: %s" command-str)
+  (eshell-command command-str))
 
 (provide 'utils)
 

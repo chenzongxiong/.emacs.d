@@ -17,6 +17,8 @@
                          ecb
                          helm
                          helm-gtags
+                         helm-ag
+                         helm-c-moccur
 
                          jedi
                          elpy
@@ -32,7 +34,8 @@
                          yaml-mode
 
                          ;; angular-snippets
-                         ;; yasnippet
+                         yasnippet
+                         yasnippet-snippets
                          ;; ac-html
                          ;; auto-complete
                          iedit
@@ -80,7 +83,15 @@
                          dante
                          ac-haskell-process
                          flymake-haskell-multi
+                         ;;
+                         htmlize
+                         ;; rust
+                         flycheck-rust
+                         cargo
+
+                         typescript
                          )
+
     "Default packages")
   ;; Install default packages
   (defun czx/packages-installed-p ()

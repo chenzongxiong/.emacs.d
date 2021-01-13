@@ -35,6 +35,7 @@
 ;; Set up the fill-column to 80 characters and set tab width to 2
 (setq-default fill-column 80)
 (setq-default default-tab-width 4)
+(setq tab-width 4)
 (setq-default indent-tabs-mode nil)
 ;; Require a newline at the end of files
 (setq require-final-newline t)
@@ -64,9 +65,9 @@
 ;; display time
 (display-time-mode 1)
 ;; File association
-(setq auto-mode-alist (cons '("README" . text-mode) auto-mode-alist))
-(setq auto-mode-alist (cons '("README.md" . text-mode) auto-mode-alist))
-(setq auto-mode-alist (cons '("README.mk" . text-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("README" . markdown-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("README.md" . markdown-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("README.mk" . markdown-mode) auto-mode-alist))
 ;; Unicode on MacOSX
 (setenv "LC_CTYPE" "UTF-8")
 ;; enable narrow-to-region
@@ -163,6 +164,13 @@
 
 (setq visible-bell 1)
 (global-set-key (kbd "C-2") 'set-mark-command)
+
+(setq shell-file-name "/usr/bin/zsh")
+
+(global-eldoc-mode -1)
+
+(setq auth-sources '("~/.authinfo"))
+
 
 (provide 'general-settings)
 
