@@ -3,11 +3,12 @@
 ;;; Commentary:
 
 
-require 'org)
+(require 'org)
 (setq org-babel-load-languages
  '(
    (ditaa . t)
    (python . t)
+   (haskell . t)
    (perl . t)
    (C . t)
    (C++ . t)
@@ -50,6 +51,9 @@ require 'org)
 (require 'ob-C)
 (require 'ob-shell)
 ;; (require 'ob-c++)
+(require 'ob-haskell)
+(require 'ob-python)
+(require 'ob-sql)
 (provide 'init-org)
 
 ;;; init-org.el ends here

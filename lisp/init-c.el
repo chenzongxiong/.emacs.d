@@ -1,13 +1,13 @@
-;;; Package -- Summary
-;;; Code:
-;;; Commentary:
+;; ;;; Package -- Summary
+;; ;;; Code:
+;; ;;; Commentary:
 
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
 (add-to-list 'auto-mode-alist '("\\.c\\'" . c++-mode))
 
 (add-hook 'c++-mode-hook #'modern-c++-font-lock-mode)
 (require 'flymake-google-cpplint)
-;; (executable-find "cpplint")
+;; ;; (executable-find "cpplint")
 (add-hook 'c++-mode-hook 'flymake-google-cpplint-load)
 (add-hook 'c++-mode-hook '(lambda ()
                             (setq flycheck-clang-language-standard "c++11")
@@ -21,24 +21,24 @@
 
 
 (add-hook 'irony-mode-hook 'irony-eldoc)
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Set up code completion with company and irony
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; ;; Set up code completion with company and irony
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (require 'company)
 (require 'company-rtags)
 (global-company-mode)
 
-;; Enable semantics mode for auto-completion
+;; ;; Enable semantics mode for auto-completion
 (require 'cc-mode)
 (require 'semantic)
 (global-semanticdb-minor-mode 1)
 (global-semantic-idle-scheduler-mode 1)
 (semantic-mode 1)
 
-;; Setup irony-mode to load in c-modes
+;; ;; Setup irony-mode to load in c-modes
 (require 'irony)
 (require 'company-irony-c-headers)
-;; (require 'cl)
+;; ;; (require 'cl)
 (add-hook 'c++-mode-hook 'irony-mode)
 (add-hook 'c-mode-hook 'irony-mode)
 (add-hook 'objc-mode-hook 'irony-mode)
@@ -98,8 +98,8 @@
 
 ;; Zero delay when pressing tab
 (setq company-idle-delay 0)
-(define-key c-mode-map [(tab)] 'company-complete)
-(define-key c++-mode-map [(tab)] 'company-complete)
+;; (define-key c-mode-map [(tab)] 'company-complete)
+;; (define-key c++-mode-map [(tab)] 'company-complete)
 ;; Delay when idle because I want to be able to think
 (setq company-idle-delay 0.2)
 

@@ -14,16 +14,23 @@
                               (require 'elpy)
                               ;; (elpy-use-ipython)
                               (jedi:setup)
-                              (elpy-enable)))
+                              ;; (elpy-disable)
+                              (elpy-enable)
+                              ))
 
 (setq py-autopep8-options
       '("--max-line-length=100"))
-(setq python-shell-interpreter "ipython"
+(setq python-shell-interpreter "~/.venv3/bin/ipython"
       python-shell-interpreter-args "-i --simple-prompt")
 ;; (setenv "IPY_TEST_SIMPLE_PROMPT" "1")
 
-(setq python-shell-virtualenv-path "/usr/local/bin/virtualenv")
+;; (setq python-shell-virtualenv-path "/usr/local/bin/virtualenv")
+;; (setq python-shell-virtualenv-path "/home/zxchen/.local/bin/virtualenv")
+;; (eldoc-message (format "%s%s" prefix args))
 
+;; /home/zxchen/.venv3/bin/flake8
+
+(global-eldoc-mode -1)
 (provide 'init-python)
 
 ;;; init-python.el ends here

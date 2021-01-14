@@ -1,7 +1,7 @@
 ;;; Package -- Summary
 ;;; Code:
 ;;; Commentary:
-
+(require 'lsp-mode)
 (add-to-list 'auto-mode-alist '("\\.sls$" . yaml-mode))
 ;; (require 'yaml-mode)
 
@@ -20,7 +20,7 @@
 ;; (require 'init-auto-complete)
 ;; (require 'init-sql) ; cost less
 
-;; (require 'init-org)
+(require 'init-org)
 (require 'init-simple-httpd)
 (require 'init-web)
 
@@ -48,6 +48,7 @@
 ;; (require 'init-tags)
 (require 'utils)
 (require 'init-js)
+(require 'init-rust)
 ;; (require 'init-java)
 (provide 'packages-settings)
 

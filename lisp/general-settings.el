@@ -34,7 +34,9 @@
 (setq line-move-visual t)
 ;; Set up the fill-column to 80 characters and set tab width to 2
 (setq-default fill-column 80)
-(setq-default default-tab-width 2)
+
+(setq-default default-tab-width 4)
+(setq tab-width 4)
 (setq-default indent-tabs-mode nil)
 ;; Require a newline at the end of files
 (setq require-final-newline t)
@@ -163,7 +165,14 @@
 
 (setq visible-bell 1)
 (global-set-key (kbd "C-2") 'set-mark-command)
-(setq tab-width 4)
+
+(setq shell-file-name "/usr/bin/zsh")
+
+(global-eldoc-mode -1)
+
+(setq auth-sources '("~/.authinfo"))
+
+
 (provide 'general-settings)
 
 
