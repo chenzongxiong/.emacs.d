@@ -13,6 +13,7 @@
                t)
   ;; Define default packages
   (defvar czx/packages '(
+                         lsp-mode
                          ;; packages management
                          ecb
                          helm
@@ -89,7 +90,7 @@
                          flycheck-rust
                          cargo
 
-                         typescript
+                         typescript-mode
                          )
 
     "Default packages")
