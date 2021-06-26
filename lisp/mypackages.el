@@ -40,7 +40,6 @@
                          ;; ac-html
                          ;; auto-complete
                          iedit
-                         autopair
                          ;; python-pep8
 
                          dired-filter
@@ -58,8 +57,6 @@
                          cmake-mode
                          rtags
                          modern-cpp-font-lock
-                         flymake-google-cpplint
-                         flymake-cppcheck
                          google-c-style
 
                          irony

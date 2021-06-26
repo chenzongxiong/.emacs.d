@@ -6,9 +6,7 @@
 (add-to-list 'auto-mode-alist '("\\.c\\'" . c++-mode))
 
 (add-hook 'c++-mode-hook #'modern-c++-font-lock-mode)
-(require 'flymake-google-cpplint)
 ;; ;; (executable-find "cpplint")
-(add-hook 'c++-mode-hook 'flymake-google-cpplint-load)
 (add-hook 'c++-mode-hook '(lambda ()
                             (setq flycheck-clang-language-standard "c++11")
                             (cmake-ide-setup)
