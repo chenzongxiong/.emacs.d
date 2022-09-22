@@ -24,3 +24,5 @@ semanticdb/*
 ede-projects.el
 lisp/init-proxy.el
 irony/*
+elpy/*
+transient/*

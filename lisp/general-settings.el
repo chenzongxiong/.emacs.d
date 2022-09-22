@@ -35,8 +35,8 @@
 ;; Set up the fill-column to 80 characters and set tab width to 2
 (setq-default fill-column 80)
 
-(setq-default default-tab-width 4)
-(setq tab-width 4)
+(setq-default default-tab-width 2)
+(setq tab-width 2)
 (setq-default indent-tabs-mode nil)
 ;; Require a newline at the end of files
 (setq require-final-newline t)
@@ -120,7 +120,7 @@
 (defun show-curr-major-mode ()
   (interactive)
   (message "%s" major-mode))
-(setq c-default-style "linux" c-basic-offset 4)
+(setq c-default-style "linux" c-basic-offset 2)
 
 ;; (setq ad-handle-definition 'accept)     ;;
 (setq ad-redefinition-action 'accept)
@@ -129,7 +129,7 @@
 (defconst httpd-port 18080)
 (auto-fill-mode)
 ;; set the size of font
-(set-face-attribute 'default nil :height 100)
+(set-face-attribute 'default nil :height 130)
 ;; add pbpaste and pbcodpy
 ;;;###autoload
 (defun pbpaste ()
@@ -172,7 +172,11 @@
 
 (setq auth-sources '("~/.authinfo"))
 
+(when (memq window-system '(mac ns x))
+  (exec-path-from-shell-initialize))
 
+(flex-autopair-mode)
+(setq yaml-indent-offset 2)
 (provide 'general-settings)
 
 

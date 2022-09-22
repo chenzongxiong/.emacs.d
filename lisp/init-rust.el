@@ -15,5 +15,5 @@
 ;; (add-hook 'racer-mode-hook #'eldoc-mode)
 ;; (
  ;; add-hook 'racer-mode-hook #'company-mode)
-(yas-minor-mode-on)
+;; (yas-minor-mode-on)
 (provide 'init-rust)

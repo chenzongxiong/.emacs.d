@@ -14,6 +14,8 @@
   ;; Define default packages
   (defvar czx/packages '(
                          lsp-mode
+
+                         exec-path-from-shell
                          ;; packages management
                          ecb
                          helm
@@ -44,14 +46,15 @@
 
                          dired-filter
                          ;; flymake-jslint
-
+                         flex-autopair
                          flycheck
                          flymake-yaml
                          httpcode
                          browse-kill-ring
                          vlf
                          web-mode
-                         ;; magit
+
+                         magit
                          ;; c++ ide
                          cmake-ide
                          cmake-mode
@@ -74,6 +77,9 @@
                          rjsx-mode
                          simple-httpd
 
+                         prettier
+                         prettier-js
+
                          ;; haskell
                          haskell-mode
                          haskell-tab-indent
@@ -88,6 +94,9 @@
                          cargo
 
                          typescript-mode
+
+                         graphql-mode
+                         graphql
                          )
 
     "Default packages")
