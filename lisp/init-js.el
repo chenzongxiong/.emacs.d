@@ -6,8 +6,9 @@
 (setq js2-include-node-externs t)
 
 ;; use web-mode for .jsx files
-(add-to-list 'auto-mode-alist '("\\.jsx$" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.js$" . rjsx-mode))
+(add-to-list 'auto-mode-alist '("\\.jsx$" . js-mode))
+(add-to-list 'auto-mode-alist '("\\.tsx$" . js-mode))
 
 ;; http://www.flycheck.org/manual/latest/index.html
 (require 'flycheck)
@@ -68,6 +69,10 @@
       ad-do-it)
     ad-do-it))
 
+(with-eval-after-load 'rjsx-mode
+  (define-key rjsx-mode-map "<" nil)
+  (define-key rjsx-mode-map (kbd "C-d") nil)
+  (define-key rjsx-mode-map ">" nil))
 (defun set-jsx-indentation ()
   (setq-local sgml-basic-offset my/indent-offset))
 (add-hook 'js-jsx-mode-hook #'set-jsx-indentation)

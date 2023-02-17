@@ -175,7 +175,7 @@
 (when (memq window-system '(mac ns x))
   (exec-path-from-shell-initialize))
 
-(flex-autopair-mode)
+;; (flex-autopair-mode)
 (setq yaml-indent-offset 2)
 (provide 'general-settings)
 
