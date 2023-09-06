@@ -3,37 +3,37 @@
 ;;; Commentary:
 
 ;; Python Ide
-(setq jedi:complete-on-dot t)
-(setq jedi:tooltip-method t)
-(setq elpy-rpc-backend "jedi")
-(setq python-indent-guess-indent-offset nil)
+(defconst py-autopep8-options '("--max-line-length=120"))
+
+;; (setenv "IPY_TEST_SIMPLE_PROMPT" "1")
+
+;; /home/zxchen/.venv3/bin/flake8
+;; (setenv "WORKON_HOME" "/opt/homebrew/Caskroom/miniconda/base/envs")
+;; (defconst python-shell-virtualenv-path "/opt/homebrew/Caskroom/miniconda/base/envs/.torch")
+(defconst python-shell-virtualenv-path "~/.emacs.d/.python-environments/default")
+(defconst my-virtualenv-path python-shell-virtualenv-path)
+(defconst elpy-syntax-check-command "~/.pyenv/shims/flake8")
+(defconst python-shell-interpreter (concat my-virtualenv-path "/bin/python"))
+
+(setenv "WORKON_HOME" python-shell-virtualenv-path)
+(defconst pyvenv-activate (getenv "WORKON_HOME"))
+
+;; (defconst python-shell-interpreter (concat my-virtualenv-path "/bin/python3"))
+;; (defconst jedi:environment-root python-shell-virtualenv-path)
+
+(defconst jedi:complete-on-dot t)
+(defconst jedi:tooltip-method t)
+(defconst elpy-rpc-backend "jedi")
+(defconst python-indent-guess-indent-offset nil)
 
 (add-hook 'python-mode-hook (lambda ()
-                              ;; pip install jedi, epc
                               (require 'jedi)
                               (require 'elpy)
-                              ;; (elpy-use-ipython)
                               (jedi:setup)
-                              ;; (elpy-disable)
                               (elpy-enable)
                               ))
 
-(setq py-autopep8-options
-      '("--max-line-length=120"))
-;; (setq python-shell-interpreter "~/.venv3/bin/ipython"
-;;       python-shell-interpreter-args "-i --simple-prompt")
-;; (setenv "IPY_TEST_SIMPLE_PROMPT" "1")
-
-;; (setq python-shell-virtualenv-path "/usr/local/bin/virtualenv")
-;; (setq python-shell-virtualenv-path "/home/zxchen/.local/bin/virtualenv")
-;; (eldoc-message (format "%s%s" prefix args))
-
-;; /home/zxchen/.venv3/bin/flake8
-(setq python-shell-virtualenv-path "/opt/homebrew/Caskroom/miniconda/base/envs/.torch")
-(setq my-virtualenv-path python-shell-virtualenv-path)
-(setq elpy-syntax-check-command (concat my-virtualenv-path "/bin/flake8"))
-(setq python-shell-interpreter (concat my-virtualenv-path "/bin/python"))
-
+;; (defconst jedi:server-args '("--virtualenv" "/opt/homebrew/Caskroom/miniconda/base/envs/.torch"))
 ;; (global-eldoc-mode -1)
 (provide 'init-python)
 
