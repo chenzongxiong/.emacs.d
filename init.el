@@ -1,23 +1,3 @@
-(if (>= emacs-major-version 24)
-    (progn
-      (setq byte-compile-warnings '(cl-functions))
-      (require 'cl)
-      (require 'package)
-      (package-initialize)
-      (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
-      (setq dired-use-ls-dired nil)
-      (require 'general-settings)
-      (require 'mypackages)
-      (require 'packages-settings)
-      (message "Please Update the emacs")))
-
-;; (custom-set-faces
-;;  ;; custom-set-faces was added by Custom.
-;;  ;; If you edit it by hand, you could mess it up, so be careful.
-;;  ;; Your init file should contain only one such instance.
-;;  ;; If there is more than one, they won't work right.
-;;  '(company-tooltip ((t (:foreground "magenta")))))
-
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -32,12 +12,10 @@
    '(("left9"
       (ecb-methods-buffer-name 0.24 . 0.9821428571428571))))
  '(ecb-options-version "2.50")
- '(elpy-syntax-check-command "~/.venv3/bin/flake8")
  '(initial-frame-alist '((fullscreen . maximized)))
  '(package-selected-packages
-   '(go-mode caddyfile-mode django-mode solidity-mode rust-auto-use rust-mode cargo-mode graphql graphql-mode prettier prettier-js exec-path-from-shell docker tablist magit jinja2-mode racer editorconfig-generate editorconfig rustic helm-c-moccur helm-ag flycheck-rust cargo password-vault password-generator org-password-manager id-manager pbcopy nasm-mode yasnippet-snippets irony-eldoc company-irony websocket web-server flymake-haskell-multi dante haskell-mode haskell-snippets haskell-tab-indent rjsx-mode eslint-fix yaml-mode web-mode vlf scala-mode python-mode py-autopep8 pug-mode php-mode nginx-mode modern-cpp-font-lock markdown-preview-eww markdown-mode latex-math-preview json-mode jedi iedit httpcode htmlize helm-gtags google-c-style flymake-yaml flymake-solidity flymake-google-cpplint flymake-eslint flymake-cppcheck flycheck-irony elpy ecb dockerfile-mode dired-filter company-solidity company-rtags company-irony-c-headers company-bibtex company-auctex cmake-mode cmake-ide browse-kill-ring bibtex-utils autopair ac-js2))
- '(pyvenv-activate "~/.venv3")
- '(tab-width 4))
+   '(typescript-mode flycheck-kotlin mvn kotlin-mode rdf-prefix go-mode caddyfile-mode rust-auto-use rust-mode cargo-mode graphql graphql-mode prettier exec-path-from-shell docker tablist magit jinja2-mode racer editorconfig-generate editorconfig rustic helm-c-moccur helm-ag flycheck-rust cargo password-vault password-generator nasm-mode yasnippet-snippets irony-eldoc websocket web-server rjsx-mode eslint-fix yaml-mode web-mode vlf scala-mode python-mode py-autopep8 php-mode nginx-mode modern-cpp-font-lock markdown-mode json-mode jedi iedit httpcode htmlize helm-gtags google-c-style flymake-yaml flymake-solidity flymake-eslint flycheck-irony elpy ecb dockerfile-mode dired-filter company-solidity company-rtags company-irony-c-headers cmake-mode cmake-ide browse-kill-ring))
+ '(tab-width 2))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -45,3 +23,12 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
+(setq byte-compile-warnings '(cl-functions)) ; suppress the warning message `cl is deprecated`
+(defconst dired-use-ls-dired nil)
+(require 'package)
+(package-initialize)
+(add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
+(require 'install-my-packages)
+(require 'general-settings)
+(require 'packages-settings)

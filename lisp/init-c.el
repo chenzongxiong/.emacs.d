@@ -2,17 +2,18 @@
 ;; ;;; Code:
 ;; ;;; Commentary:
 
+;; Install cmake/llvm
+
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
 (add-to-list 'auto-mode-alist '("\\.c\\'" . c++-mode))
 
 (add-hook 'c++-mode-hook #'modern-c++-font-lock-mode)
 ;; ;; (executable-find "cpplint")
-(add-hook 'c++-mode-hook '(lambda ()
+(add-hook 'c++-mode-hook #'(lambda ()
                             (setq flycheck-clang-language-standard "c++11")
                             (cmake-ide-setup)
                             (setf company-backends '())
                             (add-to-list 'company-backends 'company-keywords)
-                            (add-to-list 'company-backends 'company-irony)
                             (add-to-list 'company-backends 'company-irony-c-headers)
                             ))
 (add-hook 'flycheck-mode-hook 'flycheck-irony-setup)
@@ -113,6 +114,8 @@
 (add-hook 'semantic-init-hooks
           'semantic-reset-system-include)
 
+(defconst c-default-style "linux")
+(defconst c-basic-offset 2)
 
 (provide 'init-c)
 

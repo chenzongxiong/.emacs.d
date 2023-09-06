@@ -26,7 +26,7 @@
 (setq-default indicate-buffer-boundaries nil)
 ;; Why would you not want to know lines/columns in your mode-line?
 (line-number-mode t)
-(global-linum-mode t)
+(global-display-line-numbers-mode 1)
 (column-number-mode t)
 ;; Nobody likes to have to type "yes" to questions, so change it to just hitting the y key to confirm:
 (defalias 'yes-or-no-p 'y-or-n-p)
@@ -48,7 +48,7 @@
 (global-set-key (kbd "M-%") 'query-replace-regexp)
 ;; backups
 (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
-(setq delete-old-version t)
+(defconst delete-old-version t)
 
 (when (eq system-type 'darwin)
   (toggle-frame-fullscreen))
@@ -105,9 +105,9 @@
   (save-some-buffers)
   (kill-emacs))
 ;; Bind shortcut to scroll-other-window
-(global-set-key (kbd "C-M-n") '(lambda () (interactive) ; must be `interactive' explict
+(global-set-key (kbd "C-M-n") #'(lambda () (interactive) ; must be `interactive' explict
                                  (scroll-other-window 1)))
-(global-set-key (kbd "C-M-p") '(lambda () (interactive)
+(global-set-key (kbd "C-M-p") #'(lambda () (interactive)
                                  (scroll-other-window -1)))
 ;; To scroll the window smoothly, line by line scroll
 (setq scroll-step 1)
@@ -120,13 +120,11 @@
 (defun show-curr-major-mode ()
   (interactive)
   (message "%s" major-mode))
-(setq c-default-style "linux" c-basic-offset 2)
 
 ;; (setq ad-handle-definition 'accept)     ;;
 (setq ad-redefinition-action 'accept)
 
 ;; define the const variable
-(defconst httpd-port 18080)
 (auto-fill-mode)
 ;; set the size of font
 (set-face-attribute 'default nil :height 130)
@@ -151,8 +149,8 @@
     (kill-buffer "*Shell Command Output*")))
 
 ;; setting for ecb
-(setq ecb-layout-name "left9")
-(setq ecb-tip-of-the-day nil)
+(defconst ecb-layout-name "left9")
+(defconst ecb-tip-of-the-day nil)
 
 (setq package-check-signature nil)
 (xterm-mouse-mode)
@@ -168,15 +166,13 @@
 
 ;; (setq shell-file-name "/usr/bin/zsh")
 
-(global-eldoc-mode -1)
+;; (global-eldoc-mode -1)
 
 (setq auth-sources '("~/.authinfo"))
 
 (when (memq window-system '(mac ns x))
   (exec-path-from-shell-initialize))
 
-;; (flex-autopair-mode)
-(setq yaml-indent-offset 2)
 (provide 'general-settings)
 
 

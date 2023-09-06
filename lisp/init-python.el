@@ -3,23 +3,23 @@
 ;;; Commentary:
 
 ;; Python Ide
-;; (setq jedi:complete-on-dot t)
-;; (setq jedi:tooltip-method t)
-;; (setq elpy-rpc-backend "jedi")
-;; (setq python-indent-guess-indent-offset nil)
+(setq jedi:complete-on-dot t)
+(setq jedi:tooltip-method t)
+(setq elpy-rpc-backend "jedi")
+(setq python-indent-guess-indent-offset nil)
 
-;; (add-hook 'python-mode-hook (lambda ()
-;;                               ;; pip install jedi, epc
-;;                               (require 'jedi)
-;;                               (require 'elpy)
-;;                               ;; (elpy-use-ipython)
-;;                               (jedi:setup)
-;;                               ;; (elpy-disable)
-;;                               (elpy-enable)
-;;                               ))
+(add-hook 'python-mode-hook (lambda ()
+                              ;; pip install jedi, epc
+                              (require 'jedi)
+                              (require 'elpy)
+                              ;; (elpy-use-ipython)
+                              (jedi:setup)
+                              ;; (elpy-disable)
+                              (elpy-enable)
+                              ))
 
 (setq py-autopep8-options
-      '("--max-line-length=100"))
+      '("--max-line-length=120"))
 ;; (setq python-shell-interpreter "~/.venv3/bin/ipython"
 ;;       python-shell-interpreter-args "-i --simple-prompt")
 ;; (setenv "IPY_TEST_SIMPLE_PROMPT" "1")
@@ -29,8 +29,12 @@
 ;; (eldoc-message (format "%s%s" prefix args))
 
 ;; /home/zxchen/.venv3/bin/flake8
+(setq python-shell-virtualenv-path "/opt/homebrew/Caskroom/miniconda/base/envs/.torch")
+(setq my-virtualenv-path python-shell-virtualenv-path)
+(setq elpy-syntax-check-command (concat my-virtualenv-path "/bin/flake8"))
+(setq python-shell-interpreter (concat my-virtualenv-path "/bin/python"))
 
-(global-eldoc-mode -1)
+;; (global-eldoc-mode -1)
 (provide 'init-python)
 
 ;;; init-python.el ends here

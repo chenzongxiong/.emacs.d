@@ -2,10 +2,7 @@
 ;;; Code:
 ;;; Commentary:
 (require 'lsp-mode)
-(add-to-list 'auto-mode-alist '("\\.sls$" . yaml-mode))
-;; (require 'yaml-mode)
 
-;; (require 'flymake-yaml)
 ;; (require 'json)
 ;; (require 'json-mode)
 
@@ -23,6 +20,7 @@
 (require 'init-org)
 (require 'init-simple-httpd)
 (require 'init-web)
+(require 'init-yaml)
 
 ;; ;; ;; start yasnippet with emacs
 ;; ;; (setq yas-snippet-dirs yas-installed-snippets-dir)
