@@ -15,7 +15,8 @@
  '(initial-frame-alist '((fullscreen . maximized)))
  '(package-selected-packages
    '(flex-autopair simple-httpd lsp-mode typescript-mode flycheck-kotlin mvn kotlin-mode rdf-prefix go-mode caddyfile-mode rust-auto-use rust-mode cargo-mode graphql graphql-mode prettier exec-path-from-shell docker tablist magit jinja2-mode racer editorconfig-generate editorconfig rustic helm-c-moccur helm-ag flycheck-rust cargo password-vault password-generator nasm-mode yasnippet-snippets irony-eldoc websocket web-server rjsx-mode eslint-fix yaml-mode web-mode vlf scala-mode python-mode py-autopep8 php-mode nginx-mode modern-cpp-font-lock markdown-mode json-mode jedi iedit httpcode htmlize helm-gtags google-c-style flymake-yaml flymake-solidity flymake-eslint flycheck-irony elpy ecb dockerfile-mode dired-filter company-solidity company-rtags company-irony-c-headers cmake-mode cmake-ide browse-kill-ring))
- '(tab-width 2))
+ '(tab-width 2)
+ '(warning-suppress-types '((emacs))))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
