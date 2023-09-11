@@ -1,3 +1,6 @@
+(when (< (string-to-number emacs-version) 26.3)           ; helm needs 26.3 or above
+  (defconst package-check-signature nil))
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

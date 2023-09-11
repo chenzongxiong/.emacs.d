@@ -3,7 +3,7 @@
 ;;; Commentary:
 
 ;; package management
-(when (>= (string-to-number emacs-version) 24.4)           ; helm needs 24.4 or above
+(when (>= (string-to-number emacs-version) 26.3)           ; helm needs 26.3 or above
   (add-to-list 'package-archives
                '("gnu" . "http://elpa.gnu.org/packages/"))
   (add-to-list 'package-archives
@@ -22,7 +22,7 @@
     (package-refresh-contents)
     (dolist (pkg package-selected-packages)
       (when (not (package-installed-p pkg))
-        (package-install pkg)))))
+        (ignore-errors (package-install pkg))))))
 
 
 (provide 'install-my-packages)

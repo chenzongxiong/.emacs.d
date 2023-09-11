@@ -26,7 +26,9 @@
 (setq-default indicate-buffer-boundaries nil)
 ;; Why would you not want to know lines/columns in your mode-line?
 (line-number-mode t)
-(global-display-line-numbers-mode 1)
+(cond
+ ((>= (string-to-number emacs-version) 26.3) (global-display-line-numbers-mode 1))
+ ((< (string-to-number emacs-version) 26.3) (global-linum-mode t)))
 (column-number-mode t)
 ;; Nobody likes to have to type "yes" to questions, so change it to just hitting the y key to confirm:
 (defalias 'yes-or-no-p 'y-or-n-p)

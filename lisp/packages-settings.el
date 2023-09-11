@@ -1,7 +1,7 @@
 ;;; Package -- Summary
 ;;; Code:
 ;;; Commentary:
-(require 'lsp-mode)
+(require 'lsp-mode nil t)
 
 ;; (require 'json)
 ;; (require 'json-mode)

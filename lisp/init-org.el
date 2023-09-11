@@ -48,12 +48,11 @@
 (setq org-todo-keywords
 '((sequence "TODO(t)" "DOING" "|" "DONE(d!)" "CANCELED(c@)")))
 
-(require 'ob-C)
-(require 'ob-shell)
+(require 'ob-C nil t)
+(require 'ob-shell nil t)
 ;; (require 'ob-c++)
-(require 'ob-haskell)
-(require 'ob-python)
-(require 'ob-sql)
+(require 'ob-python nil t)
+(require 'ob-sql nil t)
 (provide 'init-org)
 
 ;;; init-org.el ends here
