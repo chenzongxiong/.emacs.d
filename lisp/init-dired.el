@@ -12,7 +12,7 @@
           #'(lambda ()
               (require 'dired-x)
               (defconst dired-omit-mode t)
-              (defconst dired-omit-files "^\\.?#\\|^\\.$\\|^\\.\\.$|\\.pyc$\\|\\.DS_Store$\\|__pycache__\\|^\\.git\\|\\.zcompdump.*")
+              (defconst dired-omit-files "^\\.?#\\|^\\.$\\|^\\.\\.$|\\.pyc$\\|\\.DS_Store$\\|__pycache__$\\|^\\.git\\|\\.zcompdump.*")
               ))
 
 ;;
