@@ -24,11 +24,11 @@
 
 ;; Extended use of TODO keywords
 (setq org-todo-keywords
- '((sequence "TODO(t)" "IN-PROGRESS(i)" "DONE (d)" "CANCELED (c)" "BUG (b)"))
+ '((sequence "TODO(t)" "IN-PROGRESS(i)" "CANCELED(c)" "BUG(b)" "DONE(d)" ))
  )
 
 (setq org-todo-keyword-faces
- '(("IN-PROGRESS" . "orange") ("CANCELED" . "red") ("DONE" . "green"))
+ '(("TODO" . "orange")  ("IN-PROGRESS" . "yellow") ("CANCELED" . "gray") ("DONE" . "green") ("BUG" . "red"))
  )
 
 ;; C-c '    --> org-edit-special & optional ARG
