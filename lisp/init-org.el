@@ -24,16 +24,27 @@
 
 ;; Extended use of TODO keywords
 (setq org-todo-keywords
-      '((sequence "TODO(t)" "GOING(g)" "DONE(d)")
-        (sequence "REPORT(r)" "BUG(b)" "FIXED(f)")
-        (sequence "CANCELD(c)")))
+ '((sequence "TODO(t)" "IN-PROGRESS(i)" "DONE (d)" "CANCELED (c)" "BUG (b)"))
+ )
+
+(setq org-todo-keyword-faces
+ '(("IN-PROGRESS" . "orange") ("CANCELED" . "red") ("DONE" . "green"))
+ )
+
 ;; C-c '    --> org-edit-special & optional ARG
 ;; C-c, C-t --> org-todo
 ;; C-c a t  --> org-todo-list
 ;; C-c, / t --> org-show-todo-list
 ;; S-M-RET  --> org-insert-todo-heading
-;; (setq org-agenda-files
-;;      (directory-files "/home/czx/test/snippets/org" t "org$"))
+(defun create-folder-if-not-exists (folder)
+  "Creat a FOLDER is not existed."
+  (unless (file-directory-p folder)
+    (make-directory folder t))
+  )
+(create-folder-if-not-exists "~/.todo")
+
+(setq org-agenda-files
+     (directory-files "~/.todo" t "org$"))
 
 (setq org-plantuml-jar-path
       (expand-file-name "~/.emacs.d/third-parts/plantuml.jar"))
@@ -45,8 +56,6 @@
    (concat ditaa-cmd " " buffer-file-name)))
 (setq org-ditaa-jar-path "~/tools/ditaa.jar")
 
-(setq org-todo-keywords
-'((sequence "TODO(t)" "DOING" "|" "DONE(d!)" "CANCELED(c@)")))
 
 (require 'ob-C nil t)
 (require 'ob-shell nil t)
