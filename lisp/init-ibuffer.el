@@ -4,6 +4,7 @@
 
 (defalias 'list-buffers 'ibuffer)
 (global-set-key (kbd "C-x C-b") 'ibuffer)
+
 (setq ibuffer-saved-filter-groups
       (quote (("default"
                ("org" ;; all org-releated buffers
