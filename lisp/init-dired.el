@@ -9,6 +9,7 @@
                                (defconst dired-omit-mode t)
                                (defconst dired-omit-files "^\\.?#\\|^\\.$\\|^\\.\\.$|\\.pyc$\\|\\.DS_Store$\\|__pycache__$\\|^\\.git\\|\\.zcompdump.*")
                                ))
+;; you can modify the files attributes in dired
 ;;
 (provide 'init-dired)
 

@@ -24,7 +24,7 @@
 
 ;; Extended use of TODO keywords
 (setq org-todo-keywords
- '((sequence "TODO(t)" "IN-PROGRESS(i)" "CANCELED(c)" "BUG(b)" "DONE(d)" ))
+ '((sequence "TODO(t)" "IN-PROGRESS(i@)" "CANCELED(c@)" "BUG(b@)" "DONE(d!)" ))
  )
 
 (setq org-todo-keyword-faces
