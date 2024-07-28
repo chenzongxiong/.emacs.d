@@ -24,7 +24,7 @@
 
 ;; Extended use of TODO keywords
 (setq org-todo-keywords
- '((sequence "TODO(t)" "IN-PROGRESS(i@)" "CANCELED(c@)" "BUG(b@)" "DONE(d!)" ))
+ '((sequence "TODO(t)" "IN-PROGRESS(i@)" "BUG(b@/!)" "|" "CANCELED(c@/!)" "DONE(d!)" ))
  )
 
 (setq org-todo-keyword-faces
@@ -46,16 +46,15 @@
 (setq org-agenda-files
      (directory-files "~/.todo" t "org$"))
 
-(setq org-plantuml-jar-path
-      (expand-file-name "~/.emacs.d/third-parts/plantuml.jar"))
+(defun org-summary-todo (n-done n-not-done)
+  "Switch entry to DONE when all subentries are done, to TODO otherwise."
+  (let (org-log-done org-log-states)   ; turn off logging
+    (org-todo (if (= n-not-done 0) "DONE" "TODO"))))
 
-(setq ditaa-cmd "java -jar ~/tools/ditaa.jar")
-(defun ditaa-generate()
-  (interactive)
-  (shell-command
-   (concat ditaa-cmd " " buffer-file-name)))
-(setq org-ditaa-jar-path "~/tools/ditaa.jar")
+(add-hook 'org-after-todo-statistics-hook #'org-summary-todo)
 
+;; (defconst org-log-done 'time)
+;; (defconst org-log-done 'note)
 
 (require 'ob-C nil t)
 (require 'ob-shell nil t)

@@ -5,7 +5,7 @@
 ;; folding or unfolding code
 ;; Todo: hs-minor-mode
 
-;;;###autoload
+;;; ;;;###autoload
 (defun hs-enable-and-toggle ()
   "Enable or disable `hs-minor-mode`."
   (interactive)
@@ -13,7 +13,7 @@
   (hs-toggle-hiding))
 
 
-;;;###autoload
+;;; ;;;###autoload
 (defun hs-enable-and-hideshow-all (&optional arg)
   "Hide all blocks. If prefix argument is given, show all blocks"
   (interactive "P")

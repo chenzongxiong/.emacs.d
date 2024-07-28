@@ -15,7 +15,12 @@
 
 ;; turn on flychecking globally
 (add-hook 'after-init-hook #'global-flycheck-mode)
-(add-hook 'before-save-hook 'prettier-prettify)
+;; (add-hook 'before-save-hook 'prettier-prettify)
+
+(setq-default prettier-js-args '(
+  "--timeout" "120000" ;; Set timeout to 60 seconds
+))
+
 
 ;; disable jshint since we prefer eslint checking
 (setq-default flycheck-disabled-checkers

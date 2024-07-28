@@ -175,6 +175,13 @@
 (when (memq window-system '(mac ns x))
   (exec-path-from-shell-initialize))
 
+(defun save-buffer-without-tabs ()
+  (interactive)
+  (untabify (point-min) (point-max))
+  (save-buffer))
+(global-set-key "\C-x\C-s" 'save-buffer-without-tabs)
+
+(add-to-list 'auto-mode-alist '("\\.ttl$" . ttl-mode))
 (provide 'general-settings)
 
 
