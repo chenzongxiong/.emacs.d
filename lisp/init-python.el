@@ -12,16 +12,19 @@
 
 ;; (setenv "IPY_TEST_SIMPLE_PROMPT" "1")
 
-;; (setenv "WORKON_HOME" "/opt/homebrew/Caskroom/miniconda/base/envs")
-;; (defvar python-shell-virtualenv-path "/opt/homebrew/Caskroom/miniconda/base/envs/.torch")
 (defvar elpy-syntax-check-command (concat (python-environment-root-path) "/bin/flake8"))
-
+(defvar python-shell-virtualenv-root (concat (python-environment-root-path) "/bin/virtualenv"))
 
 ;; install flake8
 (defvar flake8-install-command (concat pip-command " install --upgrade flake8"))
+;; install jupytext
+(defvar jupytext-install-command (concat pip-command " install --upgrade jupytext"))
 
 (unless (file-exists-p elpy-syntax-check-command)
   (shell-command-to-string flake8-install-command))
+
+(unless (file-exists-p (concat (python-environment-root-path) "/bin/jupytext"))
+  (shell-command-to-string jupytext-install-command))
 
 (defvar python-shell-interpreter (concat (python-environment-root-path) "/bin/python"))
 
@@ -35,6 +38,11 @@
 (defvar jedi:tooltip-method t)
 (defvar elpy-rpc-backend "jedi")
 (defvar python-indent-guess-indent-offset nil)
+
+(defun ipdb-break-point()
+  (interactive)
+  (insert "import ipdb; ipdb.set_trace()")
+  )
 
 (add-hook 'python-mode-hook (lambda ()
                               (require 'jedi)

@@ -1,6 +1,13 @@
 (when (< (string-to-number emacs-version) 26.3)           ; helm needs 26.3 or above
   (defconst package-check-signature nil))
 
+
+(if (equal system-type 'gnu/linux)
+    (if (equal (shell-command-to-string "which xclip") "")
+        (message "Please install xclip first, run command \"sudo apt install xclip\"")
+      )
+  )
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -18,7 +25,7 @@
  '(ecb-options-version "2.50")
  '(initial-frame-alist '((fullscreen . maximized)))
  '(package-selected-packages
-   '(sparql-mode prettier-js ttl-mode md-readme conda pip-requirements vue-html-mode vue-mode flex-autopair simple-httpd lsp-mode typescript-mode flycheck-kotlin mvn kotlin-mode rdf-prefix go-mode caddyfile-mode rust-auto-use rust-mode cargo-mode graphql graphql-mode prettier exec-path-from-shell docker tablist magit jinja2-mode racer editorconfig-generate editorconfig rustic helm-c-moccur helm-ag flycheck-rust cargo password-vault password-generator nasm-mode yasnippet-snippets irony-eldoc websocket web-server rjsx-mode eslint-fix yaml-mode web-mode vlf scala-mode python-mode py-autopep8 php-mode nginx-mode modern-cpp-font-lock markdown-mode json-mode jedi iedit httpcode htmlize helm-gtags google-c-style flymake-yaml flymake-solidity flymake-eslint flycheck-irony elpy ecb dockerfile-mode dired-filter company-solidity company-rtags company-irony-c-headers cmake-mode cmake-ide browse-kill-ring))
+   '(jq-format jsonl xclip jupyter code-cells sparql-mode prettier-js ttl-mode md-readme conda pip-requirements vue-html-mode vue-mode flex-autopair simple-httpd lsp-mode typescript-mode flycheck-kotlin mvn kotlin-mode rdf-prefix go-mode caddyfile-mode rust-auto-use rust-mode cargo-mode graphql graphql-mode prettier exec-path-from-shell docker tablist magit jinja2-mode racer editorconfig-generate editorconfig rustic helm-c-moccur helm-ag flycheck-rust cargo password-vault password-generator nasm-mode yasnippet-snippets irony-eldoc websocket web-server rjsx-mode eslint-fix yaml-mode web-mode vlf scala-mode python-mode py-autopep8 php-mode nginx-mode modern-cpp-font-lock markdown-mode json-mode jedi iedit httpcode htmlize helm-gtags google-c-style flymake-yaml flymake-solidity flymake-eslint flycheck-irony elpy ecb dockerfile-mode dired-filter company-solidity company-rtags company-irony-c-headers cmake-mode cmake-ide browse-kill-ring))
  '(tab-width 2)
  '(warning-suppress-types '((emacs))))
 

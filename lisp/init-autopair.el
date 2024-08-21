@@ -2,8 +2,8 @@
 ;;; Code:
 ;;; Commentary:
 
-(require 'flex-autopair)
-(flex-autopair-mode 1)
+;; (require 'flex-autopair)
+;; (flex-autopair-mode 1)
 
 (provide 'init-autopair)
 

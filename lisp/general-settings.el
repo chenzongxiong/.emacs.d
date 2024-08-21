@@ -52,8 +52,8 @@
 (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
 (defconst delete-old-version t)
 
-(when (eq system-type 'darwin)
-  (toggle-frame-fullscreen))
+;; (when (eq system-type 'darwin)
+;;   (toggle-frame-fullscreen))
 
 
 ;; (setq auto-save-file-name-transforms '((".*" "~/.emacs.d/auto-save-list/" t)))
@@ -130,6 +130,20 @@
 (auto-fill-mode)
 ;; set the size of font
 (set-face-attribute 'default nil :height 130)
+;; (if (eq system-type 'darwin)
+;;   ; something for OS X if true
+;;   ; optional something if not
+;; )
+
+(setq pb-copy "pbcopy")
+(setq pb-paste "pbpaste")
+
+(if (equal system-type 'gnu/linux)
+    (setq pb-copy "cat | xclip -selection clipboard"
+          pb-paste "xclip -selection clipboard -o")
+  )
+
+
 ;; add pbpaste and pbcodpy
 ;;;###autoload
 (defun pbpaste ()
@@ -138,7 +152,7 @@
   (shell-command-on-region
    (point)
    (if mark-active (mark) (point))
-      "pbpaste" nil t))
+   pb-paste nil t))
 
 ;;;###autoload
 (defun pbcopy ()
@@ -147,7 +161,7 @@
   (print (mark))
   (when mark-active
     (shell-command-on-region
-     (point) (mark) "pbcopy")
+     (point) (mark) pb-copy)
     (kill-buffer "*Shell Command Output*")))
 
 ;; setting for ecb

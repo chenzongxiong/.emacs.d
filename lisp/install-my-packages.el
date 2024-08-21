@@ -7,7 +7,7 @@
   (add-to-list 'package-archives
                '("gnu" . "http://elpa.gnu.org/packages/"))
   (add-to-list 'package-archives
-               '("melpa" . "https://melpa.org/packages/")
+               '("melpa" . "http://melpa.org/packages/")
                ;; (add-to-list 'package-archivesn
                ;;              '("popkit" . "http://elpa.popkit.org/packages/") ; packages maintained in China
                t)
