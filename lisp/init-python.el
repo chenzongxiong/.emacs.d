@@ -6,14 +6,17 @@
 (require 'jedi)
 (require 'elpy)
 
+(setq python-shell-interpreter (concat (python-environment-root-path) "/bin/python"))
+(setq elpy-rpc-python-command python-shell-interpreter)
+(setq elpy-rpc-default-virtualenv-path (python-environment-root-path))
+
 ;; Python Ide
 (defvar pip-command (concat (python-environment-root-path) "/bin/pip"))
-(defvar py-autopep8-options '("--max-line-length=120"))
+(defvar py-autopep8-options '("--max-line-length=140"))
 
 ;; (setenv "IPY_TEST_SIMPLE_PROMPT" "1")
 
 (defvar elpy-syntax-check-command (concat (python-environment-root-path) "/bin/flake8"))
-(defvar python-shell-virtualenv-root (concat (python-environment-root-path) "/bin/virtualenv"))
 
 ;; install flake8
 (defvar flake8-install-command (concat pip-command " install --upgrade flake8"))
@@ -26,7 +29,7 @@
 (unless (file-exists-p (concat (python-environment-root-path) "/bin/jupytext"))
   (shell-command-to-string jupytext-install-command))
 
-(defvar python-shell-interpreter (concat (python-environment-root-path) "/bin/python"))
+
 
 ;; (setenv "WORKON_HOME" python-shell-virtualenv-path)
 ;; (defvar pyvenv-activate (getenv "WORKON_HOME"))
