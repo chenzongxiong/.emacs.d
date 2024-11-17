@@ -37,6 +37,11 @@
 ;; (defvar python-shell-interpreter (concat my-virtualenv-path "/bin/python3"))
 ;; (defvar jedi:environment-root python-shell-virtualenv-path)
 
+(defun ipdb-break-point()
+  (interactive)
+  (insert "import ipdb; ipdb.set_trace()")
+  )
+
 (defvar jedi:complete-on-dot t)
 (defvar jedi:tooltip-method t)
 (defvar elpy-rpc-backend "jedi")
@@ -64,8 +69,8 @@
 ;; (add-to-hook 'find-file-hook (lambda () (when (bound-and-true-p conda-project-env-path)
 ;;                                           (conda-env-activate-for-buffer))))
 
-(custom-set-variables
- '(conda-anaconda-home "/opt/homebrew/Caskroom/miniconda/base"))
+;; (custom-set-variables
+;;  '(conda-anaconda-home "/opt/homebrew/Caskroom/miniconda/base"))
 
 (provide 'init-python)
 

@@ -52,6 +52,10 @@
     (org-todo (if (= n-not-done 0) "DONE" "TODO"))))
 
 (add-hook 'org-after-todo-statistics-hook #'org-summary-todo)
+(defun emacs-startup-screen ()
+  "Display the weekly org-agenda and all todos."
+  (org-agenda nil "n"))
+(add-hook 'emacs-startup-hook #'emacs-startup-screen)
 
 ;; (defconst org-log-done 'time)
 ;; (defconst org-log-done 'note)
